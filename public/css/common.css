@@ -7,6 +7,9 @@
     --white:#fefefe;
 }
 
+p, h1, h2, h3, h4, td, html, button{
+    font-family: 'Cinzel', serif;
+}
 
 html{
     background-color:var(--blue);
