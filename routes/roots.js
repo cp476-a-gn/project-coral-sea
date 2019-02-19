@@ -9,9 +9,8 @@ module.exports = function(app){
         res.render("pages/ScoreBoard.ejs");
     });
 
-    app.post('/score', function(req,res){
-        console.log(req.body.return);
-        res.render("pages/MainMenu.ejs")
+    app.get('/scoreToMain', function(req,res){
+        res.redirect('/')
     });
 		
 		app.get('/mainMenu',function(req,res){
@@ -19,7 +18,7 @@ module.exports = function(app){
     });
  
     app.get('/goToScore',function(req,res){
-				console.log(req.body.return);
+	    console.log(req.body.return);
         res.render('pages/ScoreBoard.ejs');
     });
 }
