@@ -9,6 +9,10 @@ module.exports = function(app){
         res.render("pages/ScoreBoard.ejs");
     });
 		
+		app.get('/mainMenu',function(req,res){
+        res.render('pages/MainMenu.ejs');
+    });
+		
 		app.get('/matching',function(req,res){
     res.render('pages/waitQueue.ejs');
     });
@@ -17,9 +21,8 @@ module.exports = function(app){
         res.redirect('/')
     });
 		
-		
-		app.get('/mainMenu',function(req,res){
-        res.render('pages/MainMenu.ejs');
+		app.get('/mainToQueue', function(req,res){
+        res.redirect('/matching')
     });
  
     app.get('/mainToScore',function(req,res){
