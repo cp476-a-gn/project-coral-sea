@@ -4,10 +4,6 @@ module.exports = function(app){
     app.get('/',function(req,res){
         res.render('pages/MainMenu.ejs');
     });
- 
-    app.post('/',function(req,res){
-        res.render('pages/score.ejs');
-    });
 
     app.get('/score', function(req,res){
         res.render("pages/ScoreBoard.ejs");
@@ -17,4 +13,8 @@ module.exports = function(app){
         console.log(req.body.return);
         res.render("pages/MainMenu.ejs")
     });
+
+    app.get('/game', function(req,res){
+        res.render("pages/Game.ejs")
+    })
 }
