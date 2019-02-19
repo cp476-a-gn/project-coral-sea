@@ -1,0 +1,27 @@
+.container{
+		height: 90vh;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-around;
+}
+.top-nav-container{
+		display: flex;
+		flex-direction: row;
+		justify-content: flex-start;
+		background-color: var(--white);
+}
+.tablink{
+		flex-basis:15%
+}
+.empty_space{
+		flex-basis: 55%;
+		display:flex;
+}
+ 
+#title{
+		margin:auto;
+}	
+#btn-play{
+		width: 200px;
+		margin: auto;
+}	
