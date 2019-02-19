@@ -1,0 +1,47 @@
+
+.title{
+    text-align: center;
+    margin-top:20px;
+    margin-bottom:100px;
+}
+.board{
+    background-color:var(--coral);
+    padding:20px;
+    width:30%;
+    height:auto;
+    display:flex;
+    flex-direction: column;
+    margin:auto;
+    border: solid 4px var(--white);
+}
+
+.entry{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom:20px;
+}
+
+.center{
+    display:flex;
+    align-content: center;
+    justify-content: center;
+}
+
+.page{
+    margin:auto;
+    margin-top:100px;
+    display:flex;
+    flex-direction: column;
+    width:80%;
+    height:50%;
+    height:auto;
+}
+
+.flex-body{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+}
+
