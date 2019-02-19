@@ -11,7 +11,6 @@ app.use(express.static(__dirname + '/public'));
 
 // Routes
 require('./routes/roots.js')(app);
-require('./routes/404.js')(app);
 
 // Launch
 app.listen(port, '0.0.0.0', function(){
