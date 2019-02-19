@@ -1,0 +1,20 @@
+--root{
+    --blue: #a8d1e8;
+    --green:#b3dbda;
+    --coral:#ffbfc3;
+    --grey:#a9a199;
+    --black:#232323;
+    --white:#fefefe;
+}
+
+
+html{
+    background-color:var(--blue);
+    margin:0px;
+    padding:0px;
+}
+
+body{
+    margin:0px;
+    padding:0px;
+}
