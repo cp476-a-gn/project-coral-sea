@@ -28,7 +28,7 @@ body{
     width:100%;
 }
 
-input[type=submit]{
+button{
     margin-top:10px;
     border:solid 4px var(--white);
     background-color: var(--coral);
@@ -41,13 +41,13 @@ input[type=submit]{
 
 }
 
-input[type=submit]:hover{
+button:hover{
     box-shadow:0px 5px 0px var(--grey);
     transform:translateY(-5px);
     transition:box-shadow .2s, transform .2s;
 }
 
-input[type=submit]:active{
+button:active{
     box-shadow:0px 2px 0px var(--grey);
     transform:translateY(-1px);
     transition:box-shadow .1s, transform .1s;
