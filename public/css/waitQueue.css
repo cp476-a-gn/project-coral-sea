@@ -6,16 +6,16 @@
 }
 
 .empty_space{
-		flex-basis: 55%;
+		flex-basis: 25%;
 		display:flex;
+}
+.gif{
+		display: flex;
+		margin: auto;
 }
 
 #capture{
 		margin:auto;
-}	
-#btn-play{
-		width: 200px;
-		margin: auto;
 }	
 
 .lds-ellipsis {
