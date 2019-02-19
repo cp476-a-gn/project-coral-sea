@@ -29,7 +29,6 @@ body{
 }
 
 button{
-    margin-top:10px;
     border:solid 4px var(--white);
     background-color: var(--coral);
     color:var(--white);
