@@ -9,7 +9,9 @@ var bodyParser = require('body-parser');
 app.use(morgan('dev'));
 app.set('view engine','ejs');
 app.use(bodyParser.urlencoded({extended: false}));
+
 app.use(express.static(__dirname + '/public'));
+app.use('/resources', express.static(__dirname + '/public/resources/game'));
 
 // Routes
 require('./routes/roots.js')(app);
