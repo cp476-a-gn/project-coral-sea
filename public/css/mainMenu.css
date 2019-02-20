@@ -13,11 +13,40 @@
 .tablink{
 		flex-basis:15%
 }
+.sidebar{
+		height:100%;
+		width: 0;
+		position:fixed;
+		z-index: 1;
+		top: 0;
+		left: 0;
+		background-color: var(--white);
+		overflow-x: hidden;
+		padding-top: 60px;
+		transition: 0.5s;
+}
+.sidebar .closebtn{
+		position: absolute;
+		top: 0;
+		right: 25px;
+		font-size: 36px;
+		margin-left: 50px;
+}
 .empty_space{
 		flex-basis: 55%;
 		display:flex;
 }
- 
+.empty_space2{
+		flex-basis: 10%;
+		display:flex;
+}
+.fields{
+		margin-right: 5vw;
+		margin-left: 5vw;
+		width: 20vw;
+		padding-left: 2vw;
+}
+
 #title{
 		margin:auto;
 }	
