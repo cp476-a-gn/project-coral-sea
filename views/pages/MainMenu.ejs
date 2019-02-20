@@ -8,22 +8,22 @@
 <body>
 
 <header>
-<%# include ../partials/header %> 
+<form>
+	<div class="top-nav-container">
+			<button class="tablink" onclick="#">Register</button>
+			<button class="tablink" onclick="#">Sign in</button>
+			<div class="empty_space"></div>
+			<button class="tablink" type="submit" formaction="/mainToScore">Score board</button>
+		</div>
+</form>
 </header>
 
 <main>
 <form>
-	<div class="top-nav-container">
-		<button class="tablink" onclick="#">Register</button>
-		<button class="tablink" onclick="#">Sign in</button>
-		<div class="empty_space"></div>
-		<button class="tablink" value="went to score" formaction="/goToScore">Score board</button>
-	</div>
-	
 	<div class="container">
 		<h1 id="title"> Coral Sea</h1>
 		<div class="empty_space"></div>
-		<button type="submit" id="btn-play" class="btn" formaction="/play">Play</button>
+		<button type="submit" id="btn-play" type="submit" class="btn" formaction="/mainToQueue">Play</button>
 	</div>
 </form>	
 </main>
