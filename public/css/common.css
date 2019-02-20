@@ -13,6 +13,7 @@ p, h1, h2, h3, h4, td, html, button{
 
 html{
     background-color:var(--blue);
+    background-image: url("../resources/wallpaper.png");
     margin:0px;
     padding:0px;
     height:100vh;
