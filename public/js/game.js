@@ -112,7 +112,8 @@ function dragShipEnd(event){
 			position.y > starty && position.y < endy){
 					// do snapping
 					this.position.y += (this.height / 2);
-					this.position = snapToGrid(this.position, sprites.userGrid, this.width);
+					if (this.rotation == 0) this.position = snapToGridHorizontal(this.position, sprites.userGrid, this.width);
+					else this.position = snapToGridVertical(this.position, sprites.userGrid, this.width);
 			}
 			else{
 					this.position.x = this.startPos.x;
@@ -145,6 +146,7 @@ function rotateQueue(event){
     console.log("???");
     if(this.rotation == 0) this.rotation = 3.14 / 2;
     else this.rotation = 0;
+		adjustLocation(this, sprites.userGrid);
 }
 
 
