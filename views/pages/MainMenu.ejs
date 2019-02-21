@@ -1,59 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-				<link href="https://fonts.googleapis.com/css?family=Cinzel:700" rel="stylesheet"> 
-        <link rel="stylesheet" type="text/css" href="css/common.css"/>
-        <link rel="stylesheet" type="text/css" href="css/mainMenu.css"/>
-				<script type="text/javascript" src="js/mainMenuBar.js"></script>
-</head>
+	<head>
+					<link href="https://fonts.googleapis.com/css?family=Cinzel:700" rel="stylesheet"> 
+			<link rel="stylesheet" type="text/css" href="css/common.css"/>
+			<link rel="stylesheet" type="text/css" href="css/mainMenu.css"/>
+					<script type="text/javascript" src="js/mainMenuBar.js"></script>
+	</head>
 
-<body>
+	<body>
 
-<header>
-	<div class="top-nav-container">
-		<button class="tablink" value="1" onclick="openRegister()">Register</button>
-		<button class="tablink" value="2" onclick="openLogin()">Sign in</button>
-		<div class="empty_space"></div>
-		<form><button class="tablink" type="submit" formaction="/mainToScore">Score board</button></form>
-	</div>
+		<header>
+			<div class="top-nav-container">
+				<button class="tablink" value="1" onclick="openRegister()">Register</button>
+				<button class="tablink" value="2" onclick="openLogin()">Sign in</button>
+				<div class="empty_space"></div>
+				<form><button class="tablink" type="submit" formaction="/mainToScore">Score board</button></form>
+			</div>
 
-</header>
+		</header>
 
-<main>
-	<div id="sidebar" class="sidebar"> 
-		<a href="javascript:void(0)" class="closebtn" onclick="closeBar()">&times;</a> 
-		<form>
-		<div class="container">
-		<h1 class="fields" id="reg_name">""</h1>
-		<div class="empty_space2"></div>
-		<div class="fields">
-			<p class="labels">Enter your user name</p>
-			<input type="text" name="user_name">
-		</div>	
-		<div class="fields">
-			<p class="labels">Enter your password</p>
-			<input type="text" name="password">
-		</div>	
-		<div class="fields" id ="pas_rep"  style="display:none"> 
-			<p class="labels">Repeat your password</p>
-			<input type="text" name="password_repeat">
-		</div>	
-			<button type="submit" type="submit" formaction="#">Play</button>
+		<main>
+			<div id="sidebar" class="sidebar"> 
+				<a href="javascript:void(0)" class="closebtn" onclick="closeBar()">&times;</a> 
+				<form>
+				<div class="container">
+				<h1 class="fields" id="reg_name">""</h1>
+				<div class="empty_space2"></div>
+				<div class="fields">
+					<p class="labels">Enter your user name</p>
+					<input type="text" name="user_name">
+				</div>	
+				<div class="fields">
+					<p class="labels">Enter your password</p>
+					<input type="text" name="password">
+				</div>	
+				<div class="fields" id ="pas_rep"  style="display:none"> 
+					<p class="labels">Repeat your password</p>
+					<input type="text" name="password_repeat">
+				</div>	
+					<button type="submit" type="submit" formaction="#">Play</button>
+				</div>
+				</form>
+			</div>
+			<form>
+				<div class="container">
+					<h1 id="title"> Coral Sea</h1>
+					<div class="empty_space"></div>
+					<button type="submit" id="btn-play" type="submit" formaction="/mainToQueue">Play</button>
+				</div>
+			</form>	
+		</main>
+
+		<footer>
+			<% include partials/footer %>
+		</footer>
+
+		<div id="backgroundWater">
+			<div id="wave1" class="wave"></div>
+			<div id="wave2" class="wave"></div>
+			<div id="wave3" class="wave"></div>
 		</div>
-		</form>
-	</div>
-	<form>
-		<div class="container">
-			<h1 id="title"> Coral Sea</h1>
-			<div class="empty_space"></div>
-			<button type="submit" id="btn-play" type="submit" formaction="/mainToQueue">Play</button>
-		</div>
-	</form>	
-</main>
 
-<footer>
-	<% include partials/footer %>
-</footer>
-
-</body>
+	</body>
 </html>
