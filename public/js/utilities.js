@@ -1,3 +1,25 @@
+function snapToGrid(position, userGrid, width){
+    var unitSize = userGrid.width / 10;
+    var startX = userGrid.x - (userGrid.width / 2);
+    var startY = userGrid.y - (userGrid.height / 2);
+    var endX = startX + userGrid.width;
+    var realX = startX + unitSize*(Math.floor((position.x - startX)/unitSize));
+    var realY = startY + unitSize*(Math.floor((position.y - startY)/unitSize));
+    
+		var endPointR = realX + width;    
+		if (endPointR > endX){
+      realX = realX - (endPointR - endX);
+    }else if (realX < startX){
+			//console.log("realX: " + realX + "  endPointL:  " + endPointL + " startX: " + startX +" endX: " + endX);
+			realX = realX + (startX - realX);
+		}
+    
+    position.x = realX;
+    position.y = realY;
+    
+    return position;
+}
+
 function pixel2grid(grid, posX, posY){
 	var unit_size = grid.width / 10;
 	var locX = Math.floor(posX/unit_size);

@@ -102,30 +102,33 @@ function dragShipStart(event){
 }
 
 function dragShipEnd(event){
-    var position = this.data.getLocalPosition(this.parent);
-    startx = sprites.userGrid.x - (sprites.userGrid.width / 2);
-    starty = sprites.userGrid.y - (sprites.userGrid.height / 2);
-    endx = startx + sprites.userGrid.width;
-    endy = starty + sprites.userGrid.height;
-    if(position.x > startx && position.x < endx &&
-    position.y > starty && position.y < endy){
-        // do snapping
-        this.position.y += (this.height / 2);
-        this.position = snapToGrid(this.position, sprites.userGrid, this.width);
-    }
-    else{
-        this.position.x = this.startPos.x;
-        this.position.y = this.startPos.y;
-    }
+		if (this.data != null){
+			var position = this.data.getLocalPosition(this.parent);
+			startx = sprites.userGrid.x - (sprites.userGrid.width / 2);
+			starty = sprites.userGrid.y - (sprites.userGrid.height / 2);
+			endx = startx + sprites.userGrid.width;
+			endy = starty + sprites.userGrid.height;
+			if(position.x > startx && position.x < endx &&
+			position.y > starty && position.y < endy){
+					// do snapping
+					this.position.y += (this.height / 2);
+					this.position = snapToGrid(this.position, sprites.userGrid, this.width);
+			}
+			else{
+					this.position.x = this.startPos.x;
+					this.position.y = this.startPos.y;
+			}
 
-    this.dragging = false;
-    this.data = null;
-
+			this.dragging = false;
+			this.data = null;
+		}else{
+		console.log("got the bug. FIXME");
+	}
 }
 
 function dragShip(event){
     if(this.dragging){
-        console.log(this.data.getLocalPosition(this.parent));
+       // console.log(this.data.getLocalPosition(this.parent));
         var newPosition = this.data.getLocalPosition(this.parent);
         if(this.rotation == 0){
             this.position.x = newPosition.x - (this.width / 2);
