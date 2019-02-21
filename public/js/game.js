@@ -94,6 +94,14 @@ ships.forEach(function(ship){
     stage.addChild(ship);
 })
 
+var screenblocker = PIXI.Sprite.from('resources/blocker.png');
+screenblocker.x = WIDTH/2;
+screenblocker.y = 0;
+screenblocker.width = WIDTH/2;
+screenblocker.height = HEIGHT;
+stage.addChild(screenblocker);
+
+
 function dragShipStart(event){
     this.dragging = true;
     this.startPos = event.data.getLocalPosition(this.parent);
@@ -102,14 +110,14 @@ function dragShipStart(event){
 
 function dragShipEnd(event){
     var position = this.data.getLocalPosition(this.parent);
-    startx = userGrid.x - (userGrid.width / 2)
-    starty = userGrid.y - (userGrid.height / 2)
+    startx = userGrid.x - (userGrid.width / 2);
+    starty = userGrid.y - (userGrid.height / 2);
     endx = startx + userGrid.width;
     endy = starty + userGrid.height;
     if(position.x > startx && position.x < endx &&
     position.y > starty && position.y < endy){
         // do snapping
-        //snapToGrid(position, userGrid);
+        this.position = snapToGrid(position, userGrid);
     }
     else{
         this.position.x = this.startPos.x;
@@ -128,3 +136,15 @@ function dragShip(event){
         this.position.y = newPosition.y;
     }
 }   
+
+function snapToGrid(position, userGrid){
+		var unitSize = userGrid.width / 10;
+		var startX = userGrid.x - (userGrid.width / 2);
+    var startY = userGrid.y - (userGrid.height / 2);
+		var realX = startX + unitSize*(Math.floor((position.x - startX)/unitSize));
+		var realY = startY + unitSize*(Math.floor((position.y - startY)/unitSize));
+		position.x = realX;
+		position.y = realY;
+		
+		return position;
+}

@@ -17,7 +17,7 @@ function grid2pixel(grid, posX, posY){
 	
 }
 
-function createJSON(cell, type, direction){
+function createShipJSON(cell, type, direction){
 	var ship_obj = {"x": cell.x, "y": cell.y, "type": type, "direction": direction};
 	if (type < 1 || type >5){
 			console.log("invalid type was passed");
@@ -30,6 +30,12 @@ function createJSON(cell, type, direction){
 	var ship =JSON.stringify(ship_obj);
 	
 	return ship;
+}
+
+function createShotJSON(cell){
+	var shot = JSON.stringify(cell);
+	
+	return shot;
 }
 
 function readJSON(hit_loc){
