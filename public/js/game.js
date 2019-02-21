@@ -117,7 +117,7 @@ function dragShipEnd(event){
     if(position.x > startx && position.x < endx &&
     position.y > starty && position.y < endy){
         // do snapping
-        this.position = snapToGrid(position, userGrid);
+        this.position = snapToGrid(position, userGrid, this.width);
     }
     else{
         this.position.x = this.startPos.x;
@@ -137,12 +137,19 @@ function dragShip(event){
     }
 }   
 
-function snapToGrid(position, userGrid){
+function snapToGrid(position, userGrid, width){
+	console.log(width);
 		var unitSize = userGrid.width / 10;
 		var startX = userGrid.x - (userGrid.width / 2);
     var startY = userGrid.y - (userGrid.height / 2);
+		var endX = startX + userGrid.width;
 		var realX = startX + unitSize*(Math.floor((position.x - startX)/unitSize));
 		var realY = startY + unitSize*(Math.floor((position.y - startY)/unitSize));
+		var endPoint = realX + width;
+		if (endPoint > endX){
+			realX = realX - (endPoint - endX);
+		}
+		
 		position.x = realX;
 		position.y = realY;
 		
