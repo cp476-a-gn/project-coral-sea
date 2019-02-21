@@ -7,117 +7,109 @@ CRUISER = 1 //3
 BATTLESHIP = 1 //4
 CARRIER = 1 //5
 
-//files
-var file_wallpaper =    "resources/background.png";
-var file_grid =         "resources/grid.png";
-var file_carrier =      "resources/ships/carrier.png";
-var file_battleship =   "resources/ships/battleship.png";
-var file_cruiser =      "resources/ships/cruiser.png";
-var file_destroyer =    "resources/ships/destroyer.png";
-var file_submarine =    "resources/ships/submarine.png";
+const loader = PIXI.Loader.shared;
 
-let type="WebGL";
-if(!PIXI.utils.isWebGLSupported()){
-    type="canvas";
-}
-PIXI.utils.sayHello(type);
+const sprites = {};
 
-let app = new PIXI.Application({width: WIDTH , height: HEIGHT});
+loadFiles(sprites, loader);
 
-document.body.appendChild(app.view);
+loader.onComplete.add(() => {
 
-var stage = app.stage;
+    let type="WebGL";
+    if(!PIXI.utils.isWebGLSupported()){
+        type="canvas";
+    }
+    PIXI.utils.sayHello(type);
 
-//prep screen
+    let app = new PIXI.Application({width: WIDTH , height: HEIGHT});
 
-var wallpaper = PIXI.Sprite.from('resources/background.png');
-var userGrid = PIXI.Sprite.from('resources/grid.png');
-var oponGrid = PIXI.Sprite.from('resources/grid.png');
+    document.body.appendChild(app.view);
 
-wallpaper.x = 0;
-wallpaper.y = 0;
-wallpaper.width = WIDTH;
-wallpaper.height = HEIGHT;
+    var stage = app.stage;
 
-userGrid.anchor.set(0.5);
-userGrid.x = WIDTH / 4;
-userGrid.y = HEIGHT / 3;
-userGrid.width = HEIGHT * .50;
-userGrid.height = HEIGHT * .50;
+    //prep screen
 
-console.log(userGrid.width);
+    sprites.wallpaper.x = 0;
+    sprites.wallpaper.y = 0;
+    sprites.wallpaper.width = WIDTH;
+    sprites.wallpaper.height = HEIGHT;
 
-oponGrid.anchor.set(0.5);
-oponGrid.x = (WIDTH / 4) * 3;
-oponGrid.y = HEIGHT / 2;
-oponGrid.width = HEIGHT * .66;
-oponGrid.height = HEIGHT * .66;
+    sprites.userGrid.anchor.set(0.5);
+    sprites.userGrid.x = WIDTH / 4;
+    sprites.userGrid.y = HEIGHT / 3;
+    sprites.userGrid.width = HEIGHT * .50;
+    sprites.userGrid.height = HEIGHT * .50;
 
-// draw ships
-var ships = [PIXI.Sprite.from(file_carrier), 
-            PIXI.Sprite.from(file_battleship), 
-            PIXI.Sprite.from(file_cruiser),
-            PIXI.Sprite.from(file_destroyer),
-            PIXI.Sprite.from(file_destroyer),
-            PIXI.Sprite.from(file_submarine),
-            PIXI.Sprite.from(file_submarine)];
+    sprites.oponGrid.anchor.set(0.5);
+    sprites.oponGrid.x = (WIDTH / 4) * 3;
+    sprites.oponGrid.y = HEIGHT / 2;
+    sprites.oponGrid.width = HEIGHT * .66;
+    sprites.oponGrid.height = HEIGHT * .66;
 
-var beginx = userGrid.x - (userGrid.width / 2);
-var startx = beginx;
-var starth = HEIGHT - 350;
-val = 2;
-j = 0
+    // draw ships
 
-unit_size = userGrid.width / 10;
 
-for( var i = 0; i < 7; i++){
-    if(j % val == 0 && j != 0){ starth = starth + (unit_size * 1.5); startx = beginx; val+=1; j = 0}
-    ships[i].height = unit_size;
-    ships[i].width = (ships[i].width / 100) * unit_size;
-    ships[i].x = startx;
-    startx += ships[i].width + unit_size; 
-    j++;
-    ships[i].y = starth;
-    ships[i].interactive = true;
-    ships[i].on('mousedown', dragShipStart)
-            .on('mouseup', dragShipEnd)
-            .on('mousemove', dragShip);
-}
+    var beginx = sprites.userGrid.x - (sprites.userGrid.width / 2);
+    var startx = beginx;
+    var starth = HEIGHT - 350;
+    val = 2;
+    j = 0
+
+    unit_size = sprites.userGrid.width / 10;
+
+    for( var i = 0; i < 7; i++){
+        if(j % val == 0 && j != 0){ starth = starth + (unit_size * 1.5); startx = beginx; val+=1; j = 0}
+        sprites.ships[i].height = unit_size;
+        sprites.ships[i].width = (sprites.ships[i].width / 100) * unit_size;
+        sprites.ships[i].x = startx;
+        startx += sprites.ships[i].width + unit_size; 
+        j++;
+        sprites.ships[i].y = starth;
+        sprites.ships[i].interactive = true;
+        sprites.ships[i].on('mousedown', dragShipStart)
+                .on('mouseup', dragShipEnd)
+                .on('mousemove', dragShip);
+        sprites.ships[i].startPos = new PIXI.Point(sprites.ships[i].x, sprites.ships[i].y);
+
+        sprites.ships[i].gridPoint = new PIXI.Point();
+        sprites.ships[i].gridRotation = 0; // 0 horizontal 1 vertilce
+    }
 
 
 
-stage.addChild(wallpaper);
-stage.addChild(userGrid);
-stage.addChild(oponGrid);
+    stage.addChild(sprites.wallpaper);
+    stage.addChild(sprites.userGrid);
+    stage.addChild(sprites.oponGrid);
 
-ships.forEach(function(ship){
-    stage.addChild(ship);
-})
+    sprites.ships.forEach(function(ship){
+        stage.addChild(ship);
+    })
 
-var screenblocker = PIXI.Sprite.from('resources/blocker.png');
-screenblocker.x = WIDTH/2;
-screenblocker.y = 0;
-screenblocker.width = WIDTH/2;
-screenblocker.height = HEIGHT;
-stage.addChild(screenblocker);
 
+    sprites.screenblocker.x = WIDTH/2;
+    sprites.screenblocker.y = 0;
+    sprites.screenblocker.width = WIDTH/2;
+    sprites.screenblocker.height = HEIGHT;
+    stage.addChild(sprites.screenblocker);
+
+});
 
 function dragShipStart(event){
     this.dragging = true;
-    this.startPos = event.data.getLocalPosition(this.parent);
     this.data = event.data;
 }
 
 function dragShipEnd(event){
     var position = this.data.getLocalPosition(this.parent);
-    startx = userGrid.x - (userGrid.width / 2);
-    starty = userGrid.y - (userGrid.height / 2);
-    endx = startx + userGrid.width;
-    endy = starty + userGrid.height;
+    startx = sprites.userGrid.x - (sprites.userGrid.width / 2);
+    starty = sprites.userGrid.y - (sprites.userGrid.height / 2);
+    endx = startx + sprites.userGrid.width;
+    endy = starty + sprites.userGrid.height;
     if(position.x > startx && position.x < endx &&
     position.y > starty && position.y < endy){
         // do snapping
-        this.position = snapToGrid(position, userGrid, this.width);
+        position.x -= (this.width / 2)
+        this.position = snapToGrid(position, sprites.userGrid, this.width);
     }
     else{
         this.position.x = this.startPos.x;
@@ -131,27 +123,28 @@ function dragShipEnd(event){
 
 function dragShip(event){
     if(this.dragging){
+        console.log(this.data.getLocalPosition(this.parent));
         var newPosition = this.data.getLocalPosition(this.parent);
-        this.position.x = newPosition.x;
-        this.position.y = newPosition.y;
+        this.position.x = newPosition.x - (this.width / 2);
+        this.position.y = newPosition.y - (this.height / 2);
     }
 }   
 
 function snapToGrid(position, userGrid, width){
 	console.log(width);
-		var unitSize = userGrid.width / 10;
-		var startX = userGrid.x - (userGrid.width / 2);
+    var unitSize = userGrid.width / 10;
+    var startX = userGrid.x - (userGrid.width / 2);
     var startY = userGrid.y - (userGrid.height / 2);
-		var endX = startX + userGrid.width;
-		var realX = startX + unitSize*(Math.floor((position.x - startX)/unitSize));
-		var realY = startY + unitSize*(Math.floor((position.y - startY)/unitSize));
-		var endPoint = realX + width;
-		if (endPoint > endX){
-			realX = realX - (endPoint - endX);
-		}
-		
-		position.x = realX;
-		position.y = realY;
-		
-		return position;
+    var endX = startX + userGrid.width;
+    var realX = startX + unitSize*(Math.floor((position.x - startX)/unitSize));
+    var realY = startY + unitSize*(Math.floor((position.y - startY)/unitSize));
+    var endPoint = realX + width;
+    if (endPoint > endX){
+        realX = realX - (endPoint - endX);
+    }
+    
+    position.x = realX;
+    position.y = realY;
+    
+    return position;
 }
