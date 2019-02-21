@@ -112,9 +112,15 @@ function dragShipEnd(event){
 			position.y > starty && position.y < endy){
 					// do snapping
 					this.position.y += (this.height / 2);
-					this.position = snapToGrid(this.position, sprites.userGrid, this.width);
+					
+					if (this.rotation == 0) this.position = snapToGridHorizontal(this.position, sprites.userGrid, this.width);
+					else{
+						this.position.x += (this.height / 2);
+						this.position = snapToGridVertical(this.position, sprites.userGrid, this.width);
+					}
 			}
 			else{
+					this.rotation = 0;
 					this.position.x = this.startPos.x;
 					this.position.y = this.startPos.y;
 			}
@@ -143,8 +149,14 @@ function dragShip(event){
 
 function rotateQueue(event){
     console.log("???");
-    if(this.rotation == 0) this.rotation = 3.14 / 2;
-    else this.rotation = 0;
+    if(this.rotation == 0){
+			this.rotation = 3.14 / 2;
+			adjustLocationH2V(this, sprites.userGrid);
+		}
+    else{
+			this.rotation = 0;
+			adjustLocationV2H(this, sprites.userGrid);
+		}
 }
 
 
