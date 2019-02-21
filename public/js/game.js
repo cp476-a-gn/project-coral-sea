@@ -96,12 +96,29 @@ ships.forEach(function(ship){
 
 function dragShipStart(event){
     this.dragging = true;
+    this.startPos = event.data.getLocalPosition(this.parent);
     this.data = event.data;
 }
 
 function dragShipEnd(event){
+    var position = this.data.getLocalPosition(this.parent);
+    startx = userGrid.x - (userGrid.width / 2)
+    starty = userGrid.y - (userGrid.height / 2)
+    endx = startx + userGrid.width;
+    endy = starty + userGrid.height;
+    if(position.x > startx && position.x < endx &&
+    position.y > starty && position.y < endy){
+        // do snapping
+        //snapToGrid(position, userGrid);
+    }
+    else{
+        this.position.x = this.startPos.x;
+        this.position.y = this.startPos.y;
+    }
+
     this.dragging = false;
     this.data = null;
+
 }
 
 function dragShip(event){
