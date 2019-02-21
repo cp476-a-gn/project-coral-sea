@@ -11,10 +11,13 @@
 
 		<header>
 			<div class="top-nav-container">
-				<button class="tablink" value="1" onclick="openRegister()">Register</button>
-				<button class="tablink" value="2" onclick="openLogin()">Sign in</button>
-				<div class="empty_space"></div>
-				<form><button class="tablink" type="submit" formaction="/mainToScore">Score board</button></form>
+				<div>
+					<button class="tablink" value="1" onclick="openRegister()">Register</button>
+					<button class="tablink" value="2" onclick="openLogin()">Sign in</button>
+				</div>
+				<div>
+					<form><button class="tablink" type="submit" formaction="/mainToScore">Score board</button></form>
+				</div>
 			</div>
 
 		</header>
@@ -24,8 +27,7 @@
 				<a href="javascript:void(0)" class="closebtn" onclick="closeBar()">&times;</a> 
 				<form>
 				<div class="container">
-				<h1 class="fields" id="reg_name">""</h1>
-				<div class="empty_space2"></div>
+				<h1 class="fields" id="reg_name" style="margin-bottom:10vh;">""</h1>
 				<div class="fields">
 					<p class="labels">Enter your user name</p>
 					<input type="text" name="user_name">
@@ -38,7 +40,7 @@
 					<p class="labels">Repeat your password</p>
 					<input type="text" name="password_repeat">
 				</div>	
-					<button type="submit" type="submit" formaction="#">Play</button>
+					<button type="submit" type="submit" formaction="#" style="margin-top:4vh;">Play</button>
 				</div>
 				</form>
 			</div>

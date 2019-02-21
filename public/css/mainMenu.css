@@ -6,16 +6,21 @@ html{
 		height: 90vh;
 		display: flex;
 		flex-direction: column;
-		justify-content: space-around;
+		/*justify-content: space-around;*/
+		align-items:center;
 }
 .top-nav-container{
-		display: flex;
-		flex-direction: row;
-		justify-content: flex-start;
-		background-color: var(--white);
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	background-color: var(--white);
+	box-shadow: 0px 5px 10px var(--grey);
 }
 .tablink{
-		flex-basis:15%
+	flex-basis:15%;
+	font-size: 30px;
+	border: none;
+	border-right: 5px solide var(--white);
 }
 .sidebar{
 		height:100%;
@@ -24,7 +29,8 @@ html{
 		z-index: 1;
 		top: 0;
 		left: 0;
-		background-color: var(--white);
+		background-color: var(--black);
+		color:var(--white);
 		overflow-x: hidden;
 		padding-top: 60px;
 		transition: 0.5s;
@@ -45,14 +51,28 @@ html{
 		display:flex;
 }
 .fields{
-		margin-right: 5vw;
-		margin-left: 5vw;
-		width: 20vw;
-		padding-left: 2vw;
+	display:flex;
+	flex-direction:column;
+	justify-content: center;
+	align-items: center;
+	margin-right: 5vw;
+	margin-left: 5vw;
+	margin-bottom: 2vh;
+	white-space: nowrap;
 }
 
 #title{
-		margin:auto;
+	margin:auto;
+	margin-top:20vh;
+	font-size:100px;
+	width:30%;
+	text-align: center;
+	text-shadow:
+   -2px -2px 0 var(--white),  
+    2px -2px 0 var(--white),
+    -2px 2px 0 var(--white),
+     2px 2px 0 var(--white);
+	color:var(--coral);
 }	
 #btn-play{
 	width: 400px;
@@ -108,4 +128,9 @@ html{
 	50% {transform: translate(-30px, 0px);}
 	75% {transform: translate(0px, 10px);}
 	100% {transform: translate(30px, 0px);}
+}
+
+a{
+	color:white;
+	text-decoration: none;
 }
