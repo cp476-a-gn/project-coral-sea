@@ -24,7 +24,7 @@ loader.onComplete.add(() => {
     let app = new PIXI.Application({width: WIDTH , height: HEIGHT});
 
     document.body.appendChild(app.view);
-
+    app.view.oncontextmenu =  function(e){return false;} 
     var stage = app.stage;
 
     //prep screen
@@ -68,11 +68,13 @@ loader.onComplete.add(() => {
         sprites.ships[i].interactive = true;
         sprites.ships[i].on('mousedown', dragShipStart)
                 .on('mouseup', dragShipEnd)
-                .on('mousemove', dragShip);
+                .on('mousemove', dragShip)
+                .on('rightclick', rotateQueue);
         sprites.ships[i].startPos = new PIXI.Point(sprites.ships[i].x, sprites.ships[i].y);
 
         sprites.ships[i].gridPoint = new PIXI.Point();
         sprites.ships[i].gridRotation = 0; // 0 horizontal 1 vertilce
+        sprites.ships[i].rotating = false;
     }
 
 
@@ -108,8 +110,8 @@ function dragShipEnd(event){
     if(position.x > startx && position.x < endx &&
     position.y > starty && position.y < endy){
         // do snapping
-        position.x -= (this.width / 2)
-        this.position = snapToGrid(position, sprites.userGrid, this.width);
+        this.position.y += (this.height / 2);
+        this.position = snapToGrid(this.position, sprites.userGrid, this.width);
     }
     else{
         this.position.x = this.startPos.x;
@@ -125,10 +127,22 @@ function dragShip(event){
     if(this.dragging){
         console.log(this.data.getLocalPosition(this.parent));
         var newPosition = this.data.getLocalPosition(this.parent);
-        this.position.x = newPosition.x - (this.width / 2);
-        this.position.y = newPosition.y - (this.height / 2);
+        if(this.rotation == 0){
+            this.position.x = newPosition.x - (this.width / 2);
+            this.position.y = newPosition.y - (this.height / 2);
+        }
+        else{
+            this.position.x = newPosition.x + (this.height / 2);
+            this.position.y = newPosition.y - (this.width / 2);
+        }
     }
 }   
+
+function rotateQueue(event){
+    console.log("???");
+    if(this.rotation == 0) this.rotation = 3.14 / 2;
+    else this.rotation = 0;
+}
 
 function snapToGrid(position, userGrid, width){
 	console.log(width);
@@ -148,3 +162,5 @@ function snapToGrid(position, userGrid, width){
     
     return position;
 }
+
+
