@@ -63,24 +63,28 @@ var ships = [PIXI.Sprite.from(file_carrier),
             PIXI.Sprite.from(file_submarine)];
 
 var beginx = userGrid.x - (userGrid.width / 2);
-var startx = userGrid.x - (userGrid.width / 2);
-var starth = HEIGHT - 400;
+var startx = beginx;
+var starth = HEIGHT - 350;
+val = 2;
+j = 0
+
+unit_size = userGrid.width / 10;
 
 for( var i = 0; i < 7; i++){
-    if(i > 0){
-        startx += ships[i - 1].width + 10;
-        ships[i].x = startx;   
-    }
-    else ships[i].x = startx;
-    
-    if(i % 2 == 0) starth += 100;
-
-    if(i == 2) startx = beginx;
-
-    ships[i].h = starth;
-    ships[i].width /= 2;
-    ships[i].height /= 2;
+    if(j % val == 0 && j != 0){ starth = starth + (unit_size * 1.5); startx = beginx; val+=1; j = 0}
+    ships[i].height = unit_size;
+    ships[i].width = (ships[i].width / 100) * unit_size;
+    ships[i].x = startx;
+    startx += ships[i].width + unit_size; 
+    j++;
+    ships[i].y = starth;
+    ships[i].interactive = true;
+    ships[i].on('mousedown', dragShipStart)
+            .on('mouseup', dragShipEnd)
+            .on('mousemove', dragShip);
 }
+
+
 
 stage.addChild(wallpaper);
 stage.addChild(userGrid);
@@ -90,3 +94,20 @@ ships.forEach(function(ship){
     stage.addChild(ship);
 })
 
+function dragShipStart(event){
+    this.dragging = true;
+    this.data = event.data;
+}
+
+function dragShipEnd(event){
+    this.dragging = false;
+    this.data = null;
+}
+
+function dragShip(event){
+    if(this.dragging){
+        var newPosition = this.data.getLocalPosition(this.parent);
+        this.position.x = newPosition.x;
+        this.position.y = newPosition.y;
+    }
+}   
