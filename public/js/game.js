@@ -100,51 +100,37 @@ function dragShipStart(event){
 }
 
 function dragShipEnd(event){
-    var position = this.data.getLocalPosition(this.parent);
-    startx = sprites.userGrid.x - (sprites.userGrid.width / 2);
-    starty = sprites.userGrid.y - (sprites.userGrid.height / 2);
-    endx = startx + sprites.userGrid.width;
-    endy = starty + sprites.userGrid.height;
-    if(position.x > startx && position.x < endx &&
-    position.y > starty && position.y < endy){
-        // do snapping
-        position.x -= (this.width / 2)
-        this.position = snapToGrid(position, sprites.userGrid, this.width);
-    }
-    else{
-        this.position.x = this.startPos.x;
-        this.position.y = this.startPos.y;
-    }
+		if (this.data != null){
+			var position = this.data.getLocalPosition(this.parent);
+			startx = sprites.userGrid.x - (sprites.userGrid.width / 2);
+			starty = sprites.userGrid.y - (sprites.userGrid.height / 2);
+			endx = startx + sprites.userGrid.width;
+			endy = starty + sprites.userGrid.height;
+			if(position.x > startx && position.x < endx &&
+			position.y > starty && position.y < endy){
+					// do snapping
+					this.position.y += (this.height / 2);
+					this.position = snapToGrid(this.position, sprites.userGrid, this.width);
+			}
+			else{
+					this.position.x = this.startPos.x;
+					this.position.y = this.startPos.y;
+			}
 
-    this.dragging = false;
-    this.data = null;
-
+			this.dragging = false;
+			this.data = null;
+		}else{
+		console.log("got the bug. FIXME");
+	}
 }
 
 function dragShip(event){
     if(this.dragging){
-        console.log(this.data.getLocalPosition(this.parent));
+       // console.log(this.data.getLocalPosition(this.parent));
         var newPosition = this.data.getLocalPosition(this.parent);
         this.position.x = newPosition.x - (this.width / 2);
         this.position.y = newPosition.y - (this.height / 2);
     }
 }   
 
-function snapToGrid(position, userGrid, width){
-	console.log(width);
-    var unitSize = userGrid.width / 10;
-    var startX = userGrid.x - (userGrid.width / 2);
-    var startY = userGrid.y - (userGrid.height / 2);
-    var endX = startX + userGrid.width;
-    var realX = startX + unitSize*(Math.floor((position.x - startX)/unitSize));
-    var realY = startY + unitSize*(Math.floor((position.y - startY)/unitSize));
-    var endPoint = realX + width;
-    if (endPoint > endX){
-        realX = realX - (endPoint - endX);
-    }
-    
-    position.x = realX;
-    position.y = realY;
-    
-    return position;
-}
+
