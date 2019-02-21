@@ -3,15 +3,15 @@
  */
 function snapToGridHorizontal(position, userGrid, width){
     var unitSize = userGrid.width / 10;
-    var startX = userGrid.x - (userGrid.width / 2);
-    var startY = userGrid.y - (userGrid.height / 2);
-    var endX = startX + userGrid.width;
-    var realX = startX + unitSize*(Math.floor((position.x - startX)/unitSize));  //left corner position
-    var realY = startY + unitSize*(Math.floor((position.y - startY)/unitSize));
+    var gridStartX = userGrid.x - (userGrid.width / 2);
+    var gridStartY = userGrid.y - (userGrid.height / 2);
+    var endX = gridStartX + userGrid.width;
+    var realX = gridStartX + unitSize*(Math.floor((position.x - gridStartX)/unitSize));  //left corner position
+    var realY = gridStartY + unitSize*(Math.floor((position.y - gridStartY)/unitSize));
     
 		var endPointR = realX + width;    
 		if (endPointR > endX) realX = realX - (endPointR - endX);
-    else if (realX < startX) realX = realX + (startX - realX);
+    else if (realX < gridStartX) realX = realX + (gridStartX - realX);
 
     position.x = realX;
     position.y = realY;
@@ -26,14 +26,14 @@ function snapToGridHorizontal(position, userGrid, width){
 function snapToGridVertical(position, userGrid, width){
 
     var unitSize = userGrid.height / 10;
-    var startX = userGrid.x - (userGrid.width / 2);
-    var startY = userGrid.y - (userGrid.height / 2);
-    var endY = startY + userGrid.height;
-		var realX = startX + unitSize*(Math.floor((position.x - startX)/unitSize));  //left corner position
-    var realY = startY + unitSize*(Math.floor((position.y - startY)/unitSize));
+    var gridStartX = userGrid.x - (userGrid.width / 2);
+    var gridStartY = userGrid.y - (userGrid.height / 2);
+    var endY = gridStartY + userGrid.height;
+		var realX = gridStartX + unitSize*(Math.floor((position.x - gridStartX)/unitSize));  //left corner position
+    var realY = gridStartY + unitSize*(Math.floor((position.y - gridStartY)/unitSize));
     		
 		var endPointB = realY + width;
-		if (realY < startY) realY = realY + (startY - realY);
+		if (realY < gridStartY) realY = realY + (gridStartY - realY);
 		else if (endPointB > endY) realY = realY - (endPointB - endY);
     
     position.x = realX;
@@ -44,10 +44,25 @@ function snapToGridVertical(position, userGrid, width){
 }
 
 /*
- * Fixes ship's location after it was rotated
+ * Fixes ship's location after it was rotated from horizontal to vertical position
  */
-function adjustLocation(ship, grid){
-	console.log(ship.gridPoint);
+function adjustLocationH2V(ship, userGrid){
+	var gridStartX = userGrid.x - (userGrid.width / 2);
+  var gridStartY = userGrid.y - (userGrid.height / 2);
+	
+	ship.x += ship.height;
+
+}
+
+/*
+ * Fixes ship's location after it was rotated from horizontal to vertical position
+ */
+function adjustLocationV2H(ship, userGrid){
+	var gridStartX = userGrid.x - (userGrid.width / 2);
+  var gridStartY = userGrid.y - (userGrid.height / 2);
+	
+	ship.x -= ship.height;
+
 }
 
 /*
@@ -65,6 +80,7 @@ function pixel2grid(grid, posX, posY){
 	
 	return cell;
 }
+
 
 function grid2pixel(grid, posX, posY){
 	var unit_size = grid.width / 10;

@@ -148,9 +148,14 @@ function dragShip(event){
 
 function rotateQueue(event){
     console.log("???");
-    if(this.rotation == 0) this.rotation = 3.14 / 2;
-    else this.rotation = 0;
-		adjustLocation(this, sprites.userGrid);
+    if(this.rotation == 0){
+			this.rotation = 3.14 / 2;
+			adjustLocationH2V(this, sprites.userGrid);
+		}
+    else{
+			this.rotation = 0;
+			adjustLocationV2H(this, sprites.userGrid);
+		}
 }
 
 
