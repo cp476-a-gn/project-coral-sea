@@ -1,23 +1,60 @@
-function snapToGrid(position, userGrid, width){
+/*
+ * Places horizontal ship in a valid position on the grid
+ */
+function snapToGridHorizontal(position, userGrid, width){
     var unitSize = userGrid.width / 10;
     var startX = userGrid.x - (userGrid.width / 2);
     var startY = userGrid.y - (userGrid.height / 2);
     var endX = startX + userGrid.width;
-    var realX = startX + unitSize*(Math.floor((position.x - startX)/unitSize));
+    var realX = startX + unitSize*(Math.floor((position.x - startX)/unitSize));  //left corner position
     var realY = startY + unitSize*(Math.floor((position.y - startY)/unitSize));
     
 		var endPointR = realX + width;    
-		if (endPointR > endX){
-      realX = realX - (endPointR - endX);
-    }else if (realX < startX){
-			//console.log("realX: " + realX + "  endPointL:  " + endPointL + " startX: " + startX +" endX: " + endX);
-			realX = realX + (startX - realX);
-		}
+		if (endPointR > endX) realX = realX - (endPointR - endX);
+    else if (realX < startX) realX = realX + (startX - realX);
+
+    position.x = realX;
+    position.y = realY;
+    checkCollision();
+		
+    return position;
+}
+
+/*
+ * Places vertical ship in a valid position on the grid 
+ */
+function snapToGridVertical(position, userGrid, width){
+
+    var unitSize = userGrid.height / 10;
+    var startX = userGrid.x - (userGrid.width / 2);
+    var startY = userGrid.y - (userGrid.height / 2);
+    var endY = startY + userGrid.height;
+		var realX = startX + unitSize*(Math.floor((position.x - startX)/unitSize));  //left corner position
+    var realY = startY + unitSize*(Math.floor((position.y - startY)/unitSize));
+    		
+		var endPointB = realY + width;
+		if (realY < startY) realY = realY + (startY - realY);
+		else if (endPointB > endY) realY = realY - (endPointB - endY);
     
     position.x = realX;
     position.y = realY;
-    
+    checkCollision();
+		
     return position;
+}
+
+/*
+ * Fixes ship's location after it was rotated
+ */
+function adjustLocation(ship, grid){
+	console.log(ship.gridPoint);
+}
+
+/*
+ * TODO: check that location is already occupied
+ */
+function checkCollision(){
+	
 }
 
 function pixel2grid(grid, posX, posY){
