@@ -47,10 +47,13 @@ function snapToGridVertical(position, userGrid, width){
  * Fixes ship's location after it was rotated from horizontal to vertical position
  */
 function adjustLocationH2V(ship, userGrid){
-	var gridStartX = userGrid.x - (userGrid.width / 2);
-  var gridStartY = userGrid.y - (userGrid.height / 2);
-	
-	ship.x += ship.height;
+		var gridStartX = userGrid.x - (userGrid.width / 2);
+		var gridStartY = userGrid.y - (userGrid.height / 2);
+		
+		ship.x += ship.height;
+		var endPointB = ship.y + ship.width;
+		var gridEndY = gridStartY + userGrid.height;
+		if (endPointB > gridEndY) ship.y -= (endPointB - gridEndY);
 
 }
 
@@ -58,10 +61,13 @@ function adjustLocationH2V(ship, userGrid){
  * Fixes ship's location after it was rotated from horizontal to vertical position
  */
 function adjustLocationV2H(ship, userGrid){
-	var gridStartX = userGrid.x - (userGrid.width / 2);
-  var gridStartY = userGrid.y - (userGrid.height / 2);
-	
-	ship.x -= ship.height;
+		var gridStartX = userGrid.x - (userGrid.width / 2);
+		var gridStartY = userGrid.y - (userGrid.height / 2);
+		
+		ship.x -= ship.height;
+		var endPointR = ship.x + ship.width;
+		var gridEndX = gridStartX + userGrid.width;
+		if (endPointR > gridEndX) ship.x -= (endPointR - gridEndX);
 
 }
 
@@ -73,48 +79,48 @@ function checkCollision(){
 }
 
 function pixel2grid(grid, posX, posY){
-	var unit_size = grid.width / 10;
-	var locX = Math.floor(posX/unit_size);
-	var locY = Math.floor(posY/unit_size);
-	var cell = {x: posX, y:posY}
-	
-	return cell;
+		var unit_size = grid.width / 10;
+		var locX = Math.floor(posX/unit_size);
+		var locY = Math.floor(posY/unit_size);
+		var cell = {x: posX, y:posY}
+		
+		return cell;
 }
 
 
 function grid2pixel(grid, posX, posY){
-	var unit_size = grid.width / 10;
-	var x = posX*unit_size;
-	var y = posY*unit_size;
-	var converted_location = [x, y];
-	
-	return converted_location;
+		var unit_size = grid.width / 10;
+		var x = posX*unit_size;
+		var y = posY*unit_size;
+		var converted_location = [x, y];
+		
+		return converted_location;
 	
 }
 
 function createShipJSON(cell, type, direction){
-	var ship_obj = {"x": cell.x, "y": cell.y, "type": type, "direction": direction};
-	if (type < 1 || type >5){
-			console.log("invalid type was passed");
-			type = 1;
-	}
-	if (direction < 0 || direction >1){
-		console.log("invalid direction was passed");
-		direction = 0;
-	}
-	var ship =JSON.stringify(ship_obj);
-	
-	return ship;
+		var ship_obj = {"x": cell.x, "y": cell.y, "type": type, "direction": direction};
+		if (type < 1 || type >5){
+				console.log("invalid type was passed");
+				type = 1;
+		}
+		if (direction < 0 || direction >1){
+			console.log("invalid direction was passed");
+			direction = 0;
+		}
+		var ship =JSON.stringify(ship_obj);
+		
+		return ship;
 }
 
 function createShotJSON(cell){
-	var shot = JSON.stringify(cell);
-	
-	return shot;
+		var shot = JSON.stringify(cell);
+		
+		return shot;
 }
 
 function readJSON(hit_loc){
-	var hit = JSON.parse(hit_loc);
-	
-	return hit;
+		var hit = JSON.parse(hit_loc);
+		
+		return hit;
 }

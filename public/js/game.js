@@ -120,6 +120,7 @@ function dragShipEnd(event){
 					}
 			}
 			else{
+					this.rotation = 0;
 					this.position.x = this.startPos.x;
 					this.position.y = this.startPos.y;
 			}
