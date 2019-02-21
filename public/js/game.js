@@ -147,23 +147,4 @@ function rotateQueue(event){
     else this.rotation = 0;
 }
 
-function snapToGrid(position, userGrid, width){
-	console.log(width);
-    var unitSize = userGrid.width / 10;
-    var startX = userGrid.x - (userGrid.width / 2);
-    var startY = userGrid.y - (userGrid.height / 2);
-    var endX = startX + userGrid.width;
-    var realX = startX + unitSize*(Math.floor((position.x - startX)/unitSize));
-    var realY = startY + unitSize*(Math.floor((position.y - startY)/unitSize));
-    var endPoint = realX + width;
-    if (endPoint > endX){
-        realX = realX - (endPoint - endX);
-    }
-    
-    position.x = realX;
-    position.y = realY;
-    
-    return position;
-}
-
 
