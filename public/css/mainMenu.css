@@ -72,7 +72,7 @@ html{
     2px -2px 0 var(--white),
     -2px 2px 0 var(--white),
      2px 2px 0 var(--white);
-	color:var(--coral);
+	color:var(--navy);
 }	
 #btn-play{
 	width: 400px;
@@ -98,12 +98,12 @@ html{
 	transform:translateX(0);
 	animation-name: small;
 	animation-iteration-count: infinite;
-	animation-timing-function: ease-in-out;
+	animation-timing-function: linear;
 }
 
 #wave1{
 	filter:brightness(50%);
-	margin-top:25%;
+	margin-top:45vh;
 	background-size: calc(500px / 4), calc(800px / 4);
 	background-repeat: repeat-x;
 	animation-duration: 15s;
@@ -112,12 +112,12 @@ html{
 #wave2{
 	filter:brightness(75%);
 	background-size: calc(500px / 2), calc(800px / 2);
-	margin-top:-52%;
+	margin-top:-100vh;
 	animation-duration: 10s;
 }
 
 #wave3{
-	margin-top:-52%;
+	margin-top:-100vh;
 	animation-duration: 5s;
 }
 

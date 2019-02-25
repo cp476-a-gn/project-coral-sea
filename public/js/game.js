@@ -26,6 +26,7 @@ loader.onComplete.add(() => {
     document.body.appendChild(app.view);
     app.view.oncontextmenu =  function(e){return false;} 
     var stage = app.stage;
+    app.renderer.backgroundColor = 0x232323;
 
     //prep screen
 
@@ -92,7 +93,40 @@ loader.onComplete.add(() => {
     sprites.screenblocker.y = 0;
     sprites.screenblocker.width = WIDTH/2;
     sprites.screenblocker.height = HEIGHT;
-    stage.addChild(sprites.screenblocker);
+    //stage.addChild(sprites.screenblocker);
+
+    for(var i = 0; i < 3; i ++){
+        
+        var unit = sprites.oponGrid.width / 10;
+        sprites.hit[i].width = unit;
+        sprites.hit[i].height = unit;
+        sprites.miss[i].width = unit;
+        sprites.miss[i].height = unit;
+
+        stage.addChild(sprites.miss[i]);
+        stage.addChild(sprites.hit[i]);
+    }
+        var unit = sprites.oponGrid.width / 10;
+    var startx = sprites.oponGrid.x - (sprites.oponGrid.width / 2);
+    var starty = sprites.oponGrid.y - (sprites.oponGrid.height / 2);
+    sprites.hit[0].x = startx + (unit * 2);
+    sprites.hit[0].y = starty + (unit * 2);
+
+    sprites.hit[1].x = startx + (unit * 3);
+    sprites.hit[1].y = starty + (unit * 2);
+
+    sprites.hit[2].x = startx + (unit * 4);
+    sprites.hit[2].y = starty + (unit * 2);
+
+    sprites.miss[0].x = startx + (unit * 3);
+    sprites.miss[0].y = starty + (unit * 3);
+
+    sprites.miss[1].x = startx + (unit * 3);
+    sprites.miss[1].y = starty + (unit * 1);
+
+    sprites.miss[2].x = startx + (unit * 5);
+    sprites.miss[2].y = starty + (unit * 7);
+    
 
 });
 

@@ -1,13 +1,15 @@
 function loadFiles(sprites, loader){
 
-    loader.add('wallpaper', "resources/background.png")
+    loader.add('wallpaper', "resources/background3.png")
         .add('grid', "resources/grid.png")
         .add('carrier', "resources/ships/carrier.png")
         .add('battleship', "resources/ships/battleship.png")
         .add('cruiser', "resources/ships/cruiser.png")
         .add('destroyer', "resources/ships/destroyer.png")
         .add('submarine', "resources/ships/submarine.png")
-        .add('blocker','resources/blocker.png');
+        .add('blocker','resources/blocker.png')
+        .add('hit','resources/hit.png')
+        .add('miss','resources/miss.png');
 
     //files
 
@@ -23,6 +25,8 @@ function loadFiles(sprites, loader){
             PIXI.Sprite.from(resources.submarine.texture),
             PIXI.Sprite.from(resources.submarine.texture)];
         sprites.screenblocker = PIXI.Sprite.from(resources.blocker.texture);
+        sprites.hit = [PIXI.Sprite.from(resources.hit.texture),PIXI.Sprite.from(resources.hit.texture),PIXI.Sprite.from(resources.hit.texture)];
+        sprites.miss = [PIXI.Sprite.from(resources.miss.texture),PIXI.Sprite.from(resources.miss.texture),PIXI.Sprite.from(resources.miss.texture)];
     });
 
 }
