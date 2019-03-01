@@ -147,8 +147,9 @@ function dragShipEnd(event){
 					// do snapping
 					this.position.y += (this.height / 2);
 					
-					if (this.rotation == 0) this.position = snapToGridHorizontal(this.position, sprites.userGrid, this.width);
-					else{
+					if (this.rotation == 0){
+						this.position = snapToGridHorizontal(this.position, sprites.userGrid, this.width);
+					}	else{
 						this.position.x += (this.height / 2);
 						this.position = snapToGridVertical(this.position, sprites.userGrid, this.width);
 					}
