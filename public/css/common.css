@@ -39,6 +39,7 @@ button{
     background-color: var(--coral);
     color:var(--white);
     padding:5px 20px;
+    font-size:30px;
     cursor: pointer;
     box-shadow:0px 0px 0px var(--grey);
     transform:translateY(0px);

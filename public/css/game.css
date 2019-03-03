@@ -1,0 +1,9 @@
+
+
+.ready{
+    position:absolute;
+    bottom:20%;
+    left:20%;
+    opacity:0;
+    pointer-events: none;
+}
