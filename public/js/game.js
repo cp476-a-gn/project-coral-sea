@@ -60,7 +60,8 @@ loader.onComplete.add(() => {
 
     for( var i = 0; i < 7; i++){
         if(j % val == 0 && j != 0){ starth = starth + (unit_size * 1.5); startx = beginx; val+=1; j = 0}
-        sprites.ships[i].height = unit_size;
+        sprites.ships[i].id = i;
+				sprites.ships[i].height = unit_size;
         sprites.ships[i].width = (sprites.ships[i].width / 100) * unit_size;
         sprites.ships[i].x = startx;
         startx += sprites.ships[i].width + unit_size; 
@@ -75,7 +76,7 @@ loader.onComplete.add(() => {
 
         sprites.ships[i].gridPoint = new PIXI.Point();
         sprites.ships[i].gridRotation = 0; // 0 horizontal 1 vertilce
-        sprites.ships[i].rotating = false;
+        sprites.ships[i].rotating = false;  /// DONT REMEBER WHAT THIS IS FOR ????????
     }
 
 
@@ -149,9 +150,13 @@ function dragShipEnd(event){
 					
 					if (this.rotation == 0){
 						this.position = snapToGridHorizontal(this.position, sprites.userGrid, this.width);
+						this.gridRotation = 0;
+						occupied = checkOccupied(this, sprites.ships);
 					}	else{
 						this.position.x += (this.height / 2);
 						this.position = snapToGridVertical(this.position, sprites.userGrid, this.width);
+						this.gridRotation = 1;
+						occupied = checkOccupied(this, sprites.ships);
 					}
 			}
 			else{
@@ -186,10 +191,12 @@ function rotateQueue(event){
     console.log("???");
     if(this.rotation == 0){
 			this.rotation = 3.14 / 2;
+			this.gridRotation = 1;
 			adjustLocationH2V(this, sprites.userGrid);
 		}
     else{
 			this.rotation = 0;
+			this.gridRotation = 1;
 			adjustLocationV2H(this, sprites.userGrid);
 		}
 }
