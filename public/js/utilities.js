@@ -15,7 +15,7 @@ function snapToGridHorizontal(position, userGrid, width){
 
     position.x = realX;
     position.y = realY;
-    checkCollision();
+    //checkCollision();
 		
     return position;
 }
@@ -38,7 +38,7 @@ function snapToGridVertical(position, userGrid, width){
     
     position.x = realX;
     position.y = realY;
-    checkCollision();
+   // checkCollision();
 		
     return position;
 }
@@ -74,8 +74,88 @@ function adjustLocationV2H(ship, userGrid){
 /*
  * TODO: check that location is already occupied
  */
-function checkCollision(){
+function checkOccupied(curShip, allShips){
+	console.log("GONNA CHECK");
+
+	var shipsNum = allShips.length;
 	
+	if (curShip.gridRotation == 0){ // if the ship we are oving is horizontal
+		var unitSize = curShip.height;
+		var shipX1 = curShip.x;
+		var shipX2 = curShip.x + curShip.width;
+		var shipY1 = curShip.y;
+		var shipY2 = curShip.y + curShip.height; 
+		var occupied = false;
+
+		for (var i = 0; i <shipsNum; i++){ 
+				//if (allShips[i].y < border){
+						//console.log("y: " + allShips[i].y )
+				if (allShips[i].gridRotation == 0) { //if ship with which we are comparing is horizontal
+						//console.log("HORIZONTAL SHIP");
+						var ship2X1 = allShips[i].x;
+						var ship2X2 = allShips[i].x + allShips[i].width;
+						var ship2Y1 = allShips[i].y;
+						var ship2Y2 = allShips[i].y + allShips[i].height; 
+						var ship2ID = allShips[i].id;
+						//if ((shipY1 >= ship2Y1 && shipY1 <= ship2Y2) && (((shipX1 >= ship2X1) && (shipX1 <= ship2X2)) || ((shipX2 >= ship2X1) && (shipX2 <= ship2X2)))){ //()
+					if ((curShip.id != ship2ID ) && (shipY1 == ship2Y1) && (((shipX1 >= ship2X1) && (shipX1 <= ship2X2)) || ((shipX2 >= ship2X1) && (shipX2 <= ship2X2)))){	
+					//console.log("shipY1: " + shipY1 + " ship2Y1: " + ship2Y1 + " ship2Y2: " + ship2Y2);	
+						//console.log("POSITION TAKEN");
+							occupied = true;
+						}
+				}else{   //if ship we are comparing with is vertical
+					console.log("VERTICAL SHIP");
+					var ship2X1 = allShips[i].x;
+					var ship2X2 = allShips[i].x + allShips[i].height;
+					var ship2Y1 = allShips[i].y;
+					var ship2Y2 = allShips[i].y + allShips[i].width; 
+					var ship2ID = allShips[i].id;
+						//if ((shipY1 >= ship2Y1 && shipY1 <= ship2Y2) && (((shipX1 >= ship2X1) && (shipX1 <= ship2X2)) || ((shipX2 >= ship2X1) && (shipX2 <= ship2X2)))){ //()
+					if ((curShip.id != ship2ID ) && (((shipY1 >= ship2Y1) && (shipY1 < ship2Y2)) || ((shipY2 > ship2Y1) && (shipY2 <= ship2Y2)))  
+						&& (((shipX1 >= ship2X1) && (shipX1 <= ship2X2)) || ((shipX2 >= ship2X1) && (shipX2 <= ship2X2)))){	
+					console.log("shipY1: " + shipY1 + " ship2Y1: " + ship2Y1 + " ship2Y2: " + ship2Y2);	
+						console.log("POSITION TAKEN");
+							occupied = true;
+						}
+				}
+		}
+	}else{
+		console.log("I am vertical");
+		for (var i = 0; i <shipsNum; i++){ 
+					//if (allShips[i].y < border){
+							//console.log("y: " + allShips[i].y )
+					if (allShips[i].gridRotation == 0) { //if ship with which we are comparing is horizontal
+							console.log("HORIZONTAL SHIP");
+							var ship2X1 = allShips[i].x;
+							var ship2X2 = allShips[i].x + allShips[i].height;
+							var ship2Y1 = allShips[i].y;
+							var ship2Y2 = allShips[i].y + allShips[i].width; 
+							var ship2ID = allShips[i].id;
+							//if ((shipY1 >= ship2Y1 && shipY1 <= ship2Y2) && (((shipX1 >= ship2X1) && (shipX1 <= ship2X2)) || ((shipX2 >= ship2X1) && (shipX2 <= ship2X2)))){ //()
+						
+						if ((curShip.id != ship2ID ) && (((ship2Y1 >= shipY1) && (shipY1 < shipY2)) || ((ship2Y2 > shipY1) && (ship2Y2 <= shipY2)))  
+							&& (((ship2X1 >= shipX1) && (ship2X1 <= shipX2)) || ((ship2X2 >= shipX1) && (ship2X2 <= shipX2)))){	
+						console.log("shipY1: " + shipY1 + " ship2Y1: " + ship2Y1 + " ship2Y2: " + ship2Y2);	
+							console.log("POSITION TAKEN");
+								occupied = true;
+							}
+					}else{   //if ship we are comparing with is vertical
+						console.log("VERTICAL SHIP");
+						var ship2X1 = allShips[i].x;
+						var ship2X2 = allShips[i].x + allShips[i].height;
+						var ship2Y1 = allShips[i].y;
+						var ship2Y2 = allShips[i].y + allShips[i].width; 
+						var ship2ID = allShips[i].id;
+							//if ((shipY1 >= ship2Y1 && shipY1 <= ship2Y2) && (((shipX1 >= ship2X1) && (shipX1 <= ship2X2)) || ((shipX2 >= ship2X1) && (shipX2 <= ship2X2)))){ //()
+						if ((curShip.id != ship2ID ) && (shipX1 == ship2X1) && (((shipY1 <= ship2Y1) && (shipY2 > ship2Y1)) || ((shipY1 > ship2Y1) && (shipY2 <= ship2Y2)))){	
+						console.log("shipY1: " + shipY1 + " ship2Y1: " + ship2Y1 + " ship2Y2: " + ship2Y2);	
+							console.log("POSITION TAKEN");
+								occupied = true;
+							}
+					}
+			}
+	}
+	return occupied;
 }
 
 function pixel2grid(grid, posX, posY){
