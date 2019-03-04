@@ -1,4 +1,28 @@
-
+.question{
+		position:absolute;
+    top: 5%;
+		right: 5%;
+}
+.bottombar .closebtn{
+		position: absolute;
+		top: 0;
+		right: 25px;
+		font-size: 36px;
+		margin-left: 50px;
+		color: white;
+}
+.bottombar{
+		height:10%;
+		width: 100%;
+		position:fixed;
+		z-index: 1;
+		bottom: 0;
+		background-color: var(--black);
+		color:var(--white);
+		overflow-x: hidden;
+		padding-top: 60px;
+		transition: 0.5s;
+}
 
 .ready{
     position:absolute;

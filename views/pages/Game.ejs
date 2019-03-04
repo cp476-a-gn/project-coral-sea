@@ -7,9 +7,14 @@
     <script src="js/pixi.js"></script>
     </head>
     <body style="display:flex; justify-content:center; align-items: center;">
+				<button class="question" onclick="openInstructions()">?</button>
         <script src="js/resources.js"></script>
 				<script src="js/utilities.js"></script>
         <script src="js/game.js"></script>
         <button class="ready">Ready!</button>
+				<div id="bottombar" class="bottombar"> 
+				<a href="javascript:void(0)" class="closebtn" onclick="closeInstructions()">&times;</a> 
+				<p> Instructions here </p>
+				</div>
     </body>
 </html>
