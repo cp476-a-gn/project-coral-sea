@@ -61,8 +61,9 @@ loader.onComplete.add(() => {
     for( var i = 0; i < 7; i++){
         if(j % val == 0 && j != 0){ starth = starth + (unit_size * 1.5); startx = beginx; val+=1; j = 0}
         sprites.ships[i].id = i;
-				sprites.ships[i].height = unit_size;
-        sprites.ships[i].width = (sprites.ships[i].width / 100) * unit_size;
+        sprites.ships[i].width = (sprites.ships[i].width / sprites.ships[i].height) * unit_size;
+		sprites.ships[i].height = unit_size;
+        
         sprites.ships[i].x = startx;
         startx += sprites.ships[i].width + unit_size; 
         j++;
@@ -96,38 +97,6 @@ loader.onComplete.add(() => {
     sprites.screenblocker.height = HEIGHT;
     //stage.addChild(sprites.screenblocker);
 
-    for(var i = 0; i < 3; i ++){
-        
-        var unit = sprites.oponGrid.width / 10;
-        sprites.hit[i].width = unit;
-        sprites.hit[i].height = unit;
-        sprites.miss[i].width = unit;
-        sprites.miss[i].height = unit;
-
-        stage.addChild(sprites.miss[i]);
-        stage.addChild(sprites.hit[i]);
-    }
-        var unit = sprites.oponGrid.width / 10;
-    var startx = sprites.oponGrid.x - (sprites.oponGrid.width / 2);
-    var starty = sprites.oponGrid.y - (sprites.oponGrid.height / 2);
-    sprites.hit[0].x = startx + (unit * 2);
-    sprites.hit[0].y = starty + (unit * 2);
-
-    sprites.hit[1].x = startx + (unit * 3);
-    sprites.hit[1].y = starty + (unit * 2);
-
-    sprites.hit[2].x = startx + (unit * 4);
-    sprites.hit[2].y = starty + (unit * 2);
-
-    sprites.miss[0].x = startx + (unit * 3);
-    sprites.miss[0].y = starty + (unit * 3);
-
-    sprites.miss[1].x = startx + (unit * 3);
-    sprites.miss[1].y = starty + (unit * 1);
-
-    sprites.miss[2].x = startx + (unit * 5);
-    sprites.miss[2].y = starty + (unit * 7);
-    
 
 });
 
@@ -169,7 +138,20 @@ function dragShipEnd(event){
 			this.data = null;
 		}else{
 		console.log("got the bug. FIXME");
-	}
+    }
+
+    var stillAtStart = false;
+    for(var i = 0; i < sprites.ships.length; i++ ){
+        if(sprites.ships[i].startPos.x == sprites.ships[i].x && sprites.ships[i].startPos.y == sprites.ships[i].y){
+            stillAtStart = true;
+        }
+    }
+    if(!stillAtStart){
+        showButton();
+    }
+    else{
+        hideButton();
+    }
 }
 
 function dragShip(event){
@@ -200,5 +182,16 @@ function rotateQueue(event){
 			adjustLocationV2H(this, sprites.userGrid);
 		}
 }
+
+
+function showButton(){
+    document.getElementsByClassName("ready")[0].classList.add("readyShow");
+}
+
+function hideButton(){
+    ready = document.getElementsByClassName("ready")[0];
+    if(ready.classList.contains("readyShow")) ready.classList.remove("readyShow");
+}
+
 
 
