@@ -1,6 +1,21 @@
 /*
  * Places horizontal ship in a valid position on the grid
  */
+function openInstructions(){
+	document.getElementById("bottombar").classList.add("visible")
+	if(document.getElementById("bottombar").classList.contains("hidden")){
+		document.getElementById("bottombar").classList.remove("hidden")
+	}
+}	
+
+function closeInstructions(){
+	document.getElementById("bottombar").classList.add("hidden")
+
+	if(document.getElementById("bottombar").classList.contains("visible")){
+		document.getElementById("bottombar").classList.remove("visible")
+	}
+}
+ 
 function snapToGridHorizontal(position, userGrid, width){
     var unitSize = userGrid.width / 10;
     var gridStartX = userGrid.x - (userGrid.width / 2);

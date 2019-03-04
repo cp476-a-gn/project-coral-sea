@@ -11,9 +11,17 @@
     </script>
     </head>
     <body style="display:flex; justify-content:center; align-items: center;">
+				<button class="question" onclick="openInstructions()">?</button>
         <script src="js/resources.js"></script>
 				<script src="js/utilities.js"></script>
         <script src="js/game.js"></script>
         <button class="ready">Ready!</button>
+
+				<div id="bottombar" class="bottombar hidden"> 
+				  <a href="javascript:void(0)" class="closebtn" onclick="closeInstructions()">&times;</a> 
+          <p> Click and drag ships to board to place them. <br>
+          Right click boats to rotate them. <br>
+          Click Ready to lock in selection. </p>
+				</div>
     </body>
 </html>

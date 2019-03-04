@@ -1,4 +1,42 @@
+.question{
+		position:absolute;
+    top: 5%;
+		right: 5%;
+}
+.bottombar .closebtn{
+		position: absolute;
+		top: 0;
+		right: 25px;
+		font-size: 36px;
+		margin-left: 50px;
+		color: white;
+}
+.bottombar{
+	height:50%;
+	width: 50%;
+	position:fixed;
+	z-index: 1;
+	bottom: 25%;
+	left:25%;
+	background-color: var(--black);
+	color:var(--white);
+	overflow-x: hidden;
+	padding:2% 0%;
+	display:flex;
+	justify-content: center;
+	align-items: center;
+}
 
+.visible {
+	visibility: visible;
+	opacity: 1;
+	transition: opacity .2s linear;
+}
+.hidden {
+	visibility: hidden;
+	opacity: 0;
+	transition: visibility 0s .2s, opacity .2s linear;
+}
 
 .ready{
     position:absolute;
