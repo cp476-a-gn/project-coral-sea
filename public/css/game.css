@@ -12,16 +12,30 @@
 		color: white;
 }
 .bottombar{
-		height:10%;
-		width: 100%;
-		position:fixed;
-		z-index: 1;
-		bottom: 0;
-		background-color: var(--black);
-		color:var(--white);
-		overflow-x: hidden;
-		padding-top: 60px;
-		transition: 0.5s;
+	height:50%;
+	width: 50%;
+	position:fixed;
+	z-index: 1;
+	bottom: 25%;
+	left:25%;
+	background-color: var(--black);
+	color:var(--white);
+	overflow-x: hidden;
+	padding:2% 0%;
+	display:flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.visible {
+	visibility: visible;
+	opacity: 1;
+	transition: opacity .2s linear;
+}
+.hidden {
+	visibility: hidden;
+	opacity: 0;
+	transition: visibility 0s .2s, opacity .2s linear;
 }
 
 .ready{

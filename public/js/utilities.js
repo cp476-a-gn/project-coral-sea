@@ -2,13 +2,18 @@
  * Places horizontal ship in a valid position on the grid
  */
 function openInstructions(){
-	document.getElementById("bottombar").style.height = "10vw";
-	document.getElementById("bottombar").style.display = "block";
+	document.getElementById("bottombar").classList.add("visible")
+	if(document.getElementById("bottombar").classList.contains("hidden")){
+		document.getElementById("bottombar").classList.remove("hidden")
+	}
 }	
 
 function closeInstructions(){
-		document.getElementById("bottombar").style.height = "0";
-		document.getElementById("bottombar").style.display = "none";
+	document.getElementById("bottombar").classList.add("hidden")
+
+	if(document.getElementById("bottombar").classList.contains("visible")){
+		document.getElementById("bottombar").classList.remove("visible")
+	}
 }
  
 function snapToGridHorizontal(position, userGrid, width){
