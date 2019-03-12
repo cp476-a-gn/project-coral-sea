@@ -154,6 +154,8 @@ function dragShipEnd(event){
 						occupied = checkOccupied(sprites.userGrid, this, sprites.ships);
 						if (occupied){
 							this.position = this.startPos;
+							this.rotation = 0;
+							this.gridRotation = 0;
 						}
 					}	else{
 						this.position.x += (this.height / 2);
@@ -162,6 +164,8 @@ function dragShipEnd(event){
 						occupied = checkOccupied(sprites.userGrid, this, sprites.ships);
 						if (occupied){
 							this.position = this.startPos;
+							this.rotation = 0;
+							this.gridRotation = 0;
 						}
 					}
 			}
@@ -203,6 +207,8 @@ function rotateQueue(event){
 			occupied = checkOccupied(sprites.userGrid, this, sprites.ships);
 			if (occupied){
 				this.position = this.startPos;
+				this.rotation = 0;
+				this.gridRotation = 0;
 			}
 			//console.log("super new x: ", this.x, " super new y: ", this.y);
 		}
@@ -213,6 +219,8 @@ function rotateQueue(event){
 			occupied = checkOccupied(sprites.userGrid, this, sprites.ships);
 			if (occupied){
 				this.position = this.startPos;
+				this.rotation = 0;
+				this.gridRotation = 0;
 			}
 		}
 }
