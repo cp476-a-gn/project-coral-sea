@@ -1,4 +1,4 @@
-// Declarations
+ // Declarations
 var express = require('express');
 var app = express();
 var http = require('http').Server(app);
@@ -6,21 +6,19 @@ var port = process.env.PORT || 8082;
 var morgan = require('morgan');
 var bodyParser = require('body-parser');
 var io = require('socket.io')(http);
-//DB stuff
-const { DatabaseAPI } = require('./db/database');
-const DB_PATH = './db/coralSea.db';
-var DB = new DatabaseAPI(DB_PATH);
+
 
 // Configure
 //app.use(morgan('dev'));
 app.set('view engine','ejs');
 app.use(bodyParser.urlencoded({extended: false}));
-
 app.use(express.static(__dirname + '/public'));
 app.use('/resources', express.static(__dirname + '/public/resources/game'));
+app.use(bodyParser.json());
 
 // Routes
 require('./routes/roots.js')(app);
+
 
 // Launch
 http.listen(port, '0.0.0.0', function(){

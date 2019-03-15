@@ -1,6 +1,10 @@
 const sqlite3 = require('sqlite3').verbose();
+const DB_PATH = './db/coralSea.db';
 
-function DatabaseAPI(DB_PATH){
+//SQL statements
+var selectTop10 = "SELECT uid, uname, score FROM players ORDER BY score LIMIT 10;";
+
+function DatabaseAPI(){
 	const DB = new sqlite3.Database(DB_PATH, function(err){
 		if (err){
 			console.log(err);
@@ -15,6 +19,19 @@ function DatabaseAPI(DB_PATH){
 			}
 		});
 	});
+	
+	return{
+		getTop10: function(_callback){
+			DB.all(selectTop10,[], function(error, rows){
+				if(error){
+					console.log(error);
+					return
+				}
+				_callback(rows);
+			});
+		}
+		//add comma to previous line and write more here if needed
+	}
 }
 
 module.exports = {DatabaseAPI}

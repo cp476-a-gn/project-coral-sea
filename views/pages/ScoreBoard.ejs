@@ -1,20 +1,22 @@
-
-
 <html>
     <head> 
         <link href="https://fonts.googleapis.com/css?family=Cinzel:700" rel="stylesheet"> 
         <link rel="stylesheet" type="text/css" href="css/common.css"/>
         <link rel="stylesheet" type="text/css" href="css/score.css"/>
+				
     </head>
     <body class="flex-body">
         <div class="page">
             <h1 class="title">Scoreboard</h1>
-            <div class="board">
+            <div class="board" id ="board">
             <div class="entry">
                 <div> User Name </div>
                 <div> Score </div>
             </div>
-            <% for(var i = 0; i < 10; i++) { %>
+            <% 
+						//DB.getTop10
+						for(var i = 0; i < 10; i++) { 
+						  	%>
                 <div class="entry">
                     <div> Name From Database </div>
                     <div> Score from database </div>
