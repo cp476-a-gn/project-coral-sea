@@ -62,7 +62,8 @@ loader.onComplete.add(() => {
         if(j % val == 0 && j != 0){ starth = starth + (unit_size * 1.5); startx = beginx; val+=1; j = 0}
         sprites.ships[i].id = i;
         sprites.ships[i].width = (sprites.ships[i].width / sprites.ships[i].height) * unit_size;
-		sprites.ships[i].height = unit_size;
+				sprites.ships[i].height = unit_size;
+
         
         sprites.ships[i].x = startx;
         startx += sprites.ships[i].width + unit_size; 
@@ -121,11 +122,21 @@ function dragShipEnd(event){
 						this.position = snapToGridHorizontal(this.position, sprites.userGrid, this.width);
 						this.gridRotation = 0;
 						occupied = checkOccupied(sprites.userGrid, this, sprites.ships);
+						if (occupied){
+							this.position = this.startPos;
+							this.rotation = 0;
+							this.gridRotation = 0;
+						}
 					}	else{
 						this.position.x += (this.height / 2);
 						this.position = snapToGridVertical(this.position, sprites.userGrid, this.width);
 						this.gridRotation = 1;
 						occupied = checkOccupied(sprites.userGrid, this, sprites.ships);
+						if (occupied){
+							this.position = this.startPos;
+							this.rotation = 0;
+							this.gridRotation = 0;
+						}
 					}
 			}
 			else{
@@ -176,12 +187,24 @@ function rotateQueue(event){
 			this.gridRotation = 1;
 			//console.log("new x: ", this.x, " new y: ", this.y);
 			adjustLocationH2V(this, sprites.userGrid);
+			occupied = checkOccupied(sprites.userGrid, this, sprites.ships);
+			if (occupied){
+				this.position = this.startPos;
+				this.rotation = 0;
+				this.gridRotation = 0;
+			}
 			//console.log("super new x: ", this.x, " super new y: ", this.y);
 		}
     else{
 			this.rotation = 0;
 			this.gridRotation = 0;
 			adjustLocationV2H(this, sprites.userGrid);
+			occupied = checkOccupied(sprites.userGrid, this, sprites.ships);
+			if (occupied){
+				this.position = this.startPos;
+				this.rotation = 0;
+				this.gridRotation = 0;
+			}
 		}
 }
 
