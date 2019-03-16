@@ -4,37 +4,40 @@
         <link rel="stylesheet" type="text/css" href="css/common.css"/>
         <link rel="stylesheet" type="text/css" href="css/score.css"/>
 				<script src="/socket.io/socket.io.js"></script>
-				<script>
-					var socket = io(); 
-				</script>
+				<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
     </head>
 		
 		<script>
 			
-			window.onload=function(){
+			$(function(){
+				var socket = io(); 
 				socket.emit('getBoard');
 				console.log("should get board");
-				var boardVals = [];
-					socket.on('returnBoard', function(msg){
-						console.log(msg);
-					});
+				var boardVals = null;
+				socket.on('returnBoard', (msg) => {
+						boardVals = JSON.parse(msg);
+						text = "";
+						boardVals.forEach(generateTable);
+						console.log(text);
+						$(text).appendTo($(".board"));
+				});
+			});
+			
+			function generateTable(row){
+			     text += '<div class="entry"> <div> ' + row.uname + '</div>';
+					 text += "<div> " + row.score + " </div></div>";
 			}
+				
 		</script>
 		
     <body class="flex-body">
         <div class="page">
             <h1 class="title">Scoreboard</h1>
             <div class="board" id ="board">
-            <div class="entry">
-                <div> User Name </div>
-                <div> Score </div>
-            </div>
-            <% for(var i = 0; i < 10; i++) { %>
-                <div class="entry">
-                    <div> Name From Database </div>
-                    <div> Score from database </div>
-                </div>
-            <% } %>
+							<div class="entry">
+									<div> User Name </div>
+									<div> Score </div>
+							</div>
             </div>
             <div class="center">
             <form>

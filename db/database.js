@@ -22,7 +22,7 @@ function DatabaseAPI(){
 	});
 	
 	return{
-		getTop10: function(_callback){
+		getTop10: function(_callback, _callback2){
 			DB.all(selectTop10,[], function(error, rows){
 				if(error){
 					console.log(error);

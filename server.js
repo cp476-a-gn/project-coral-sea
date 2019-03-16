@@ -10,16 +10,8 @@ var io = require('socket.io')(http);
 //DB stuff
 const { DatabaseAPI } = require('./db/database.js');
 var db = new DatabaseAPI();
-function listUserNames(userIDs) {
-		result = []
-		userIDs.forEach(row => {
-		console.log(row.uid + " " + row.uname);
-					//var entry =JSON.stringify(row);
-		});
-		var test = JSON.stringify("testing");
-		
-		return test
-}
+
+
 
 
 // Configure
@@ -41,6 +33,7 @@ http.listen(port, '0.0.0.0', function(){
 
 
 io.on('connection', function(socket){
+
     console.log("A user has sailed!");
     socket.on('disconnect', function(socket){
         console.log("A user has sailed to deeper waters!");
@@ -49,9 +42,16 @@ io.on('connection', function(socket){
         console.log("player ships submited");
     });
 		socket.on('getBoard', function(){
-				var testJSON = db.getTop10(listUserNames); 
-				console.log("got board " + testJSON);
-				socket.emit('returnBoard', testJSON)
+				function listUserNames(userIDs) {
+						result = []
+						var entry = JSON.stringify("meow");
+						userIDs.forEach(row => {
+							result.push(row);
+						});
+						entry = JSON.stringify(result);
+						socket.emit('returnBoard', entry);
+				}
+				db.getTop10(listUserNames);
 		});
 });
 
