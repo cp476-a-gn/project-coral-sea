@@ -1,29 +1,35 @@
+
 <!DOCTYPE html>
+
 <html lang="en">
-<head>
-        <link href="https://fonts.googleapis.com/css?family=Cinzel:700" rel="stylesheet"> 
-        <link rel="stylesheet" type="text/css" href="css/common.css"/>
-        <link rel="stylesheet" type="text/css" href="css/waitQueue.css"/>
-</head>
+	<head>
+		<link href="https://fonts.googleapis.com/css?family=Cinzel:700" rel="stylesheet"> 
+		<link rel="stylesheet" type="text/css" href="css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="css/waitQueue.css"/>
+		<script src="/socket.io/socket.io.js"></script>
+		<script>
+			var socket = io();
+			socket.emit('add to queue');
+			socket.on('start game', function(socket){
+				console.log("received! game start");
+				window.location.href="/game";
+			})
+		</script>
+	</head>
 
-<body>
-
-<main>
-
-	<div class="container">
-		<div class="empty_space"></div>
-		<h1 id="capture">Finding your crew..</h1>
-		<div class="empty_space"></div>
-		<div class="gif">
-			<div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
-		</div>
-
-	</div>
-</main>
-
-<footer>
-	<% include partials/footer %>
-</footer>
-
-</body>
+	<body>
+		<main>
+			<div class="container">
+				<div class="empty_space"></div>
+				<h1 id="capture">Finding your crew..</h1>
+				<div class="empty_space"></div>
+				<div class="gif">
+					<div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+				</div>
+			</div>
+		</main>
+		<footer>
+			<% include partials/footer %>
+		</footer>
+	</body>
 </html>
