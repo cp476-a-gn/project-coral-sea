@@ -7,6 +7,20 @@ var morgan = require('morgan');
 var bodyParser = require('body-parser');
 var io = require('socket.io')(http);
 
+//DB stuff
+const { DatabaseAPI } = require('./db/database.js');
+var db = new DatabaseAPI();
+function listUserNames(userIDs) {
+		result = []
+		userIDs.forEach(row => {
+		console.log(row.uid + " " + row.uname);
+					//var entry =JSON.stringify(row);
+		});
+		var test = JSON.stringify("testing");
+		
+		return test
+}
+
 
 // Configure
 //app.use(morgan('dev'));
@@ -34,6 +48,11 @@ io.on('connection', function(socket){
     socket.on('player ready', function(msg){
         console.log("player ships submited");
     });
+		socket.on('getBoard', function(){
+				var testJSON = db.getTop10(listUserNames); 
+				console.log("got board " + testJSON);
+				socket.emit('returnBoard', testJSON)
+		});
 });
 
 //DB.close()

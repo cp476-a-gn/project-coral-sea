@@ -4,6 +4,7 @@ const DB_PATH = './db/coralSea.db';
 //SQL statements
 var selectTop10 = "SELECT uid, uname, score FROM players ORDER BY score LIMIT 10;";
 
+
 function DatabaseAPI(){
 	const DB = new sqlite3.Database(DB_PATH, function(err){
 		if (err){

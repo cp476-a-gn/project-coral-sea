@@ -11,7 +11,7 @@ function listUserNames(userIDs) {
 
 
 module.exports = function(app){
-		var db = new DatabaseAPI();
+		//var db = new DatabaseAPI();
 	
     app.get('/',function(req,res){
         res.render('pages/MainMenu.ejs');
