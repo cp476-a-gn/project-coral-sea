@@ -1,10 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-					<link href="https://fonts.googleapis.com/css?family=Cinzel:700" rel="stylesheet"> 
+			<link href="https://fonts.googleapis.com/css?family=Cinzel:700" rel="stylesheet"> 
 			<link rel="stylesheet" type="text/css" href="css/common.css"/>
 			<link rel="stylesheet" type="text/css" href="css/mainMenu.css"/>
-					<script type="text/javascript" src="js/mainMenuBar.js"></script>
+			<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+			<script type="text/javascript" src="js/mainMenuBar.js"></script>
+			<script src="/socket.io/socket.io.js"></script>
+			<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+			<script> var socket = io(); </script>
+			
 	</head>
 
 	<body>
@@ -25,7 +30,7 @@
 		<main>
 			<div id="sidebar" class="sidebar"> 
 				<a href="javascript:void(0)" class="closebtn" onclick="closeBar()">&times;</a> 
-				<form>
+				<form id="userForm">
 				<div class="container">
 				<h1 class="fields" id="reg_name" style="margin-bottom:10vh;">""</h1>
 				<div class="fields">
@@ -34,23 +39,25 @@
 				</div>	
 				<div class="fields">
 					<p class="labels">Enter your password</p>
-					<input type="text" name="password">
+					<input type="text" name="user_password">
 				</div>	
 				<div class="fields" id ="pas_rep"  style="display:none"> 
 					<p class="labels">Repeat your password</p>
 					<input type="text" name="password_repeat">
 				</div>	
-					<button type="submit" type="submit" formaction="#" style="margin-top:4vh;">Play</button>
-				</div>
+					<button type="button" id="btnChanging" onclick = "register()" style="margin-top:4vh;">Play</button>
+					<p class="regResults labels" id="regResults"></p>
+				</div>		
 				</form>
 			</div>
 			<form>
 				<div class="container">
 					<h1 id="title"> Coral Sea</h1>
 					<div class="empty_space"></div>
-					<button type="submit" id="btn-play" type="submit" formaction="/mainToQueue">Play</button>
+					<button id="btn-play" type="submit" formaction="/mainToQueue">Play</button>
 				</div>
 			</form>	
+			
 		</main>
 
 		<footer>
