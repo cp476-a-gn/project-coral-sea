@@ -18,28 +18,29 @@ module.exports = function(app){
     });
 
     app.get('/score', function(req,res){
-				res.render("pages/ScoreBoard.ejs");
+		res.render("pages/ScoreBoard.ejs");
 				
     });
 		
-		app.get('/score/json', function (req,res){
-				var testJSON = db.getTop10(listUserNames); 
-				res.json(testJSON)
-		});
+    app.get('/score/json', function (req,res){
+        var testJSON = db.getTop10(listUserNames); 
+        res.json(testJSON)
+    });
 		
-		app.get('/mainMenu',function(req,res){
+	app.get('/mainMenu',function(req,res){
         res.render('pages/MainMenu.ejs');
     });
 		
-		app.get('/matching',function(req,res){
-			res.render('pages/waitQueue.ejs');
+	app.get('/matching',function(req,res){
+		res.render('pages/waitQueue.ejs');
     });
 
     app.get('/scoreToMain', function(req,res){
         res.redirect('/')
     });
 		
-		app.get('/mainToQueue', function(req,res){
+	app.get('/mainToQueue', function(req,res){
+        
         res.redirect('/matching')
     });
  

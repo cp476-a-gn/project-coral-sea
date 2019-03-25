@@ -1,21 +1,24 @@
 
 <html>
     <head>
-    <link href="https://fonts.googleapis.com/css?family=Cinzel:700" rel="stylesheet"> 
-    <link rel="stylesheet" type="text/css" href="css/common.css"/>
-    <link rel="stylesheet" type="text/css" href="css/game.css"/>
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="js/pixi.js"></script>
-    <script>
-    var socket = io();
-    </script>
+      <link href="https://fonts.googleapis.com/css?family=Cinzel:700" rel="stylesheet"> 
+      <link rel="stylesheet" type="text/css" href="css/common.css"/>
+      <link rel="stylesheet" type="text/css" href="css/game.css"/>
+      
+      <script src="js/pixi.js"></script>
+      <script src="/socket.io/socket.io.js"></script>
+      <script>
+        var socket = io();
+        socket.emit('in game');
+        console.log(document.cookie);
+      </script>
     </head>
     <body style="display:flex; justify-content:center; align-items: center;">
 				<button class="question" onclick="openInstructions()">?</button>
         <script src="js/resources.js"></script>
 				<script src="js/utilities.js"></script>
         <script src="js/game.js"></script>
-        <button class="ready">Ready!</button>
+        <button class="ready" onclick="sendShips(socket)" >Ready!</button>
 
 				<div id="bottombar" class="bottombar hidden"> 
 				  <a href="javascript:void(0)" class="closebtn" onclick="closeInstructions()">&times;</a> 

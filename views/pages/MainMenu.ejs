@@ -7,13 +7,12 @@
 			<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
 			<script type="text/javascript" src="js/mainMenuBar.js"></script>
 			<script src="/socket.io/socket.io.js"></script>
-			<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
-			<script> var socket = io(); </script>
-			
+			<script> var socket = io();
+               socket.emit('new_connection');
+      </script>
 	</head>
 
 	<body>
-
 		<header>
 			<div class="top-nav-container">
 				<div>
@@ -24,9 +23,7 @@
 					<form><button class="tablink" type="submit" formaction="/mainToScore">Score board</button></form>
 				</div>
 			</div>
-
 		</header>
-
 		<main>
 			<div id="sidebar" class="sidebar"> 
 				<a href="javascript:void(0)" class="closebtn" onclick="closeBar()">&times;</a> 
