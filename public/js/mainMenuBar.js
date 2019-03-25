@@ -49,7 +49,7 @@ $(function(){
 	socket.on('registrationResult', (msg) => {
 			regResults = JSON.parse(msg);
 			console.log("GOT REG: "+ regResults.result);
-			var erText="";
+			$erText="";
 			if (regResults.result == '1'){
 				$erText = "<p> Welcome on board! </p>";
 			}else{
@@ -81,8 +81,17 @@ $(function(){
 	socket.on('loginResult',(msg) =>{
 		logResults = JSON.parse(msg);
 		console.log("GOT LOGIN: "+ logResults);
-		var resText="";
-		//if (){}
+		$resText="";
+		if (logResults[2] == 1){
+			$resText += "Welcome back, captain!";
+		}else{
+			if (logResults[0] == 1){
+				$resText += "Uername and password cannot be empty";
+			}
+			if (logResults[1] == 1){
+				$resText += "Wrong username or password";
+			}
+		}
 		$("#regResults").html($resText);
 	})
 });

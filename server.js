@@ -56,10 +56,11 @@ io.on('connection', function(socket){
 		socket.on('registerNew', function(userForm){
 				//NEEDS MORE INPUT CHECKING BUT INSERTING NEW USER WORKS
 				console.log("registring new user " + userForm);
+				
 				function getRegResult(inputErrors, queryResult){
-					console.log("REGISTRATION RESULTS");
-					console.log(inputErrors);
-					console.log(queryResult);
+					//console.log("REGISTRATION RESULTS");
+					//console.log(inputErrors);
+					//console.log(queryResult);
 					var result = {errors:inputErrors, result:queryResult};
 					var entry = JSON.stringify(result);
 					socket.emit('registrationResult', entry);
@@ -69,12 +70,13 @@ io.on('connection', function(socket){
 		});
 		socket.on('loginUser', function(userForm){
 				console.log("loging in user " + userForm);
-				var userData = JSON.parse(userForm);
+				
 				function getLoginResult(result){
 					var entry = JSON.stringify(result);
 					socket.emit('loginResult', entry);
 				}
-				db.loginUser(userData, getLoginResult);
+				
+				db.loginUser(userForm, getLoginResult);
 		});
 });
 

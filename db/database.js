@@ -53,7 +53,9 @@ function DatabaseAPI(){
 			console.log("userData: "+userData);
 				var uscore = "0";
 				var uname = userData.user_name;
-				var upass = Crypto.SHA256(userData.user_password).toString;
+				var upass = userData.user_password;
+				Crypto.SHA256(upass).toString;
+				
 				console.log("uname: " + uname + "  upass: " + upass);
 				DB.run(insertNewSQL, [uname, upass, uscore], function(error){
 					if (error){
@@ -147,8 +149,9 @@ function DatabaseAPI(){
 				resultsAr[0] = 1;
 				_callback(resultsAr);
 			}else{
-				var passHash = Crypto.SHA256(userData.user_password).toString;
-				checkUser(userData.user_name)
+				var passHash = userData.user_password;
+				Crypto.SHA256(passHash).toString;
+				checkLogin(userData.user_name)
 					.then(function (fullfilled){
 						console.log(fullfilled);
 						if (fullfilled.pwd != passHash){
