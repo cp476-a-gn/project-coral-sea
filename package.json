@@ -19,7 +19,9 @@
   "homepage": "https://github.com/cp476-a-gn/project-coral-sea#readme",
   "dependencies": {
     "body-parser": "^1.18.3",
+
     "client-sessions": "^0.8.0",
+    
     "ejs": "^2.6.1",
     "express": "^4.16.4",
     "express-session": "^1.15.6",
