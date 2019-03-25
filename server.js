@@ -12,8 +12,6 @@ const { DatabaseAPI } = require('./db/database.js');
 var db = new DatabaseAPI();
 
 
-
-
 // Configure
 //app.use(morgan('dev'));
 app.set('view engine','ejs');
@@ -41,6 +39,7 @@ io.on('connection', function(socket){
     socket.on('player ready', function(msg){
         console.log("player ships submited");
     });
+
 		socket.on('getBoard', function(){
 				function listUserNames(userIDs) {
 						result = []
@@ -80,7 +79,6 @@ io.on('connection', function(socket){
 		});
 });
 
-//DB.close()
 
 
 

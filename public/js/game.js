@@ -63,6 +63,7 @@ loader.onComplete.add(() => {
         sprites.ships[i].id = i;
         sprites.ships[i].width = (sprites.ships[i].width / sprites.ships[i].height) * unit_size;
 				sprites.ships[i].height = unit_size;
+
         
         sprites.ships[i].x = startx;
         startx += sprites.ships[i].width + unit_size; 
