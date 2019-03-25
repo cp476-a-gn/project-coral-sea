@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-					<link href="https://fonts.googleapis.com/css?family=Cinzel:700" rel="stylesheet"> 
-			<link rel="stylesheet" type="text/css" href="css/common.css"/>
-			<link rel="stylesheet" type="text/css" href="css/mainMenu.css"/>
-					<script type="text/javascript" src="js/mainMenuBar.js"></script>
+		<link href="https://fonts.googleapis.com/css?family=Cinzel:700" rel="stylesheet"> 
+		<link rel="stylesheet" type="text/css" href="css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="css/mainMenu.css"/>
+		<script type="text/javascript" src="js/mainMenuBar.js"></script>
+		<script src="/socket.io/socket.io.js"></script>
+      <script>
+        var socket = io();
+        socket.emit('new_connection');
+      </script>
 	</head>
 
 	<body>
-
 		<header>
 			<div class="top-nav-container">
 				<div>
@@ -19,9 +23,7 @@
 					<form><button class="tablink" type="submit" formaction="/mainToScore">Score board</button></form>
 				</div>
 			</div>
-
 		</header>
-
 		<main>
 			<div id="sidebar" class="sidebar"> 
 				<a href="javascript:void(0)" class="closebtn" onclick="closeBar()">&times;</a> 

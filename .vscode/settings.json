@@ -1,0 +1,10 @@
+{
+    "sshfs.configs": [
+        {
+            "host": "10.84.72.63",
+            "name": "pilab",
+            "password": "raspberry",
+            "username": "pi"
+        }
+    ]
+}
