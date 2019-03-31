@@ -100,7 +100,7 @@ module.exports = function(app, io){
         gameData: the game object containing the current game info
         playerTurn: The player that sent the click 
 
-*
+*/
 function checkLocation(posX, posY, gameData, playerTurn){
     var boards = gameData.boards
     //player checks opponents bored for a click
@@ -111,13 +111,28 @@ function checkLocation(posX, posY, gameData, playerTurn){
     var playerToCheckBored = boards[playerToCheck];
     ships.push(playerToCheckBored.battleship);
     ships.push(playerToCheckBored.cruiser);
-    var carrier = playerToCheckBored.carrier);
-    var destroyer = player.playerToCheckBored.destroyer);
-    var submarine = player.playerToCheckBored.submarine);
+    ships.push(playerToCheckBored.carrier);
+    ships.push(player.playerToCheckBored.destroyer[0]);
+    ships.push(player.playerToCheckBored.destroyer[1]);
+    ships.push(player.playerToCheckBored.submarine[0]);
+    ships.push(player.playerToCheckBored.submarine[1]);
 
-
-    
-    
-    
+    ships.forEach(function(ship){
+        for(var i = 0; i < ship.s; i++){
+            relX = Math.abs(posX - ship.x);
+            relY = Math.abs(posY - ship.y);
+            if(ship.r == 0 && relY == 0 && relX < ship.s){
+                return(true);
+                // is hit
+            }
+            else if(ship.r == 1 && relX == 0 && relY < ship.s){
+                return(true);
+                // is hit
+            }
+            else{
+                return(false);
+                //is miss
+            }
+        }
+    });
 }
-*/
