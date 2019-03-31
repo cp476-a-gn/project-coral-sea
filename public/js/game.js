@@ -220,12 +220,51 @@ function hideButton(){
 
 function sendShips(socket){
 
-    var ships = new Object();
+    ships = new Object();
+    ships.carrier = new Object();
+    ships.battleship = new Object();
+    ships.cruiser = new Object();
+    ships.destroyer = [new Object(), new Object()];
+    ships.submarine = [new Object(), new Object()];
 
-    //ships['carrier']['position']['x'] = 
+    positions = [];
+    var i = 0;
+    sprites.ships.forEach(function(element){
+        var cell = pixel2grid(sprites.userGrid, element.x, element.y)
+        cell.r = element.gridRotation
+        if(cell.r == 1) cell.x -= 1;
+        positions.push(cell);
+    });
 
-    sprites.shipes.forEach(function(ship){
+    ships.carrier.x = positions[0].x;
+    ships.carrier.y = positions[0].y;
+    ships.carrier.r = positions[0].r;
 
-    })
+    ships.battleship.x = positions[1].x
+    ships.battleship.y = positions[1].y;
+    ships.battleship.r = positions[1].r;
+
+    ships.cruiser.x = positions[2].x;
+    ships.cruiser.y = positions[2].y;
+    ships.cruiser.r = positions[2].r;
+
+    ships.destroyer[0].x = positions[3].x;
+    ships.destroyer[0].y = positions[3].y;
+    ships.destroyer[0].r = positions[3].r;
+
+    ships.destroyer[1].x = positions[4].x;
+    ships.destroyer[1].y = positions[4].y;
+    ships.destroyer[1].r = positions[4].r;
+
+    ships.submarine[0].x = positions[5].x;
+    ships.submarine[0].y = positions[5].y;
+    ships.submarine[0].r = positions[5].r;
+
+    ships.submarine[1].x = positions[6].x;
+    ships.submarine[1].y = positions[6].y;
+    ships.submarine[1].r = positions[6].r;
+
+    console.log(ships);
+    socket.emit("ship submit", JSON.stringify(ships));
 }
 

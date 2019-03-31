@@ -10,6 +10,9 @@
       <script>
         var socket = io();
         socket.emit('in game');
+        socket.on("board accept", function(msg){
+          alert("Board from player " + msg + " submit success");
+        });
         console.log(document.cookie);
       </script>
     </head>
