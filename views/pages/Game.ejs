@@ -8,10 +8,14 @@
       <script src="js/pixi.js"></script>
       <script src="/socket.io/socket.io.js"></script>
       <script>
+        your_id = 0;
         var socket = io();
         socket.emit('in game');
         socket.on("board accept", function(msg){
           alert("Board from player " + msg + " submit success");
+        });
+        socket.on("your id", function(msg){
+          your_id = parseInt(msg);
         });
         console.log(document.cookie);
       </script>

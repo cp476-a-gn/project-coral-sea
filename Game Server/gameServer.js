@@ -20,6 +20,7 @@ module.exports = function(app, io){
                 socket.handshake.session.player_order = 1;
                 socket.handshake.session.room = current_room;
                 socket.handshake.session.save();
+                socket.emit("your id", 1);
                 console.log("User has joined room " + room);
             }
             else if(!first && socket.handshake.room === undefined){
@@ -30,6 +31,7 @@ module.exports = function(app, io){
                 socket.handshake.session.player_order = 2;
                 socket.handshake.session.room = current_room - 1;
                 socket.handshake.session.save();
+                socket.emit("your id", 2);
 
                 gameData = new Object(),
                 gameData.boards = [null, null];
@@ -58,7 +60,7 @@ module.exports = function(app, io){
             boards = games[room].boards;
             
             boards[playeris - 1] = JSON.parse(msg);
-            io.to(socket.handshake.session.room).emit('board accept', playeris);
+            socket.emit('board accept', playeris);
             console.log("received player " + playeris + " board");
 
             if(boards[0] != null && boards[1] != null) io.to(room).emit("player turn", 1);
@@ -87,3 +89,35 @@ module.exports = function(app, io){
         });
     });
 }
+
+/*
+    Checks the location that the current player selected on the oponents board
+    for a ship hit or miss
+
+    Parameters
+        posX: x cell coordinate of the click location
+        posY: y cell location of the clock location
+        gameData: the game object containing the current game info
+        playerTurn: The player that sent the click 
+
+*
+function checkLocation(posX, posY, gameData, playerTurn){
+    var boards = gameData.boards
+    //player checks opponents bored for a click
+    var playerToCheck = playerTurn - 1; // 1 -> 2; 0 -> 1
+    playerToCheck = Math.abs(playerTurn - 1); // 0-> 1; 1 -> 0
+    //check ships for overlap
+    var ships = [];
+    var playerToCheckBored = boards[playerToCheck];
+    ships.push(playerToCheckBored.battleship);
+    ships.push(playerToCheckBored.cruiser);
+    var carrier = playerToCheckBored.carrier);
+    var destroyer = player.playerToCheckBored.destroyer);
+    var submarine = player.playerToCheckBored.submarine);
+
+
+    
+    
+    
+}
+*/
