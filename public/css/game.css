@@ -1,3 +1,7 @@
+html{
+	overflow: hidden;
+}
+
 .question{
 		position:absolute;
     top: 5%;
@@ -49,4 +53,39 @@
 .readyShow{
     opacity:1;
     pointer-events: all;
+}
+
+.indicateSuccess{
+	background-color: #119966 !important;
+}
+
+.indicateFail{
+	background-color: #cc1155 !important;
+}
+
+.indicateYield{
+	background-color: #eebb00 !important;
+}
+
+.animate{
+	animation-name: indicate;
+  	animation-duration: 4s;
+}
+
+#indicatorD{
+	background-color:#323232;
+	color:white;
+	position:absolute;
+	bottom:-100px;
+	left:0px;
+	width:100%;
+	text-align: center;
+}
+
+@keyframes indicate{
+	0%    { bottom: -100px; }
+	5%    { bottom: 0px; }
+	95%   { bottom: 0px; }
+	100% { bottom: -100px; }
+
 }
