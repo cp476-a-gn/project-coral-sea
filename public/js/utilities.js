@@ -265,8 +265,13 @@ function startGame(){
 /**
  * Make a shot here
 **/ 
-function executeTurn(seq_id){
+function executeTurn(stage, seq_id){
 	
 	console.log("executing turn "+ seq_id);
+	stage.removeChild(sprites.screenblocker);
 	socket.emit('finish turn', seq_id);
+}
+
+function executeWait(stage){
+    stage.addChild(sprites.screenblocker);
 }

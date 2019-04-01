@@ -7,6 +7,8 @@ CRUISER = 1 //3
 BATTLESHIP = 1 //4
 CARRIER = 1 //5
 
+var stage;
+
 const loader = PIXI.Loader.shared;
 
 const sprites = {};
@@ -25,7 +27,7 @@ loader.onComplete.add(() => {
 
     document.body.appendChild(app.view);
     app.view.oncontextmenu =  function(e){return false;} 
-    var stage = app.stage;
+    stage = app.stage;
     app.renderer.backgroundColor = 0x232323;
 
     //prep screen
@@ -96,7 +98,7 @@ loader.onComplete.add(() => {
     sprites.screenblocker.y = 0;
     sprites.screenblocker.width = WIDTH/2;
     sprites.screenblocker.height = HEIGHT;
-    //stage.addChild(sprites.screenblocker);
+    stage.addChild(sprites.screenblocker);
 
 
 });
@@ -274,5 +276,9 @@ function sendShips(socket){
 
     console.log(ships);
     socket.emit("ship submit", JSON.stringify(ships));
+}
+
+function getStage(){
+    return stage;
 }
 

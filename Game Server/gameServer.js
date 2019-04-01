@@ -65,22 +65,23 @@ module.exports = function(app, io){
             console.log("received player " + playeris + " board");
 
             if(boards[0] != null && boards[1] != null){ 
-							var response = {'shot':null, 'hit':false, 'seq_id':1};
-							var responseJSON = JSON.stringify(response);
-							io.to(room).emit("player turn",  responseJSON);
-						}
+                var response = {'shot':null, 'hit':false, 'seq_id':1};
+                var responseJSON = JSON.stringify(response);
+                console.log("sending game start");
+                io.to(room).emit("player turn",  responseJSON);
+            }
         });
-				socket.on('finish turn', function(msg){
-					var seq_id = parseInt(msg);
-					console.log("Finished turn " + seq_id);
-					if (seq_id < 5){
-						console.log("sending seq_id: "+seq_id);
-						seq_id ++;
-						var response = {'shot':null, 'hit':false, 'seq_id':seq_id};
-						var responseJSON = JSON.stringify(response);
-						io.to(room).emit("player turn",  responseJSON);
-					}
-				});
+        socket.on('finish turn', function(msg){
+            var seq_id = parseInt(msg);
+            console.log("Finished turn " + seq_id);
+            if (seq_id < 5){
+                console.log("sending seq_id: "+seq_id);
+                seq_id ++;
+                var response = {'shot':null, 'hit':false, 'seq_id':seq_id};
+                var responseJSON = JSON.stringify(response);
+                io.to(room).emit("player turn",  responseJSON);
+            }
+        });
 				
         socket.on('disconnect', function(socket){
             console.log("A user has sailed to deeper waters!");
