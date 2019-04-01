@@ -295,7 +295,7 @@ function getOponGrid(){
         position: an object with properties x and y containing grid positions 
 
 */
-function drawMarker(position, type){
+function drawMarker(position, type, turn){
     var mark;
     if(type == "hit"){ 
         mark = sprites.hit[num_hit]; 
@@ -305,6 +305,10 @@ function drawMarker(position, type){
         mark = sprites.miss[num_miss]; 
         num_miss++; 
     }
+		if (turn == 1)
+			grid = sprites.oponGrid;
+		else
+			grid = sprites.userGrid;
     var cell = grid2pixel(grid, position.x, position.y)
     mark.x = cell[0];
     mark.y = cell[1];
