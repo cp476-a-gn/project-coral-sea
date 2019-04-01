@@ -7,6 +7,9 @@ CRUISER = 1 //3
 BATTLESHIP = 1 //4
 CARRIER = 1 //5
 
+num_miss = 0;
+num_hit = 0;
+
 var stage;
 
 const loader = PIXI.Loader.shared;
@@ -280,5 +283,27 @@ function sendShips(socket){
 
 function getStage(){
     return stage;
+}
+
+/*
+    parameters:
+        position: an object with properties x and y containing grid positions 
+
+*/
+function drawMarker(position, type){
+    var mark;
+    if(type == "hit"){ 
+        mark = sprites.hit[num_hit]; 
+        num_hit++; 
+    }
+    if(type == "miss"){ 
+        mark = sprites.miss[num_miss]; 
+        num_miss++; 
+    }
+    var cell = grid2pixel(grid, position.x, position.y)
+    mark.x = cell[0];
+    mark.y = cell[1];
+    stage.addChild(mark);
+    sprites.mark.push(mark);
 }
 
