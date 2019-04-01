@@ -197,8 +197,8 @@ function pixel2grid(grid, posX, posY){
 
 function grid2pixel(grid, posX, posY){
 	var unit_size = grid.width / 10;
-	var x = posX*unit_size + grid.x;
-	var y = posY*unit_size + grid.y;
+	var x = posX*unit_size + (grid.x - (grid.width / 2));
+	var y = posY*unit_size + (grid.y - (grid.height / 2));
 	var converted_location = [x, y];
 	
 	return converted_location;
@@ -262,26 +262,13 @@ function startGame(){
 	document.getElementsByClassName("ready")[0].classList.remove("readyShow");
 }
 
+function fire_aux(e){
+	fire(e, finishTurn)
+}
+
 /**
  * Make a shot here
 **/ 
-function executeTurn(board, stage, seq_id){
-	//console.log(board);
-	board.interactive = true;
-	board.on('mousedown', function(e){
-		fire(e, finishTurn)
-	});
-	console.log(board);
-	console.log("executing turn "+ seq_id);
-	stage.removeChild(sprites.screenblocker);
-
-	
-}
-
-function executeWait(stage){
-    stage.addChild(sprites.screenblocker);
-		sprites.oponGrid.on('mousedown', turnWarn);
-}
 
 /**
   * Shoot opponent

@@ -239,7 +239,7 @@ function sendShips(socket){
         cell.r = element.gridRotation
         if(cell.r == 1) cell.x -= 1;
         positions.push(cell);
-				element.removeAllListeners();
+		element.removeAllListeners();
     });
 
     ships.carrier.x = positions[0].x;
@@ -287,16 +287,23 @@ function getStage(){
 
 
 function getOponGrid(){
-		return sprites.oponGrid;
+	return sprites.oponGrid;
+}
+
+function getUserGrid(){
+	return sprites.userGrid;
 }
 
 /*
     parameters:
         position: an object with properties x and y containing grid positions 
+        type: "hit" or "miss"
+        turn: 1 or 2 
 
 */
 function drawMarker(position, type, turn){
     var mark;
+
     if(type == "hit"){ 
         mark = sprites.hit[num_hit]; 
         num_hit++; 
@@ -305,15 +312,41 @@ function drawMarker(position, type, turn){
         mark = sprites.miss[num_miss]; 
         num_miss++; 
     }
-		if (turn == 1)
-			grid = sprites.oponGrid;
-		else
-			grid = sprites.userGrid;
+
+    if (turn == 1)
+        grid = sprites.oponGrid;
+    else
+        grid = sprites.userGrid;
+    
     var cell = grid2pixel(grid, position.x, position.y)
     mark.x = cell[0];
     mark.y = cell[1];
+    mark.width = grid.width / 10;
+    mark.height = grid.width / 10;
     stage.addChild(mark);
-    sprites.mark.push(mark);
 }
 
+function executeWait(stage, board, data){
+    stage.addChild(sprites.screenblocker);
+	sprites.oponGrid.removeAllListeners(); 
 
+	if(data.hit) type = "hit";
+	else type = "miss";
+	drawMarker(data.shot, type, data.seq_id % your_id - 1);
+}
+
+function executeTurn(board, stage, seq_id, data){
+    //console.log(board);
+	sprites.oponGrid.interactive = true;
+    sprites.oponGrid.on('click', fire_aux);
+    
+	console.log(board);
+	console.log("executing turn "+ seq_id);
+	stage.removeChild(sprites.screenblocker);
+	var type = ""
+	if(data.hit) type = "hit";
+	else type = "miss"; 
+
+	drawMarker(data.shot,type,seq_id % your_id);
+	
+}

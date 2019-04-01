@@ -29,31 +29,33 @@
 
         socket.on("player turn", function(msg){
             var stage = getStage()
-						var board = getOponGrid();
             console.log("turn switch");
             /**
                 * data: shot, hit, seq_id
             **/
             var data = JSON.parse(msg);
-						seq_id = data.seq_id;
+			seq_id = data.seq_id;
             console.log(data+ " " +data.seq_id + " ");
             if (seq_id === 1){
                 startGame();
                 if(your_id === 1){
-                //console.log("about to execute turn1");
-                executeTurn(board, stage, data.seq_id);
+                    var board = getOponGrid();
+                    //console.log("about to execute turn1");
+                    executeTurn(board, stage, data.seq_id);
                 }
             }else{
-								var shotloc = data.shot;
-								var hit = data.hit;
-								console.log("got a hit: " + data.hit);
+                var shotloc = data.shot;
+                var hit = data.hit;
+                console.log("got a hit: " + data.hit);
                 if (your_id !== 0 && ((your_id + seq_id)%2) === 0){
-                    //console.log("about to execute turn2");
-                    executeTurn(board, stage, seq_id);
+                    // this players turn
+			        var board = getOponGrid();
+                    executeTurn(board, stage, seq_id, data);
                 }
                 else if(your_id !== 0 && ((your_id + seq_id) %2) !== 0){
-                    console.log("Not your turn");
-                    executeWait(stage);
+                    // not this players turn
+                    var board = getUserGrid();
+                    executeWait(stage,data, board);
                 }
             }
         });	

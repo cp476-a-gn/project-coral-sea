@@ -74,23 +74,23 @@ module.exports = function(app, io){
         socket.on('finish turn', function(msg){
             var clientData = JSON.parse(msg);
             console.log("Finished turn " + msg);
-						seq_id =  clientData.seq_id;
-						var shot_coords = clientData.shotLoc;
-						var gameData = games[socket.handshake.session.room];
-						var player =0;
-						if (seq_id % 2 === 0 ) 
-							player = 2;
-						else 
-							player = 1;
+            seq_id =  clientData.seq_id;
+            var shot_coords = clientData.shotLoc;
+            var gameData = games[socket.handshake.session.room];
+            var player =0;
+            if (seq_id % 2 === 0 ) 
+                player = 2;
+            else 
+                player = 1;
             var hit = checkLocation(shot_coords.x, shot_coords.y, gameData, player);
-						if (seq_id < 5){
-                console.log("sending seq_id: "+clientData.seq_id);
-                seq_id ++;
-								console.log("hit is: " + hit);
-                var response = {'shot':shot_coords, 'hit':hit, 'seq_id':seq_id};
-                var responseJSON = JSON.stringify(response);
-                io.to(room).emit("player turn",  responseJSON);
-            }
+            
+            console.log("sending seq_id: " + clientData.seq_id);
+            seq_id ++;
+            console.log("hit is: " + hit);
+            var response = {'shot':shot_coords, 'hit':hit, 'seq_id':seq_id};
+            var responseJSON = JSON.stringify(response);
+            io.to(room).emit("player turn",  responseJSON);
+            
         });
         socket.on('disconnect', function(socket){
             console.log("A user has sailed to deeper waters!");
