@@ -141,44 +141,44 @@ function checkOccupied(grid, curShip, allShips){
 		shipX2 = shipX1;
 		shipY1 = shipTC.y;
 		shipY2 = shipTC.y + Math.floor(curShip.width/curShip.height)-1;
-
+		console.log("shipX1: "+ shipX1 + "shipX2: "+ shipX2 + "shipY1: "+ shipY1 + "shipY2: "+ shipY2 );
 		var occupied = false;
 		for (var i = 0; i <shipsNum; i++){ 							
-					if (allShips[i].gridRotation == 0) { //if ship with which we are comparing is horizontal
-							//console.log("HORIZONTAL SHIP");
-							var shipTC1 = pixel2grid(grid, allShips[i].x, allShips[i].y);
-							ship2X1 = shipTC1.x;
-							ship2X2 = shipTC1.x + Math.floor(allShips[i].width/allShips[i].height)-1;
-							ship2Y1 = shipTC1.y;
-							ship2Y2 = shipTC1.y;
+			if (allShips[i].gridRotation == 0) { //if ship with which we are comparing is horizontal
+					//console.log("HORIZONTAL SHIP");
+					var shipTC1 = pixel2grid(grid, allShips[i].x, allShips[i].y);
+					ship2X1 = shipTC1.x;
+					ship2X2 = shipTC1.x + Math.floor(allShips[i].width/allShips[i].height)-1;
+					ship2Y1 = shipTC1.y;
+					ship2Y2 = shipTC1.y;
 
-							var ship2ID = allShips[i].id;
-							if (ship2Y1 < 10){
-							
-								if ((curShip.id != ship2ID ) && (((shipX1 >= ship2X1) && (shipX2 <= ship2X2))
-									&& (((shipY1 <= ship2Y1) && (shipY2 >= ship2Y1)) || ((shipY1 >= ship2Y1) && (shipY2 <= ship2Y2))))){ 
-								
-									console.log("POSITION TAKEN");
-									occupied = true;
-								}
-							}
-						}else{   //if ship we are comparing with is vertical
-							//console.log("VERTICAL SHIP");
-							var shipTC2 = pixel2grid(grid, allShips[i].x, allShips[i].y);
-							ship2X1 = shipTC2.x - 1;
-							ship2X2 = ship2X1;
-							ship2Y1 = shipTC2.y;
-							ship2Y2 = shipTC2.y + Math.floor(allShips[i].width/allShips[i].height)-1;
-
-							if (ship2Y1 < 10){
-							
-								var ship2ID = allShips[i].id;
-								if ((curShip.id != ship2ID ) && (shipX1 == ship2X1) && (((shipY2 >= ship2Y1) && (shipY2 <= ship2Y2)) || ((shipY1 >= ship2Y1) && (shipY1 <= ship2Y2)))){	
-									console.log("POSITION TAKEN");
-									occupied = true;
-									}	
-							}
+					var ship2ID = allShips[i].id;
+					if (ship2Y1 < 10){
+					
+						if ((curShip.id != ship2ID ) && (((shipX1 >= ship2X1) && (shipX2 <= ship2X2))
+							&& (((shipY1 <= ship2Y1) && (shipY2 >= ship2Y1)) || ((shipY1 >= ship2Y1) && (shipY2 <= ship2Y2))))){ 
+						
+							console.log("POSITION TAKEN");
+							occupied = true;
 						}
+					}
+				}else{   //if ship we are comparing with is vertical
+					//console.log("VERTICAL SHIP");
+					var shipTC2 = pixel2grid(grid, allShips[i].x, allShips[i].y);
+					ship2X1 = shipTC2.x -1;
+					ship2X2 = ship2X1;
+					ship2Y1 = shipTC2.y;
+					ship2Y2 = shipTC2.y + Math.floor(allShips[i].width/allShips[i].height)-1;
+					console.log("ship2X1: "+ ship2X1 + "ship2X2: "+ ship2X2 + "ship2Y1: "+ ship2Y1 + "ship2Y2: "+ ship2Y2 );
+					if (ship2Y1 < 10){
+					
+						var ship2ID = allShips[i].id;
+						if ((curShip.id != ship2ID ) && (shipX1 == ship2X1) && (((shipY2 >= ship2Y1) && (shipY2 <= ship2Y2)) || ((shipY1 >= ship2Y1) && (shipY1 <= ship2Y2)))){	
+							console.log("POSITION TAKEN");
+							occupied = true;
+							}	
+					}
+				}
 			}
 	}
 	return occupied;
@@ -266,6 +266,7 @@ function startGame(){
  * Make a shot here
 **/ 
 function executeTurn(seq_id){
+	
 	console.log("executing turn "+ seq_id);
 	socket.emit('finish turn', seq_id);
 }
