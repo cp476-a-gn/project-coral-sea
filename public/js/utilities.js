@@ -185,51 +185,74 @@ function checkOccupied(grid, curShip, allShips){
 }
 
 function pixel2grid(grid, posX, posY){
-		var unit_size = grid.width / 10;
-		var locX = Math.floor((posX-(grid.x - grid.width/2))/unit_size);
-		var locY = Math.floor((posY-(grid.y - grid.height/2))/unit_size);
-		var cell = {x: locX, y:locY}
-		console.log();
-		
-		return cell;
+	var unit_size = grid.width / 10;
+	var locX = Math.floor((posX-(grid.x - grid.width/2))/unit_size);
+	var locY = Math.floor((posY-(grid.y - grid.height/2))/unit_size);
+	var cell = {x: locX, y:locY}
+	console.log();
+	
+	return cell;
 }
 
 
 function grid2pixel(grid, posX, posY){
-		var unit_size = grid.width / 10;
-		var x = posX*unit_size + grid.x;
-		var y = posY*unit_size + grid.y;
-		var converted_location = [x, y];
-		
-		return converted_location;
+	var unit_size = grid.width / 10;
+	var x = posX*unit_size + grid.x;
+	var y = posY*unit_size + grid.y;
+	var converted_location = [x, y];
+	
+	return converted_location;
 	
 }
 
 function createShipJSON(cell, type, direction){
-		var ship_obj = {"x": cell.x, "y": cell.y, "type": type, "direction": direction};
-		if (type < 1 || type >5){
-				console.log("invalid type was passed");
-				type = 1;
-		}
-		if (direction < 0 || direction >1){
-			console.log("invalid direction was passed");
-			direction = 0;
-		}
-		var ship =JSON.stringify(ship_obj);
-		
-		return ship;
+	var ship_obj = {"x": cell.x, "y": cell.y, "type": type, "direction": direction};
+	if (type < 1 || type >5){
+		console.log("invalid type was passed");
+		type = 1;
+	}
+	if (direction < 0 || direction >1){
+		console.log("invalid direction was passed");
+		direction = 0;
+	}
+	var ship =JSON.stringify(ship_obj);
+	
+	return ship;
 }
 
 function createShotJSON(cell){
-		var shot = JSON.stringify(cell);
-		
-		return shot;
+	var shot = JSON.stringify(cell);
+	
+	return shot;
 }
 
 function readJSON(hit_loc){
-		var hit = JSON.parse(hit_loc);
-		
-		return hit;
+	var hit = JSON.parse(hit_loc);
+	return hit;
+}
+
+function updateStatusBar(msg, status){
+	document.getElementById("indicatorT").innerHTML = msg;
+	classList = document.getElementById("indicatorD").classList;
+	classList.remove("animate");
+	document.getElementById("indicatorT").offsetWidth;
+	classList.add("animate");
+	if(status != null){
+		if (classList.contains("indicateSuccess")) classList.remove("indicateSucess");
+		if (classList.contains("indicateFail")) classList.remove("indicateFail");
+		if (classList.contains("indicateYield")) classList.remove("indicateYield");
+		switch(status){
+			case "success":
+				classList.add("indicateSuccess");
+				break;
+			case "fail":
+				classList.add("indicateFail");
+				break;
+			case "yield":
+				classList.add("indicateYield");
+				break;			
+		}
+	}
 }
 
 /**
