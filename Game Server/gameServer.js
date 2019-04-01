@@ -131,7 +131,8 @@ module.exports = function(app, io){
 
 */
 function checkLocation(posX, posY, gameData, playerTurn){
-		console.log("posX: " + posX + " posY: " +posY);
+    console.log("posX: " + posX + " posY: " +posY);
+    var is_hit = false;
     var boards = gameData.boards
     //player checks opponents bored for a click
     var playerToCheck = playerTurn - 1; // 1 -> 2; 0 -> 1
@@ -148,23 +149,22 @@ function checkLocation(posX, posY, gameData, playerTurn){
     ships.push(playerToCheckBored.submarine[0]);
     ships.push(playerToCheckBored.submarine[1]);
 
-    ships.forEach(function(ship){
-        for(var i = 0; i < ship.s; i++){
-            relX = Math.abs(posX - ship.x);
-            relY = Math.abs(posY - ship.y);
-            if(ship.r == 0 && relY == 0 && relX < ship.s){
-                gameData.hits[playerToCheck] += 1;
-                return(true);
-                // is hit
-            }
-            else if(ship.r == 1 && relX == 0 && relY < ship.s){
-                gameData.hits[playerToCheck] += 1;
-                return(true);
-                // is hit
-            }
+    ships.forEach( function(ship){
+        relX = Math.abs(posX - ship.x);
+        relY = Math.abs(posY - ship.y);
+        if(ship.r == 0 && relY == 0 && relX < ship.s){
+            gameData.hits[playerToCheck] += 1;
+            is_hit = true;
+            // is hit
+        }
+        else if(ship.r == 1 && relX == 0 && relY < ship.s){
+            gameData.hits[playerToCheck] += 1;
+            is_hit = true;
+            // is hit
         }
     });
-    return(false);
+    console.log("hit? " + is_hit);
+    return(is_hit);
 }
 
 function isFinished(){
