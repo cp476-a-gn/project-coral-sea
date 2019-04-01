@@ -259,7 +259,7 @@ function updateStatusBar(msg, status){
  * Setup screen for the actual game
 **/
 function startGame(){
-	
+	document.getElementsByClassName("ready")[0].classList.remove("readyShow");
 }
 
 /**
