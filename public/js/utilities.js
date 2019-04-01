@@ -228,7 +228,6 @@ function createShotJSON(cell){
 
 function readJSON(hit_loc){
 	var hit = JSON.parse(hit_loc);
-	
 	return hit;
 }
 
@@ -254,4 +253,19 @@ function updateStatusBar(msg, status){
 				break;			
 		}
 	}
+}
+
+/**
+ * Setup screen for the actual game
+**/
+function startGame(){
+	
+}
+
+/**
+ * Make a shot here
+**/ 
+function executeTurn(seq_id){
+	console.log("executing turn "+ seq_id);
+	socket.emit('finish turn', seq_id);
 }
