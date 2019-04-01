@@ -72,17 +72,26 @@ module.exports = function(app, io){
             }
         });
         socket.on('finish turn', function(msg){
-            var seq_id = parseInt(msg);
-            console.log("Finished turn " + seq_id);
-            if (seq_id < 5){
-                console.log("sending seq_id: "+seq_id);
+            var clientData = JSON.parse(msg);
+            console.log("Finished turn " + msg);
+						seq_id =  clientData.seq_id;
+						var shot_coords = clientData.shotLoc;
+						var gameData = games[socket.handshake.session.room];
+						var player =0;
+						if (seq_id % 2 === 0 ) 
+							player = 2;
+						else 
+							player = 1;
+            var hit = checkLocation(shot_coords.x, shot_coords.y, gameData, player);
+						if (seq_id < 5){
+                console.log("sending seq_id: "+clientData.seq_id);
                 seq_id ++;
-                var response = {'shot':null, 'hit':false, 'seq_id':seq_id};
+								console.log("hit is: " + hit);
+                var response = {'shot':shot_coords, 'hit':hit, 'seq_id':seq_id};
                 var responseJSON = JSON.stringify(response);
                 io.to(room).emit("player turn",  responseJSON);
             }
         });
-				
         socket.on('disconnect', function(socket){
             console.log("A user has sailed to deeper waters!");
         });
@@ -106,14 +115,12 @@ module.exports = function(app, io){
             db.getTop10(listUserNames);
         });
     });
-		
-
 }
 
 
 
 /*
-    Checks the location that the current player selected on the oponents board
+    Checks the location that the current player selected on the opponents board
     for a ship hit or miss
 
     Parameters
@@ -124,6 +131,7 @@ module.exports = function(app, io){
 
 */
 function checkLocation(posX, posY, gameData, playerTurn){
+		console.log("posX: " + posX + " posY: " +posY);
     var boards = gameData.boards
     //player checks opponents bored for a click
     var playerToCheck = playerTurn - 1; // 1 -> 2; 0 -> 1

@@ -265,16 +265,57 @@ function startGame(){
 /**
  * Make a shot here
 **/ 
-function executeTurn(stage, seq_id){
-	
+function executeTurn(board, stage, seq_id){
+	//console.log(board);
+	board.interactive = true;
+	board.on('mousedown', function(e){
+		fire(e, finishTurn)
+	});
+	console.log(board);
 	console.log("executing turn "+ seq_id);
 	stage.removeChild(sprites.screenblocker);
+
+	
+}
+
+function executeWait(stage){
+    stage.addChild(sprites.screenblocker);
+		sprites.oponGrid.on('mousedown', turnWarn);
+}
+
+/**
+  * Shoot opponent
+ **/
+function fire(e, _callback){
+	
+	console.log("fire");
+	var shot = e.data.global;
+	var grid = getOponGrid();
+	var shotLoc = pixel2grid(grid, e.data.global.x, e.data.global.y);
+	console.log(shotLoc);
+	
+	var dataToServer = {'shotLoc':shotLoc, 'seq_id':seq_id};
+	var dataToServerJSON = JSON.stringify(dataToServer);
+	console.log("data to server: "+dataToServer);
+	//socket.emit('finish turn', dataToServerJSON);
+	_callback(dataToServerJSON);
+}
+
+/**
+  * Warn user that it's not their turn
+ **/
+function turnWarn(event){
+	console.log("be patient");
+}
+
+function finishTurn(dataToServerJSON){
+	console.log("data to server: "+dataToServerJSON); 
+	socket.emit('finish turn', dataToServerJSON);
+}
+
+
 	socket.emit('finish turn', seq_id);
 	updateStatusBar("Your Turn!", "success");
 }
 
-function executeWait(stage){
-	stage.addChild(sprites.screenblocker);
-	updateStatusBar("Opponents Turn!", "yield");
-	
-}
+

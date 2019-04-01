@@ -285,6 +285,11 @@ function getStage(){
     return stage;
 }
 
+
+function getOponGrid(){
+		return sprites.oponGrid;
+}
+
 /*
     parameters:
         position: an object with properties x and y containing grid positions 
@@ -306,4 +311,5 @@ function drawMarker(position, type){
     stage.addChild(mark);
     sprites.mark.push(mark);
 }
+
 
