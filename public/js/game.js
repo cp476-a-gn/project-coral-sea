@@ -234,6 +234,7 @@ function sendShips(socket){
         cell.r = element.gridRotation
         if(cell.r == 1) cell.x -= 1;
         positions.push(cell);
+				element.removeAllListeners();
     });
 
     ships.carrier.x = positions[0].x;

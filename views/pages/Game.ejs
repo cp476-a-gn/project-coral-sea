@@ -20,10 +20,11 @@
         });
         console.log(document.cookie);
 				socket.on("player turn", function(msg){
+						/**
+							* data: shot, hit, seq_id
+						**/
 						var data = JSON.parse(msg);
-						//console.log("about to execute turn");
-						console.log(data+ " " +data.seq_id)
-						//data has shot, hit, seq_id
+						console.log(data+ " " +data.seq_id);
 						if (data.seq_id === 1){
 							startGame();
 							if(your_id === 1){

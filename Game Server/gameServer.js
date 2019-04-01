@@ -77,8 +77,8 @@ module.exports = function(app, io){
 						console.log("sending seq_id: "+seq_id);
 						seq_id ++;
 						var response = {'shot':null, 'hit':false, 'seq_id':seq_id};
-							var responseJSON = JSON.stringify(response);
-							io.to(room).emit("player turn",  responseJSON);
+						var responseJSON = JSON.stringify(response);
+						io.to(room).emit("player turn",  responseJSON);
 					}
 				});
 				
