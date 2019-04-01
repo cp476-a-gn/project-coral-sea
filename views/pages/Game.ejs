@@ -8,7 +8,7 @@
       <script src="js/pixi.js"></script>
       <script src="/socket.io/socket.io.js"></script>
       <script>
-        your_id = 0;
+        var your_id = 0;
         var socket = io();
         socket.emit('in game');
         socket.on("board accept", function(msg){
@@ -16,8 +16,28 @@
         });
         socket.on("your id", function(msg){
           your_id = parseInt(msg);
+					console.log("MY ID IS: " + your_id);
         });
         console.log(document.cookie);
+				socket.on("player turn", function(msg){
+						var data = JSON.parse(msg);
+						//console.log("about to execute turn");
+						console.log(data+ " " +data.seq_id)
+						//data has shot, hit, seq_id
+						if (data.seq_id === 1){
+							startGame();
+							if(your_id === 1){
+							//console.log("about to execute turn1");
+							executeTurn(data.seq_id);
+							}
+						}else{
+							if (your_id !== 0 && ((your_id + data.seq_id)%2) === 0){
+								//console.log("about to execute turn2");
+								executeTurn(data.seq_id);
+							}
+						}
+				});	
+
       </script>
     </head>
     <body style="display:flex; justify-content:center; align-items: center;">
