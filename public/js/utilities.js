@@ -270,8 +270,11 @@ function executeTurn(stage, seq_id){
 	console.log("executing turn "+ seq_id);
 	stage.removeChild(sprites.screenblocker);
 	socket.emit('finish turn', seq_id);
+	updateStatusBar("Your Turn!", "success");
 }
 
 function executeWait(stage){
-    stage.addChild(sprites.screenblocker);
+	stage.addChild(sprites.screenblocker);
+	updateStatusBar("Opponents Turn!", "yield");
+	
 }

@@ -51,6 +51,18 @@
                 }
             }
         });	
+        socket.on('disconnect', (reason) => {
+            if (reason === 'io server disconnect') {
+            // the disconnection was initiated by the server, you need to reconnect manually
+            updateStatusBar("Disconnected", "fail")
+            socket.connect();
+            }
+            updateStatusBar("Disconnected", "fail")
+            // else the socket will automatically try to reconnect
+        });
+        socket.on('reconnect', (attemptNumber) => {
+            updateStatusBar("Reconnected", "success")
+        });
     </script>
     <body style="display:flex; justify-content:center; align-items: center;">
 		<button class="question" onclick="openInstructions()">?</button>
