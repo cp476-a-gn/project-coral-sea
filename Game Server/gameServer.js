@@ -35,7 +35,7 @@ module.exports = function(app, io){
 
                 gameData = new Object(),
                 gameData.boards = [null, null];
-                gameData.firedAt = [[],[]];
+                gameData.hits = [0,0];
                 gameData.turn = 0;
                     
                 games.push(gameData);
@@ -53,7 +53,7 @@ module.exports = function(app, io){
         socket.on('in game', function(msg){
             console.log("Player " + socket.handshake.session.player_order + " In room " + socket.handshake.session.room);
             socket.emit("your id", socket.handshake.session.player_order);
-						socket.join(socket.handshake.session.room);
+			socket.join(socket.handshake.session.room);
         });
         socket.on('ship submit', function(msg){
             room = socket.handshake.session.room;
@@ -139,6 +139,7 @@ function checkLocation(posX, posY, gameData, playerTurn){
     //check ships for overlap
     var ships = [];
     var playerToCheckBored = boards[playerToCheck];
+
     ships.push(playerToCheckBored.battleship);
     ships.push(playerToCheckBored.cruiser);
     ships.push(playerToCheckBored.carrier);
@@ -152,17 +153,20 @@ function checkLocation(posX, posY, gameData, playerTurn){
             relX = Math.abs(posX - ship.x);
             relY = Math.abs(posY - ship.y);
             if(ship.r == 0 && relY == 0 && relX < ship.s){
+                gameData.hits[playerToCheck] += 1;
                 return(true);
                 // is hit
             }
             else if(ship.r == 1 && relX == 0 && relY < ship.s){
+                gameData.hits[playerToCheck] += 1;
                 return(true);
                 // is hit
             }
-            else{
-                return(false);
-                //is miss
-            }
         }
     });
+    return(false);
+}
+
+function isFinished(){
+
 }
