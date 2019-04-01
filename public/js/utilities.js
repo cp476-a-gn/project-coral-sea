@@ -314,8 +314,3 @@ function finishTurn(dataToServerJSON){
 }
 
 
-	socket.emit('finish turn', seq_id);
-	updateStatusBar("Your Turn!", "success");
-}
-
-
