@@ -259,7 +259,7 @@ function updateStatusBar(msg, status){
  * Setup screen for the actual game
 **/
 function startGame(){
-	
+	document.getElementsByClassName("ready")[0].classList.remove("readyShow");
 }
 
 /**
@@ -274,6 +274,7 @@ function executeTurn(board, stage, seq_id){
 	console.log(board);
 	console.log("executing turn "+ seq_id);
 	stage.removeChild(sprites.screenblocker);
+
 	
 }
 
@@ -311,4 +312,10 @@ function finishTurn(dataToServerJSON){
 	console.log("data to server: "+dataToServerJSON); 
 	socket.emit('finish turn', dataToServerJSON);
 }
+
+
+	socket.emit('finish turn', seq_id);
+	updateStatusBar("Your Turn!", "success");
+}
+
 

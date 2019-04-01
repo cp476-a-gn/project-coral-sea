@@ -25,8 +25,14 @@ function loadFiles(sprites, loader){
             PIXI.Sprite.from(resources.submarine.texture),
             PIXI.Sprite.from(resources.submarine.texture)];
         sprites.screenblocker = PIXI.Sprite.from(resources.blocker.texture);
-        sprites.hit = [PIXI.Sprite.from(resources.hit.texture),PIXI.Sprite.from(resources.hit.texture),PIXI.Sprite.from(resources.hit.texture)];
-        sprites.miss = [PIXI.Sprite.from(resources.miss.texture),PIXI.Sprite.from(resources.miss.texture),PIXI.Sprite.from(resources.miss.texture)];
+        sprites.miss = [];
+        sprites.hit = [];
+        for(var i = 0; i < 82; i++){
+            sprites.miss.push(PIXI.Sprite.from(resources.miss.texture));
+        }
+        for(var i = 0; i < 18; i++){
+            sprites.hit.push(PIXI.Sprite.from(resources.hit.texture));
+        }
     });
 
 }
