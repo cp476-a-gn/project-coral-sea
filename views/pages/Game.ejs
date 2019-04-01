@@ -11,7 +11,8 @@
 	<script src="js/utilities.js"></script>
     <script src="js/game.js"></script>
     <script>
-        your_id = 0;
+        var your_id = 0;
+				var seq_id = 0;
         var socket = io();
         socket.emit('in game');
         socket.on("board accept", function(msg){
@@ -28,24 +29,29 @@
 
         socket.on("player turn", function(msg){
             var stage = getStage()
+						var board = getOponGrid();
             console.log("turn switch");
             /**
                 * data: shot, hit, seq_id
             **/
             var data = JSON.parse(msg);
+						seq_id = data.seq_id;
             console.log(data+ " " +data.seq_id + " ");
-            if (data.seq_id === 1){
+            if (seq_id === 1){
                 startGame();
                 if(your_id === 1){
                 //console.log("about to execute turn1");
-                executeTurn(stage, data.seq_id);
+                executeTurn(board, stage, data.seq_id);
                 }
             }else{
-                if (your_id !== 0 && ((your_id + data.seq_id)%2) === 0){
+								var shotloc = data.shot;
+								var hit = data.hit;
+								console.log("got a hit: " + data.hit);
+                if (your_id !== 0 && ((your_id + seq_id)%2) === 0){
                     //console.log("about to execute turn2");
-                    executeTurn(stage, data.seq_id);
+                    executeTurn(board, stage, seq_id);
                 }
-                else if(your_id !== 0 && ((your_id + data.seq_id) %2) !== 0){
+                else if(your_id !== 0 && ((your_id + seq_id) %2) !== 0){
                     console.log("Not your turn");
                     executeWait(stage);
                 }

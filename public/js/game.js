@@ -282,3 +282,6 @@ function getStage(){
     return stage;
 }
 
+function getOponGrid(){
+		return sprites.oponGrid;
+}
