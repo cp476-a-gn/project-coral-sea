@@ -231,3 +231,18 @@ function readJSON(hit_loc){
 		
 		return hit;
 }
+
+/**
+ * Setup screen for the actual game
+**/
+function startGame(){
+	
+}
+
+/**
+ * Make a shot here
+**/ 
+function executeTurn(seq_id){
+	console.log("executing turn "+ seq_id);
+	socket.emit('finish turn', seq_id);
+}

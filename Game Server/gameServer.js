@@ -20,7 +20,7 @@ module.exports = function(app, io){
                 socket.handshake.session.player_order = 1;
                 socket.handshake.session.room = current_room;
                 socket.handshake.session.save();
-                socket.emit("your id", 1);
+                
                 console.log("User has joined room " + room);
             }
             else if(!first && socket.handshake.room === undefined){
@@ -31,7 +31,7 @@ module.exports = function(app, io){
                 socket.handshake.session.player_order = 2;
                 socket.handshake.session.room = current_room - 1;
                 socket.handshake.session.save();
-                socket.emit("your id", 2);
+                
 
                 gameData = new Object(),
                 gameData.boards = [null, null];
@@ -52,7 +52,8 @@ module.exports = function(app, io){
         });
         socket.on('in game', function(msg){
             console.log("Player " + socket.handshake.session.player_order + " In room " + socket.handshake.session.room);
-            socket.join(socket.handshake.session.room);
+            socket.emit("your id", socket.handshake.session.player_order);
+						socket.join(socket.handshake.session.room);
         });
         socket.on('ship submit', function(msg){
             room = socket.handshake.session.room;
@@ -63,8 +64,24 @@ module.exports = function(app, io){
             socket.emit('board accept', playeris);
             console.log("received player " + playeris + " board");
 
-            if(boards[0] != null && boards[1] != null) io.to(room).emit("player turn", 1);
+            if(boards[0] != null && boards[1] != null){ 
+							var response = {'shot':null, 'hit':false, 'seq_id':1};
+							var responseJSON = JSON.stringify(response);
+							io.to(room).emit("player turn",  responseJSON);
+						}
         });
+				socket.on('finish turn', function(msg){
+					var seq_id = parseInt(msg);
+					console.log("Finished turn " + seq_id);
+					if (seq_id < 5){
+						console.log("sending seq_id: "+seq_id);
+						seq_id ++;
+						var response = {'shot':null, 'hit':false, 'seq_id':seq_id};
+							var responseJSON = JSON.stringify(response);
+							io.to(room).emit("player turn",  responseJSON);
+					}
+				});
+				
         socket.on('disconnect', function(socket){
             console.log("A user has sailed to deeper waters!");
         });
@@ -88,7 +105,11 @@ module.exports = function(app, io){
             db.getTop10(listUserNames);
         });
     });
+		
+
 }
+
+
 
 /*
     Checks the location that the current player selected on the oponents board
