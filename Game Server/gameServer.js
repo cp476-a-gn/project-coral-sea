@@ -80,9 +80,9 @@ module.exports = function(app, io){
             var gameData = games[socket.handshake.session.room];
             var player =0;
             if (seq_id % 2 === 0 ) 
-                player = 1;
-            else 
                 player = 0;
+            else 
+                player = 1;
             var hit = checkLocation(shot_coords.x, shot_coords.y, gameData, player);
             
             console.log("sending seq_id: " + clientData.seq_id);

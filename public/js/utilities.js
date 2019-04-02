@@ -195,6 +195,16 @@ function pixel2grid(grid, posX, posY){
 	return cell;
 }
 
+function pixel2gridFire(grid, posX, posY){
+	var unit_size = grid.width / 10;
+	
+	var locX = Math.floor((posX - (grid.x - grid.width/2))/unit_size);
+	var locY = Math.floor((posY - (grid.y - grid.height/2))/unit_size);
+	var cell = {x: locX, y:locY}
+	console.log();
+	
+	return cell;
+}
 
 function grid2pixel(grid, posX, posY){
 	var unit_size = grid.width / 10;
@@ -279,7 +289,7 @@ function fire(e, _callback){
 	console.log("fire");
 	var shot = e.data.global;
 	var grid = getOponGrid();
-	var shotLoc = pixel2grid(grid, e.data.global.x, e.data.global.y);
+	var shotLoc = pixel2gridFire(grid, e.data.global.x, e.data.global.y);
 	console.log(shotLoc);
 	
 	var dataToServer  = {'shotLoc':shotLoc, 'seq_id':seq_id};

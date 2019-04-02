@@ -354,3 +354,10 @@ function executeTurn(board, stage, data){
 		drawMarker(data.shot,type,seq_id % your_id);
 	}
 }
+
+
+
+
+
+
+
