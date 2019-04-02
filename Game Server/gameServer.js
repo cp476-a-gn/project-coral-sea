@@ -63,7 +63,8 @@ module.exports = function(app, io){
             boards[playeris - 1] = JSON.parse(msg);
             socket.emit('board accept', playeris);
             console.log("received player " + playeris + " board");
-
+            console.log(boards[playeris - 1]);
+            
             if(boards[0] != null && boards[1] != null){ 
                 var response = {'shot':null, 'hit':false, 'seq_id':1};
                 var responseJSON = JSON.stringify(response);
@@ -79,9 +80,9 @@ module.exports = function(app, io){
             var gameData = games[socket.handshake.session.room];
             var player =0;
             if (seq_id % 2 === 0 ) 
-                player = 2;
-            else 
                 player = 1;
+            else 
+                player = 0;
             var hit = checkLocation(shot_coords.x, shot_coords.y, gameData, player);
             
             console.log("sending seq_id: " + clientData.seq_id);
@@ -135,9 +136,7 @@ function checkLocation(posX, posY, gameData, playerTurn){
     var is_hit = false;
     var boards = gameData.boards
     //player checks opponents bored for a click
-    var playerToCheck = playerTurn - 1; // 1 -> 2; 0 -> 1
-    playerToCheck = Math.abs(playerTurn - 1); // 0-> 1; 1 -> 0
-    //check ships for overlap
+    var playerToCheck = playerTurn;
     var ships = [];
     var playerToCheckBored = boards[playerToCheck];
 
@@ -152,6 +151,7 @@ function checkLocation(posX, posY, gameData, playerTurn){
     ships.forEach( function(ship){
         relX = Math.abs(posX - ship.x);
         relY = Math.abs(posY - ship.y);
+        console.log("relX: " + relX + " relY: " + relY);
         if(ship.r == 0 && relY == 0 && relX < ship.s){
             gameData.hits[playerToCheck] += 1;
             is_hit = true;
