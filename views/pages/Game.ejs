@@ -34,14 +34,14 @@
                 * data: shot, hit, seq_id
             **/
             var data = JSON.parse(msg);
-			seq_id = data.seq_id;
+						seq_id = data.seq_id;
             console.log(data+ " " +data.seq_id + " ");
             if (seq_id === 1){
                 startGame();
                 if(your_id === 1){
                     var board = getOponGrid();
                     //console.log("about to execute turn1");
-                    executeTurn(board, stage, data.seq_id);
+                    executeTurn(board, stage, data);
                 }
             }else{
                 var shotloc = data.shot;
@@ -50,7 +50,7 @@
                 if (your_id !== 0 && ((your_id + seq_id)%2) === 0){
                     // this players turn
 			        var board = getOponGrid();
-                    executeTurn(board, stage, seq_id, data);
+                    executeTurn(board, stage, data);
                 }
                 else if(your_id !== 0 && ((your_id + seq_id) %2) !== 0){
                     // not this players turn

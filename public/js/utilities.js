@@ -281,7 +281,7 @@ function fire(e, _callback){
 	var shotLoc = pixel2grid(grid, e.data.global.x, e.data.global.y);
 	console.log(shotLoc);
 	
-	var dataToServer = {'shotLoc':shotLoc, 'seq_id':seq_id};
+	var dataToServer  = {'shotLoc':shotLoc, 'seq_id':seq_id};
 	var dataToServerJSON = JSON.stringify(dataToServer);
 	console.log("data to server: "+dataToServer);
 	//socket.emit('finish turn', dataToServerJSON);
@@ -299,5 +299,15 @@ function finishTurn(dataToServerJSON){
 	console.log("data to server: "+dataToServerJSON); 
 	socket.emit('finish turn', dataToServerJSON);
 }
+
+
+
+
+
+
+
+
+
+s
 
 

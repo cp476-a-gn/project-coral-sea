@@ -312,7 +312,7 @@ function drawMarker(position, type, turn){
         mark = sprites.miss[num_miss]; 
         num_miss++; 
     }
-
+		console.log("TURN IS " + turn);
     if (turn == 1)
         grid = sprites.oponGrid;
     else
@@ -326,27 +326,31 @@ function drawMarker(position, type, turn){
     stage.addChild(mark);
 }
 
-function executeWait(stage, board, data){
+function executeWait(stage, data, board){
     stage.addChild(sprites.screenblocker);
-	sprites.oponGrid.removeAllListeners(); 
+		sprites.oponGrid.removeAllListeners(); 
 
-	if(data.hit) type = "hit";
-	else type = "miss";
-	drawMarker(data.shot, type, data.seq_id % your_id - 1);
+		if(data.hit) type = "hit";
+		else type = "miss";
+
+		drawMarker(data.shot, type, (your_id + seq_id)%2);
 }
 
-function executeTurn(board, stage, seq_id, data){
+function executeTurn(board, stage, data){
     //console.log(board);
 	sprites.oponGrid.interactive = true;
-    sprites.oponGrid.on('click', fire_aux);
+    sprites.oponGrid.on('click', function(e){
+			fire(e, finishTurn);
+		});
     
 	console.log(board);
 	console.log("executing turn "+ seq_id);
 	stage.removeChild(sprites.screenblocker);
 	var type = ""
-	if(data.hit) type = "hit";
-	else type = "miss"; 
+	if (data.seq_id !== 1){
+		if(data.hit) type = "hit";
+		else type = "miss"; 
 
-	drawMarker(data.shot,type,seq_id % your_id);
-	
+		drawMarker(data.shot,type,seq_id % your_id);
+	}
 }

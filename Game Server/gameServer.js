@@ -170,3 +170,22 @@ function checkLocation(posX, posY, gameData, playerTurn){
 function isFinished(){
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
