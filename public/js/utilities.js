@@ -186,8 +186,9 @@ function checkOccupied(grid, curShip, allShips){
 
 function pixel2grid(grid, posX, posY){
 	var unit_size = grid.width / 10;
-	var locX = Math.floor((posX-(grid.x - grid.width/2))/unit_size);
-	var locY = Math.floor((posY-(grid.y - grid.height/2))/unit_size);
+	
+	var locX = Math.floor(((posX + unit_size/2)-(grid.x - grid.width/2))/unit_size);
+	var locY = Math.floor(((posY + unit_size/2)-(grid.y - grid.height/2))/unit_size);
 	var cell = {x: locX, y:locY}
 	console.log();
 	
@@ -305,9 +306,5 @@ function finishTurn(dataToServerJSON){
 
 
 
-
-
-
-s
 
 
