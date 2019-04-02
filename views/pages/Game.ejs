@@ -59,6 +59,14 @@
                 }
             }
         });	
+        socket.on("player wins", function(msg){
+            if(msg == your_id){
+                console.log("you win!!!");
+            }
+            else{
+                console.log("you lose... :(");
+            }
+        });
         socket.on('disconnect', (reason) => {
             if (reason === 'io server disconnect') {
             // the disconnection was initiated by the server, you need to reconnect manually

@@ -73,11 +73,12 @@ module.exports = function(app, io){
             }
         });
         socket.on('finish turn', function(msg){
+            room = socket.handshake.session.room;
             var clientData = JSON.parse(msg);
             console.log("Finished turn " + msg);
             seq_id =  clientData.seq_id;
             var shot_coords = clientData.shotLoc;
-            var gameData = games[socket.handshake.session.room];
+            var gameData = games[room];
             var player =0;
             if (seq_id % 2 === 0 ) 
                 player = 0;
@@ -91,6 +92,11 @@ module.exports = function(app, io){
             var response = {'shot':shot_coords, 'hit':hit, 'seq_id':seq_id};
             var responseJSON = JSON.stringify(response);
             io.to(room).emit("player turn",  responseJSON);
+            if(games[room].hits[0] >= 18){
+                io.to(room).emit("player wins", "2");
+            } else if(games[room].hits[1] >= 18){
+                io.to(room).emit("player wins", "1");
+            }
             
         });
         socket.on('disconnect', function(socket){
@@ -149,15 +155,15 @@ function checkLocation(posX, posY, gameData, playerTurn){
     ships.push(playerToCheckBored.submarine[1]);
 
     ships.forEach( function(ship){
-        relX = Math.abs(posX - ship.x);
-        relY = Math.abs(posY - ship.y);
+        relX = (posX - ship.x);
+        relY = (posY - ship.y);
         console.log("relX: " + relX + " relY: " + relY);
-        if(ship.r == 0 && relY == 0 && relX < ship.s){
+        if(ship.r == 0 && relY == 0 && relX < ship.s && relX >= 0){
             gameData.hits[playerToCheck] += 1;
             is_hit = true;
             // is hit
         }
-        else if(ship.r == 1 && relX == 0 && relY < ship.s){
+        else if(ship.r == 1 && relX == 0 && relY < ship.s && relY >= 0){
             gameData.hits[playerToCheck] += 1;
             is_hit = true;
             // is hit
