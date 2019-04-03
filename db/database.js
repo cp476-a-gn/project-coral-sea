@@ -1,5 +1,6 @@
 const sqlite3 = require('sqlite3').verbose();
 var Crypto = require('crypto-js');
+var SHA256 = require("crypto-js/sha256");
 const DB_PATH = './db/coralSea.db';
 
 //SQL statements
@@ -54,7 +55,8 @@ function DatabaseAPI(){
 				var uscore = "0";
 				var uname = userData.user_name;
 				var upass = userData.user_password;
-				Crypto.SHA256(upass).toString;
+				var hashed = Crypto.SHA256(upass);
+				upass = hashed.toString();
 				
 				console.log("uname: " + uname + "  upass: " + upass);
 				DB.run(insertNewSQL, [uname, upass, uscore], function(error){
@@ -150,11 +152,12 @@ function DatabaseAPI(){
 				_callback(resultsAr);
 			}else{
 				var passHash = userData.user_password;
-				Crypto.SHA256(passHash).toString;
+				//Crypto.SHA256(passHash).toString;
+				var passHash = Crypto.SHA256(userData.user_password);
 				checkLogin(userData.user_name)
 					.then(function (fullfilled){
 						console.log(fullfilled);
-						if (fullfilled.pwd != passHash){
+						if (fullfilled.pwd != passHash.toString()){
 							resultsAr[1] = 1;
 						}else{
 							resultsAr[2] = 1;
