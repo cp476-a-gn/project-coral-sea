@@ -108,7 +108,7 @@ module.exports = function(app, io){
         socket.on('join queue', function(msg){
             console.log("player joined queue" + msg);
         })
-
+			/**
         socket.on('getBoard', function(){
             function listUserNames(userIDs) {
                 result = []
@@ -121,6 +121,7 @@ module.exports = function(app, io){
             }
             db.getTop10(listUserNames);
         });
+				*/
     });
 }
 
