@@ -128,6 +128,7 @@ function dragShipEnd(event){
 						this.gridRotation = 0;
 						occupied = checkOccupied(sprites.userGrid, this, sprites.ships);
 						if (occupied){
+							//console.log("should have had a message");
 							this.position = this.startPos;
 							this.rotation = 0;
 							this.gridRotation = 0;
@@ -138,6 +139,7 @@ function dragShipEnd(event){
 						this.gridRotation = 1;
 						occupied = checkOccupied(sprites.userGrid, this, sprites.ships);
 						if (occupied){
+							//console.log("should have had a message");
 							this.position = this.startPos;
 							this.rotation = 0;
 							this.gridRotation = 0;
