@@ -115,7 +115,7 @@ function checkOccupied(grid, curShip, allShips){
 						var ship2ID = allShips[i].id;
 					
 					if ((curShip.id != ship2ID ) && (shipY1 == ship2Y1) && (((shipX1 >= ship2X1) && (shipX1 <= ship2X2)) || ((shipX2 >= ship2X1) && (shipX2 <= ship2X2)))){	
-						console.log("POSITION TAKEN");
+						//console.log("POSITION TAKEN");
 						occupied = true;
 					}
 				}else{   //if ship we are comparing with is vertical
@@ -130,7 +130,7 @@ function checkOccupied(grid, curShip, allShips){
 					if ((curShip.id != ship2ID ) && (((shipX1 <= ship2X1) && (shipX2 >= ship2X2))
 									&& (((shipY1 >= ship2Y1) && (shipY1 <= ship2Y2)) ))){
 						
-						console.log("POSITION TAKEN");
+						//console.log("POSITION TAKEN");
 							occupied = true;
 					}
 				}
@@ -158,7 +158,7 @@ function checkOccupied(grid, curShip, allShips){
 						if ((curShip.id != ship2ID ) && (((shipX1 >= ship2X1) && (shipX2 <= ship2X2))
 							&& (((shipY1 <= ship2Y1) && (shipY2 >= ship2Y1)) || ((shipY1 >= ship2Y1) && (shipY2 <= ship2Y2))))){ 
 						
-							console.log("POSITION TAKEN");
+							//console.log("POSITION TAKEN");
 							occupied = true;
 						}
 					}
@@ -169,12 +169,12 @@ function checkOccupied(grid, curShip, allShips){
 					ship2X2 = ship2X1;
 					ship2Y1 = shipTC2.y;
 					ship2Y2 = shipTC2.y + Math.floor(allShips[i].width/allShips[i].height)-1;
-					console.log("ship2X1: "+ ship2X1 + "ship2X2: "+ ship2X2 + "ship2Y1: "+ ship2Y1 + "ship2Y2: "+ ship2Y2 );
+					//console.log("ship2X1: "+ ship2X1 + "ship2X2: "+ ship2X2 + "ship2Y1: "+ ship2Y1 + "ship2Y2: "+ ship2Y2 );
 					if (ship2Y1 < 10){
 					
 						var ship2ID = allShips[i].id;
 						if ((curShip.id != ship2ID ) && (shipX1 == ship2X1) && (((shipY2 >= ship2Y1) && (shipY2 <= ship2Y2)) || ((shipY1 >= ship2Y1) && (shipY1 <= ship2Y2)))){	
-							console.log("POSITION TAKEN");
+							//console.log("POSITION TAKEN");
 							occupied = true;
 							}	
 					}
@@ -290,13 +290,14 @@ function fire(e, _callback){
 	var shot = e.data.global;
 	var grid = getOponGrid();
 	var shotLoc = pixel2gridFire(grid, e.data.global.x, e.data.global.y);
-	console.log(shotLoc);
-	
-	var dataToServer  = {'shotLoc':shotLoc, 'seq_id':seq_id};
-	var dataToServerJSON = JSON.stringify(dataToServer);
-	console.log("data to server: "+dataToServer);
-	//socket.emit('finish turn', dataToServerJSON);
-	_callback(dataToServerJSON);
+	var taken = testShots(shotLoc);
+	if (!taken){
+		var dataToServer  = {'shotLoc':shotLoc, 'seq_id':seq_id};
+		var dataToServerJSON = JSON.stringify(dataToServer);
+		//console.log("data to server: "+dataToServer);
+		//socket.emit('finish turn', dataToServerJSON);
+		_callback(dataToServerJSON);
+	} else updateStatusBar("Can't shoot at the same place twice", "yield");
 }
 
 /**
@@ -307,11 +308,34 @@ function turnWarn(event){
 }
 
 function finishTurn(dataToServerJSON){
-	console.log("data to server: "+dataToServerJSON); 
+	//console.log("data to server: "+dataToServerJSON); 
 	socket.emit('finish turn', dataToServerJSON);
 }
 
+function testShots(shotLoc){
+	var shots = getShots();
+	console.log(shotLoc);
+	var found = false;
+	var iter = shots.length - 1;
+	
+	while (!found && iter >=0){
+		if (shots[iter].x === shotLoc.x && shots[iter].y === shotLoc.y)
+			found = true;
+		iter --;
+	}
+	if (found){ 
+		console.log("can't kill twice");
+		console.log(shots);
+		return true;
+	}else{
+		console.log("first blood");
+		shots.push(shotLoc);
+		console.log(shots);
+		return false;
+	}
 
+	
+}
 
 
 

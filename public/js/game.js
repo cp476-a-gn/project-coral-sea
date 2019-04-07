@@ -11,7 +11,7 @@ num_miss = 0;
 num_hit = 0;
 
 var stage;
-
+var shots = [];
 const loader = PIXI.Loader.shared;
 
 const sprites = {};
@@ -186,7 +186,7 @@ function dragShip(event){
 }   
 
 function rotateQueue(event){
-    console.log("???");
+    //console.log("???");
     if(this.rotation == 0){
 			this.rotation = 3.14 / 2;
 			this.gridRotation = 1;
@@ -294,6 +294,10 @@ function getUserGrid(){
 	return sprites.userGrid;
 }
 
+function getShots(){
+	return shots;
+}
+
 /*
     parameters:
         position: an object with properties x and y containing grid positions 
@@ -312,7 +316,7 @@ function drawMarker(position, type, turn){
         mark = sprites.miss[num_miss]; 
         num_miss++; 
     }
-		console.log("TURN IS " + turn);
+		//console.log("TURN IS " + turn);
     if (turn == 1)
         grid = sprites.oponGrid;
     else
@@ -337,14 +341,14 @@ function executeWait(stage, data, board){
 }
 
 function executeTurn(board, stage, data){
-    //console.log(board);
+  //console.log(board);
 	sprites.oponGrid.interactive = true;
     sprites.oponGrid.on('click', function(e){
 			fire(e, finishTurn);
 		});
     
-	console.log(board);
-	console.log("executing turn "+ seq_id);
+	//console.log(board);
+	//console.log("executing turn "+ seq_id);
 	stage.removeChild(sprites.screenblocker);
 	var type = ""
 	if (data.seq_id !== 1){

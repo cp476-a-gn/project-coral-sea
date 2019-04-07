@@ -29,13 +29,13 @@
 
         socket.on("player turn", function(msg){
             var stage = getStage()
-            console.log("turn switch");
+            //console.log("turn switch");
             /**
                 * data: shot, hit, seq_id
             **/
             var data = JSON.parse(msg);
 						seq_id = data.seq_id;
-            console.log(data+ " " +data.seq_id + " ");
+            //console.log(data+ " " +data.seq_id + " ");
             if (seq_id === 1){
                 startGame();
                 if(your_id === 1){
@@ -46,7 +46,7 @@
             }else{
                 var shotloc = data.shot;
                 var hit = data.hit;
-                console.log("got a hit: " + data.hit);
+                //console.log("got a hit: " + data.hit);
                 if (your_id !== 0 && ((your_id + seq_id)%2) === 0){
                     // this players turn
 			        var board = getOponGrid();
