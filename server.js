@@ -70,7 +70,7 @@ io.on('connection', function(socket){
 				db.registerUser(userForm, getRegResult);
 		});
 		socket.on('loginUser', function(userForm){
-				console.log("loging in user " + userForm);
+				console.log("logging in user " + userForm);
 				
 				function getLoginResult(result){
 					var entry = JSON.stringify(result);

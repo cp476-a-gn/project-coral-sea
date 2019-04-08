@@ -136,6 +136,7 @@ function DatabaseAPI(){
 			}
 			
 		},
+		
 		loginUser: function(userForm, _callback){
 			/**
 			* resultsAr:
@@ -145,7 +146,7 @@ function DatabaseAPI(){
 			*/
 			var userData = JSON.parse(userForm);
 			var resultsAr = [0, 0, 0];
-			
+			console.log("bout 2 login");
 			if (userData.user_name == "" || userData.user_password == ""){
 				console.log("empty user name or password");
 				resultsAr[0] = 1;
@@ -156,7 +157,7 @@ function DatabaseAPI(){
 				var passHash = Crypto.SHA256(userData.user_password);
 				checkLogin(userData.user_name)
 					.then(function (fullfilled){
-						console.log(fullfilled);
+						console.log("here: " + fullfilled);
 						if (fullfilled.pwd != passHash.toString()){
 							resultsAr[1] = 1;
 						}else{
@@ -165,7 +166,8 @@ function DatabaseAPI(){
 						_callback(resultsAr);
 					})
 					.catch(function(error){
-						console.log("error: " + error.message);
+						console.log("1 error: " + error.message);
+						resultsAr[1] = 1;
 						_callback(resultsAr);
 					});
 			}
