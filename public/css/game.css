@@ -89,3 +89,18 @@ html{
 	100% { bottom: -100px; }
 
 }
+
+#endWindow{
+	position:absolute;
+	top: 25%;
+	background-image:url("/resources/screen.png");
+	background-size: cover;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#endText{
+	font-size: 50px;
+	text-align: center;
+}

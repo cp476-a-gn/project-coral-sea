@@ -12,7 +12,7 @@
     <script src="js/game.js"></script>
     <script>
         var your_id = 0;
-				var seq_id = 0;
+		var seq_id = 0;
         var socket = io();
         socket.emit('in game');
         socket.on("board accept", function(msg){
@@ -61,10 +61,10 @@
         });	
         socket.on("player wins", function(msg){
             if(msg == your_id){
-                console.log("you win!!!");
+                endMessage(true);
             }
             else{
-                console.log("you lose... :(");
+                endMessage(false);
             }
         });
         socket.on('disconnect', (reason) => {
@@ -91,6 +91,9 @@
         </div>
         <div id="indicatorD" class="animate">
             <p id="indicatorT"> Place ships on board. </p>
+        </div>
+        <div id="endWindow" class="end">
+            <p id="endText"></p>
         </div>
     </body>
 </html>

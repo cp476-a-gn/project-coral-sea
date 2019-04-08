@@ -313,7 +313,19 @@ function finishTurn(dataToServerJSON){
 
 
 
-
+function endMessage(win){
+	msg = "";
+	if(win) msg = "You Win!";
+	if(!win) msg = "You Lose ¯\\_(ツ)_/¯";
+	end = document.getElementById("endWindow");
+	var height = window.innerHeight * 0.5;
+	var width = height * 3 / 2
+	var left = (window.innerWidth - width) / 2;
+	end.style.width = width + "px";
+	end.style.height = height + "px";
+	end.style.left = left + "px";
+	document.getElementById("endText").innerHTML = msg;
+}
 
 
 
