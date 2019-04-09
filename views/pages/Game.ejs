@@ -14,16 +14,18 @@
         var your_id = 0;
 		var seq_id = 0;
         var socket = io();
+        var user_name = "";
         socket.emit('in game');
         socket.on("board accept", function(msg){
             updateStatusBar("Board update successful! Waiting for other player ...", "success")
         });
 
         socket.on("your id", function(msg){
-            your_id = parseInt(msg);
-            console.log(document.cookie);
-            your_id = parseInt(msg);
+            msg = JSON.parse(msg)
+            your_id = parseInt(msg.id);
+            user_name = msg.name;
             console.log("MY ID IS: " + your_id);
+            console.log("MY NAME IS: " + user_name);
         });
         console.log(document.cookie);
 
@@ -66,6 +68,9 @@
             else{
                 endMessage(false);
             }
+            setTimeout(function(){
+                redirect();
+            }, 3000);
         });
         socket.on('disconnect', (reason) => {
             if (reason === 'io server disconnect') {
@@ -79,6 +84,8 @@
         socket.on('reconnect', (attemptNumber) => {
             updateStatusBar("Reconnected", "success")
         });
+        
+        
     </script>
     <body style="display:flex; justify-content:center; align-items: center;">
 		<button class="question" onclick="openInstructions()">?</button>
@@ -95,5 +102,6 @@
         <div id="endWindow" class="end">
             <p id="endText"></p>
         </div>
+        <p style="position:absolute; top:0; left:0; width:20%;"> <script> document.write(user_name) </script> </p>
     </body>
 </html>

@@ -71,10 +71,15 @@ io.on('connection', function(socket){
 		});
 		socket.on('loginUser', function(userForm){
 				console.log("logging in user " + userForm);
-				
 				function getLoginResult(result){
 					var entry = JSON.stringify(result);
 					socket.emit('loginResult', entry);
+					userData = JSON.parse(userForm)
+					if(result[2] == 1){
+						socket.handshake.session.player_name = userData.user_name;
+						console.log("User name is: " + userData.user_name)
+					}
+				userData.user_name
 				}
 				
 				db.loginUser(userForm, getLoginResult);
