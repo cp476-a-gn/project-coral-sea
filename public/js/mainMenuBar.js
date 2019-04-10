@@ -84,6 +84,9 @@ $(function(){
 		$resText="";
 		if (logResults[2] == 1){
 			$resText += "Welcome back, captain!";
+			var user_name = document.getElementById("name").value
+			document.cookie = "name=" + user_name;
+			console.log(document.cookie);
 		}else{
 			if (logResults[0] == 1){
 				$resText += "Uername and password cannot be empty";
