@@ -52,7 +52,10 @@ module.exports = function(app, io){
         });
         socket.on('in game', function(msg){
             console.log("Player " + socket.handshake.session.player_order + " In room " + socket.handshake.session.room);
-            socket.emit("your id", socket.handshake.session.player_order);
+            var data = new Object();
+            data.id = socket.handshake.session.player_order;
+            data.name = socket.handshake.session.player_name;
+            socket.emit("your id", JSON.stringify(data));
 			socket.join(socket.handshake.session.room);
         });
         socket.on('ship submit', function(msg){

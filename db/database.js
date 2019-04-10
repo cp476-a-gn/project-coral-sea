@@ -140,9 +140,9 @@ function DatabaseAPI(){
 		loginUser: function(userForm, _callback){
 			/**
 			* resultsAr:
-			* 0: 0 - non-empty inputs; 1- empty username or password
+			* 0: 0 - non-empty inputs; 			1- empty username or password
 			* 1: 0 - correct user name and pwd; 1 - wrong username or password
-			* 2: 0 - login failed; 1 - successfull login 
+			* 2: 0 - login failed;				1 - successfull login 
 			*/
 			var userData = JSON.parse(userForm);
 			var resultsAr = [0, 0, 0];

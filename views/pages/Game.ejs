@@ -1,4 +1,24 @@
 
+
+<script>
+
+function parseCookie(key){
+    var cookie = document.cookie
+    var cookies = cookie.split(";")
+    var variables = []
+    for(var i = 0; i < cookies.length; i++){
+        variables.push(cookies[i].trim().split("="))
+    }
+    for(var i = 0; i < variables.length; i++){
+        if(variables[i][0] == key){
+            return variables[i][1];
+        }
+    }
+    return None;
+}
+
+</script>
+
 <html>
     <head>
         <link href="https://fonts.googleapis.com/css?family=Cinzel:700" rel="stylesheet"> 
@@ -14,16 +34,18 @@
         var your_id = 0;
 		var seq_id = 0;
         var socket = io();
+        var user_name = "";
         socket.emit('in game');
         socket.on("board accept", function(msg){
             updateStatusBar("Board update successful! Waiting for other player ...", "success")
         });
 
         socket.on("your id", function(msg){
-            your_id = parseInt(msg);
-            console.log(document.cookie);
-            your_id = parseInt(msg);
+            msg = JSON.parse(msg)
+            your_id = parseInt(msg.id);
+            user_name = msg.name;
             console.log("MY ID IS: " + your_id);
+            console.log("MY NAME IS: " + user_name);
         });
         console.log(document.cookie);
 
@@ -66,19 +88,24 @@
             else{
                 endMessage(false);
             }
+            setTimeout(function(){
+                redirect();
+            }, 3000);
         });
         socket.on('disconnect', (reason) => {
             if (reason === 'io server disconnect') {
             // the disconnection was initiated by the server, you need to reconnect manually
-            updateStatusBar("Disconnected", "fail")
+            updateStatusBar("Disconnected from Server, Reconnecting...", "fail")
             socket.connect();
             }
-            updateStatusBar("Disconnected", "fail")
+            updateStatusBar("Disconnected from Server, Reconnecting...", "fail")
             // else the socket will automatically try to reconnect
         });
         socket.on('reconnect', (attemptNumber) => {
             updateStatusBar("Reconnected", "success")
         });
+        
+        
     </script>
     <body style="display:flex; justify-content:center; align-items: center;">
 		<button class="question" onclick="openInstructions()">?</button>
@@ -95,5 +122,6 @@
         <div id="endWindow" class="end">
             <p id="endText"></p>
         </div>
+        <p style="position:absolute; top:-25px; left:20px; width:20%; color:white; font-size:40px"> <script> document.write(parseCookie("name")) </script> </p>
     </body>
 </html>
