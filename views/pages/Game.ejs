@@ -1,4 +1,24 @@
 
+
+<script>
+
+function parseCookie(key){
+    var cookie = document.cookie
+    var cookies = cookie.split(";")
+    var variables = []
+    for(var i = 0; i < cookies.length; i++){
+        variables.push(cookies[i].trim().split("="))
+    }
+    for(var i = 0; i < variables.length; i++){
+        if(variables[i][0] == key){
+            return variables[i][1];
+        }
+    }
+    return None;
+}
+
+</script>
+
 <html>
     <head>
         <link href="https://fonts.googleapis.com/css?family=Cinzel:700" rel="stylesheet"> 
@@ -75,10 +95,10 @@
         socket.on('disconnect', (reason) => {
             if (reason === 'io server disconnect') {
             // the disconnection was initiated by the server, you need to reconnect manually
-            updateStatusBar("Disconnected", "fail")
+            updateStatusBar("Disconnected from Server, Reconnecting...", "fail")
             socket.connect();
             }
-            updateStatusBar("Disconnected", "fail")
+            updateStatusBar("Disconnected from Server, Reconnecting...", "fail")
             // else the socket will automatically try to reconnect
         });
         socket.on('reconnect', (attemptNumber) => {
@@ -102,6 +122,6 @@
         <div id="endWindow" class="end">
             <p id="endText"></p>
         </div>
-        <p style="position:absolute; top:0; left:0; width:20%;"> <script> document.write(user_name) </script> </p>
+        <p style="position:absolute; top:-25px; left:20px; width:20%; color:white; font-size:40px"> <script> document.write(parseCookie("name")) </script> </p>
     </body>
 </html>
