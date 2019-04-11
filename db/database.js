@@ -10,7 +10,7 @@ var checkUserSQL = "SELECT COUNT(uid) as counter FROM players WHERE uname = ?;";
 var checkLoginSQL = "SELECT pwd FROM players WHERE uname = ?;";
 var updateWinSQL = "UPDATE players SET score = score + 5 WHERE uname = ?;";
 var updateLosSQL = "UPDATE players SET score = score - 5 WHERE uname = ?;";
-var returnBoard = "SELECT uid, uname, score FROM players where score < (SELECT score from players where uname = ? LIMIT 1) ORDER BY score DESC LIMIT 10;"; 
+var returnBoard = "SELECT uid, uname, score FROM players where score >= (SELECT score from players where uname = ? LIMIT 1) ORDER BY score ASC LIMIT 10;"; 
 //var updateWinSQL = 'SELECT uid, uname, score FROM players where score < (SELECT score from players where uname = ? LIMIT 1) ORDER BY score DESC LIMIT 10;';
 
 function DatabaseAPI(){
