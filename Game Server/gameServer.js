@@ -8,7 +8,9 @@ module.exports = function(app, io){
     games = []
 
     io.on('connection', function(socket){
-
+        socket.on("new connection", function(){
+			socket.handshake.session.room = undefined
+		})
         socket.on('add to queue', function(msg){
             room = 0;
             console.log(socket.handshake.room);
