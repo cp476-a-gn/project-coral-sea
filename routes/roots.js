@@ -37,7 +37,7 @@ module.exports = function(app){
     });
 		
 	app.get('/matching',function(req,res){
-		res.render('pages/waitQueue.ejs');
+		res.render('pages/WaitQueue.ejs');
     });
 
     app.get('/scoreToMain', function(req,res){

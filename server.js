@@ -2,7 +2,7 @@
 var express = require('express');
 var app = express();
 var http = require('http').Server(app);
-var port = process.env.PORT || 8082;
+var port = process.env.PORT || 80;
 var morgan = require('morgan');
 var bodyParser = require('body-parser');
 var io = require('socket.io')(http);
