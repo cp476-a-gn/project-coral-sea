@@ -9,7 +9,7 @@ module.exports = function(app, io){
 
     io.on('connection', function(socket){
         socket.on("new connection", function(){
-			socket.handshake.session.room = undefined
+			delete socket.handshake.session.room
         })
         
         socket.on('add to queue', function(msg){
@@ -52,7 +52,7 @@ module.exports = function(app, io){
                 });
             }
             else if(typeof socket.handshake.session.room !== "undefined"){
-                socket.handshake.session.room = undefined;
+                delete socket.handshake.session.room;
                 console.log(socket.handshake.session.room)
                 socket.emit("refresh");
             }
@@ -112,10 +112,10 @@ module.exports = function(app, io){
             var responseJSON = JSON.stringify(response);
             io.to(room).emit("player turn",  responseJSON);
             if(games[room].hits[0] >= 18){
-                socket.handshake.session.room = undefined
+                delete socket.handshake.session.room
                 io.to(room).emit("player wins", "2");
             } else if(games[room].hits[1] >= 18){
-                socket.handshake.session.room = undefined
+                delete socket.handshake.session.room
                 io.to(room).emit("player wins", "1");
             }
             
