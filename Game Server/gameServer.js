@@ -14,7 +14,7 @@ module.exports = function(app, io){
         
         socket.on('add to queue', function(msg){
             room = 0;
-            console.log(typeof socket.handshake.session.room);
+            console.log(socket.handshake.session.room);
             if(first && typeof socket.handshake.session.room == null){
                 room = current_room;
                 first = !first;
