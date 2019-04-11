@@ -53,6 +53,8 @@ module.exports = function(app, io){
             }
             else if(socket.handshake.session.room != null){
                 socket.handshake.session.room = null;
+                socket.handshake.session.save();
+
                 console.log("I am refresh log: " + socket.handshake.session.room)
                 socket.emit("refresh");
             }
