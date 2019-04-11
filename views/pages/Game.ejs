@@ -104,6 +104,12 @@ function parseCookie(key){
         socket.on('reconnect', (attemptNumber) => {
             updateStatusBar("Reconnected", "success")
         });
+        socket.on("leave game", (message) => {
+            updateStatusBar("Other player disconnected, leaving match...", "fail");
+            setTimeout(function(){
+                window.location.replace("/");
+            }, 3000);
+        });
         
         
     </script>
