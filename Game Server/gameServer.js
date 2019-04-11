@@ -10,10 +10,9 @@ module.exports = function(app, io){
     io.on('connection', function(socket){
 
         socket.on('add to queue', function(msg){
-
             room = 0;
             console.log(socket.handshake.room);
-            if(first && socket.handshake.room === undefined){
+            if(first && typeof socket.handshake.session.room === "undefined"){
                 room = current_room;
                 first = !first;
                 socket.join(room);
@@ -23,7 +22,7 @@ module.exports = function(app, io){
                 
                 console.log("User has joined room " + room);
             }
-            else if(!first && socket.handshake.room === undefined){
+            else if(!first && typeof socket.handshake.session.room === "undefined"){
                 room = current_room;
                 current_room ++;
                 first = !first;
@@ -49,14 +48,20 @@ module.exports = function(app, io){
                 io.sockets.in(room).emit("start game", room);
                 console.log("User has joined room " + room);
             }
+            else if(typeof socket.handshake.session.room !== "undefined"){
+                socket.join(socket.handshake.session.room);
+                
+            }
         });
         socket.on('in game', function(msg){
             console.log("Player " + socket.handshake.session.player_order + " In room " + socket.handshake.session.room);
             var data = new Object();
+            socket.handshake.session.room = undefined
             data.id = socket.handshake.session.player_order;
             data.name = socket.handshake.session.player_name;
             socket.emit("your id", JSON.stringify(data));
-			socket.join(socket.handshake.session.room);
+            socket.join(socket.handshake.session.room);
+            
         });
         socket.on('ship submit', function(msg){
             room = socket.handshake.session.room;
