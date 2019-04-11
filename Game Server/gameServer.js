@@ -10,12 +10,12 @@ module.exports = function(app, io){
     io.on('connection', function(socket){
         socket.on("new connection", function(){
 			socket.handshake.session.room = null
-        })
+        });
         
         socket.on('add to queue', function(msg){
             room = 0;
             console.log(socket.handshake.session.room);
-            if(first && typeof socket.handshake.session.room == null){
+            if(first && socket.handshake.session.room == null){
                 room = current_room;
                 first = !first;
                 socket.join(room);
@@ -25,7 +25,7 @@ module.exports = function(app, io){
                 
                 console.log("User has joined room " + room);
             }
-            else if(!first && typeof socket.handshake.session.room == null){
+            else if(!first && socket.handshake.session.room == null){
                 room = current_room;
                 current_room ++;
                 first = !first;
