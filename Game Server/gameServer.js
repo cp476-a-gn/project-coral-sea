@@ -51,7 +51,6 @@ module.exports = function(app, io){
                 });
             }
             else if(typeof socket.handshake.session.room !== "undefined"){
-                socket.join(socket.handshake.session.room);
                 socket.handshake.session.room = undefined;
                 socket.emit("refresh");
             }
