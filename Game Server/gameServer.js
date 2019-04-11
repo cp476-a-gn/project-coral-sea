@@ -70,7 +70,7 @@ module.exports = function(app, io){
                     io.sockets.in(room).emit("leave game", room);
                 }
             }, 3000);
-            socket.handshake.session.room = undefined
+           
         });
         socket.on('ship submit', function(msg){
             room = socket.handshake.session.room;
@@ -110,8 +110,10 @@ module.exports = function(app, io){
             var responseJSON = JSON.stringify(response);
             io.to(room).emit("player turn",  responseJSON);
             if(games[room].hits[0] >= 18){
+                socket.handshake.session.room = undefined
                 io.to(room).emit("player wins", "2");
             } else if(games[room].hits[1] >= 18){
+                socket.handshake.session.room = undefined
                 io.to(room).emit("player wins", "1");
             }
             
