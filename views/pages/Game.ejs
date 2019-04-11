@@ -44,31 +44,24 @@ function parseCookie(key){
             msg = JSON.parse(msg)
             your_id = parseInt(msg.id);
             user_name = msg.name;
-            console.log("MY ID IS: " + your_id);
-            console.log("MY NAME IS: " + user_name);
         });
-        console.log(document.cookie);
 
         socket.on("player turn", function(msg){
             var stage = getStage()
-            //console.log("turn switch");
             /**
                 * data: shot, hit, seq_id
             **/
             var data = JSON.parse(msg);
 						seq_id = data.seq_id;
-            //console.log(data+ " " +data.seq_id + " ");
             if (seq_id === 1){
                 startGame();
                 if(your_id === 1){
                     var board = getOponGrid();
-                    //console.log("about to execute turn1");
                     executeTurn(board, stage, data);
                 }
             }else{
                 var shotloc = data.shot;
                 var hit = data.hit;
-                //console.log("got a hit: " + data.hit);
                 if (your_id !== 0 && ((your_id + seq_id)%2) === 0){
                     // this players turn
 			        var board = getOponGrid();

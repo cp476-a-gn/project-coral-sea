@@ -1,7 +1,6 @@
 const { DatabaseAPI } = require('.././db/database.js');
 function listUserNames(userIDs) {
     userIDs.forEach(row => {
-        console.log(row.uid + " " + row.uname);
 				//var entry =JSON.stringify(row);
     });
 		var test = "testing";

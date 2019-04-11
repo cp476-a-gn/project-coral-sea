@@ -128,7 +128,6 @@ function dragShipEnd(event){
 						this.gridRotation = 0;
 						occupied = checkOccupied(sprites.userGrid, this, sprites.ships);
 						if (occupied){
-							//console.log("should have had a message");
 							this.position = this.startPos;
 							this.rotation = 0;
 							this.gridRotation = 0;
@@ -139,7 +138,6 @@ function dragShipEnd(event){
 						this.gridRotation = 1;
 						occupied = checkOccupied(sprites.userGrid, this, sprites.ships);
 						if (occupied){
-							//console.log("should have had a message");
 							this.position = this.startPos;
 							this.rotation = 0;
 							this.gridRotation = 0;
@@ -155,7 +153,6 @@ function dragShipEnd(event){
 			this.dragging = false;
 			this.data = null;
 		}else{
-		console.log("got the bug. FIXME");
     }
 
     var stillAtStart = false;
@@ -174,7 +171,6 @@ function dragShipEnd(event){
 
 function dragShip(event){
     if(this.dragging){
-       // console.log(this.data.getLocalPosition(this.parent));
         var newPosition = this.data.getLocalPosition(this.parent);
         if(this.rotation == 0){
             this.position.x = newPosition.x - (this.width / 2);
@@ -188,11 +184,9 @@ function dragShip(event){
 }   
 
 function rotateQueue(event){
-    //console.log("???");
     if(this.rotation == 0){
 			this.rotation = 3.14 / 2;
 			this.gridRotation = 1;
-			//console.log("new x: ", this.x, " new y: ", this.y);
 			adjustLocationH2V(this, sprites.userGrid);
 			occupied = checkOccupied(sprites.userGrid, this, sprites.ships);
 			if (occupied){
@@ -200,7 +194,6 @@ function rotateQueue(event){
 				this.rotation = 0;
 				this.gridRotation = 0;
 			}
-			//console.log("super new x: ", this.x, " super new y: ", this.y);
 		}
     else{
 			this.rotation = 0;
@@ -279,7 +272,6 @@ function sendShips(socket){
     ships.submarine[1].r = positions[6].r;
     ships.submarine[1].s = 1;
 
-    console.log(ships);
     socket.emit("ship submit", JSON.stringify(ships));
 }
 
@@ -318,7 +310,6 @@ function drawMarker(position, type, turn){
         mark = sprites.miss[num_miss]; 
         num_miss++; 
     }
-		//console.log("TURN IS " + turn);
     if (turn == 1)
         grid = sprites.oponGrid;
     else
@@ -343,14 +334,11 @@ function executeWait(stage, data, board){
 }
 
 function executeTurn(board, stage, data){
-  //console.log(board);
 	sprites.oponGrid.interactive = true;
     sprites.oponGrid.on('click', function(e){
 			fire(e, finishTurn);
 		});
     
-	//console.log(board);
-	//console.log("executing turn "+ seq_id);
 	stage.removeChild(sprites.screenblocker);
 	var type = ""
 	if (data.seq_id !== 1){

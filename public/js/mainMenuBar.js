@@ -28,7 +28,6 @@ function register(){
 	}, {});
 	var userData = JSON.stringify(data);
 	socket.emit('registerNew', userData);
-	console.log("gonna register");
 	
 };
 
@@ -40,7 +39,6 @@ function login(){
 	}, {});
 	var userData = JSON.stringify(data);
 	socket.emit('loginUser', userData);
-	console.log("gonna login");
 };
 
 $(function(){
@@ -48,7 +46,6 @@ $(function(){
 	var errors = null;
 	socket.on('registrationResult', (msg) => {
 			regResults = JSON.parse(msg);
-			console.log("GOT REG: "+ regResults.result);
 			$erText="";
 			if (regResults.result == '1'){
 				$erText = "<p> Welcome on board! </p>";
@@ -57,7 +54,6 @@ $(function(){
 				$erText += "<p> Got errors: </p><p class='errorM'>";
 			
 				for (var err of regResults.errors) {
-					console.log(err);
 					if (err == 0){
 						$erText += "User name cannot be empty<br>";
 					}
@@ -80,13 +76,11 @@ $(function(){
 	});
 	socket.on('loginResult',(msg) =>{
 		logResults = JSON.parse(msg);
-		console.log("GOT LOGIN: "+ logResults);
 		$resText="";
 		if (logResults[2] == 1){
 			$resText += "Welcome back, captain!";
 			user_name = document.getElementById("name").value
 			document.cookie = "name=" + user_name;
-			console.log(document.cookie);
 		}else{
 			if (logResults[0] == 1){
 				$resText += "Uername and password cannot be empty";

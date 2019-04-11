@@ -26,21 +26,16 @@
 			}
 
 			var usname = "<%= usname %>";
-			console.log(usname);
 			$(function(){
-				console.log(usname);
 				//if (usname === 1){
 				var socket = io(); 
 				if (usname === '1' && (parseCookie("name") != null)){
-					console.log("cookies: " + parseCookie("name") + " gonna updateBoardW");
 					socket.emit('updateBoardW', JSON.stringify({'name':parseCookie("name")}));
 					
 				}else if (usname === '2' && (parseCookie("name") != null)){
-					console.log("cookies: " + parseCookie("name"));
 					socket.emit('updateBoardL', JSON.stringify({'name':parseCookie("name")}));
 				}else{
 					socket.emit('getBoard');
-					console.log("should get board");
 					var boardVals = null;
 				}
 				socket.on('returnBoard', (msg) => {
@@ -48,7 +43,6 @@
 						
 						text = "";
 						boardVals.forEach(generateTable);
-						console.log(msg);
 						$(text).appendTo($(".board"));
 				});
 				

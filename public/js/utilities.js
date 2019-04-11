@@ -105,7 +105,6 @@ function checkOccupied(grid, curShip, allShips){
 
 		for (var i = 0; i <shipsNum; i++){ 
 				if (allShips[i].gridRotation == 0) { //the ship with which we are comparing is horizontal
-						//console.log("HORIZONTAL SHIP");
 						var shipTC1 = pixel2grid(grid, allShips[i].x, allShips[i].y);
 						ship2X1 = shipTC1.x;
 						ship2X2 = ship2X1 + Math.floor(allShips[i].width/allShips[i].height)-1;
@@ -115,14 +114,10 @@ function checkOccupied(grid, curShip, allShips){
 						var ship2ID = allShips[i].id;
 					
 					if ((curShip.id != ship2ID ) && (shipY1 == ship2Y1) && (((shipX1 >= ship2X1) && (shipX1 <= ship2X2)) || ((shipX2 >= ship2X1) && (shipX2 <= ship2X2)))){	
-						console.log("POSITION TAKEN");
-						console.log(" shipX1: "+ shipX1 + "  shipX2: "+ shipX2 + "  shipY1: "+ shipY1 + "  shipY2: "+ shipY2 );
-						console.log("ship2X1: "+ ship2X1 + "  ship2X2: "+ ship2X2 + "  ship2Y1: "+ ship2Y1 + "  ship2Y2: "+ ship2Y2 );
 						
 						occupied = true;
 					}
 				}else{   //if ship we are comparing with is vertical
-					//console.log("VERTICAL SHIP");
 					var shipTC2 = pixel2grid(grid, allShips[i].x, allShips[i].y);
 					ship2X1 = shipTC2.x -1;
 					ship2X2 = ship2X1;
@@ -132,11 +127,7 @@ function checkOccupied(grid, curShip, allShips){
 					var ship2ID = allShips[i].id;
 					if ((curShip.id != ship2ID ) && (((shipX1 <= ship2X1) && (shipX2 >= ship2X2))
 									&& (((shipY1 >= ship2Y1) && (shipY1 <= ship2Y2)) ))){
-							console.log("POSITION TAKEN");
-							console.log("shipX1: "+ shipX1 + "  shipX2: "+ shipX2 + "  shipY1: "+ shipY1 + "  shipY2: "+ shipY2 );
-							console.log("ship2X1: "+ ship2X1 + "  ship2X2: "+ ship2X2 + "  ship2Y1: "+ ship2Y1 + "  ship2Y2: "+ ship2Y2 );
 
-						//console.log("POSITION TAKEN");
 							occupied = true;
 					}
 				}
@@ -147,11 +138,9 @@ function checkOccupied(grid, curShip, allShips){
 		shipX2 = shipX1;
 		shipY1 = shipTC.y;
 		shipY2 = shipTC.y + Math.floor(curShip.width/curShip.height)-1;
-		console.log("shipX1: "+ shipX1 + "shipX2: "+ shipX2 + "shipY1: "+ shipY1 + "shipY2: "+ shipY2 );
 		var occupied = false;
 		for (var i = 0; i <shipsNum; i++){ 							
 			if (allShips[i].gridRotation == 0) { //if ship with which we are comparing is horizontal
-					//console.log("HORIZONTAL SHIP");
 					var shipTC1 = pixel2grid(grid, allShips[i].x, allShips[i].y);
 					ship2X1 = shipTC1.x;
 					ship2X2 = shipTC1.x + Math.floor(allShips[i].width/allShips[i].height)-1;
@@ -163,25 +152,19 @@ function checkOccupied(grid, curShip, allShips){
 					
 						if ((curShip.id != ship2ID ) && (((shipX1 >= ship2X1) && (shipX2 <= ship2X2))
 							&& (((shipY1 <= ship2Y1) && (shipY2 >= ship2Y1)) || ((shipY1 >= ship2Y1) && (shipY2 <= ship2Y2))))){ 
-							console.log("ship2X1: "+ ship2X1 + "ship2X2: "+ ship2X2 + "ship2Y1: "+ ship2Y1 + "ship2Y2: "+ ship2Y2 );
-							console.log("POSITION TAKEN");
 							occupied = true;
 						}
 					}
 				}else{   //if ship we are comparing with is vertical
-					//console.log("VERTICAL SHIP");
 					var shipTC2 = pixel2grid(grid, allShips[i].x, allShips[i].y);
 					ship2X1 = shipTC2.x + 1;
 					ship2X2 = ship2X1;
 					ship2Y1 = shipTC2.y;
 					ship2Y2 = shipTC2.y + Math.floor(allShips[i].width/allShips[i].height)-1;
-					console.log("ship2X1: "+ ship2X1 + "ship2X2: "+ ship2X2 + "ship2Y1: "+ ship2Y1 + "ship2Y2: "+ ship2Y2 );
 					if (ship2Y1 < 10){
 					
 						var ship2ID = allShips[i].id;
 						if ((curShip.id != ship2ID ) && (shipX1 == ship2X1) && (((shipY2 >= ship2Y1) && (shipY2 <= ship2Y2)) || ((shipY1 >= ship2Y1) && (shipY1 <= ship2Y2)))){	
-							console.log("ship2X1: "+ ship2X1 + "ship2X2: "+ ship2X2 + "ship2Y1: "+ ship2Y1 + "ship2Y2: "+ ship2Y2 );
-							console.log("POSITION TAKEN");
 							occupied = true;
 							}	
 					}
@@ -197,7 +180,6 @@ function pixel2grid(grid, posX, posY){
 	var locX = Math.floor(((posX + unit_size/2)-(grid.x - grid.width/2))/unit_size);
 	var locY = Math.floor(((posY + unit_size/2)-(grid.y - grid.height/2))/unit_size);
 	var cell = {x: locX, y:locY}
-	console.log();
 	
 	return cell;
 }
@@ -208,7 +190,6 @@ function pixel2gridFire(grid, posX, posY){
 	var locX = Math.floor((posX - (grid.x - grid.width/2))/unit_size);
 	var locY = Math.floor((posY - (grid.y - grid.height/2))/unit_size);
 	var cell = {x: locX, y:locY}
-	console.log();
 	
 	return cell;
 }
@@ -226,11 +207,9 @@ function grid2pixel(grid, posX, posY){
 function createShipJSON(cell, type, direction){
 	var ship_obj = {"x": cell.x, "y": cell.y, "type": type, "direction": direction};
 	if (type < 1 || type >5){
-		console.log("invalid type was passed");
 		type = 1;
 	}
 	if (direction < 0 || direction >1){
-		console.log("invalid direction was passed");
 		direction = 0;
 	}
 	var ship =JSON.stringify(ship_obj);
@@ -293,7 +272,6 @@ function fire_aux(e){
  **/
 function fire(e, _callback){
 	
-	console.log("fire");
 	var shot = e.data.global;
 	var grid = getOponGrid();
 	var shotLoc = pixel2gridFire(grid, e.data.global.x, e.data.global.y);
@@ -301,7 +279,6 @@ function fire(e, _callback){
 	if (!taken){
 		var dataToServer  = {'shotLoc':shotLoc, 'seq_id':seq_id};
 		var dataToServerJSON = JSON.stringify(dataToServer);
-		//console.log("data to server: "+dataToServer);
 		//socket.emit('finish turn', dataToServerJSON);
 		_callback(dataToServerJSON);
 	} else updateStatusBar("Can't shoot at the same place twice", "yield");
@@ -311,17 +288,14 @@ function fire(e, _callback){
   * Warn user that it's not their turn
  **/
 function turnWarn(event){
-	console.log("be patient");
 }
 
 function finishTurn(dataToServerJSON){
-	//console.log("data to server: "+dataToServerJSON); 
 	socket.emit('finish turn', dataToServerJSON);
 }
 
 function testShots(shotLoc){
 	var shots = getShots();
-	console.log(shotLoc);
 	var found = false;
 	var iter = shots.length - 1;
 	
@@ -331,13 +305,9 @@ function testShots(shotLoc){
 		iter --;
 	}
 	if (found){ 
-		console.log("can't kill twice");
-		console.log(shots);
 		return true;
 	}else{
-		console.log("first blood");
 		shots.push(shotLoc);
-		console.log(shots);
 		return false;
 	}
 

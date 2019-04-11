@@ -11,7 +11,6 @@
 			var socket = io();
 			socket.emit('add to queue');
 			socket.on('start game', function(socket){
-				console.log("received! game start");
 				window.location.href="/game";
 			})
 			socket.on('refresh', function(socket){

@@ -34,7 +34,6 @@ require('./routes/roots.js')(app);
 
 // Launch
 http.listen(port, '0.0.0.0', function(){
-    console.log('Server Started on Port: ' + port);
 });
 
 //game server
@@ -49,31 +48,24 @@ io.on('connection', function(socket){
 							result.push(row);
 						});
 						entry = JSON.stringify(result);
-						console.log("gonna return: " + entry);
 						socket.emit('returnBoard', entry);
 		}
 		socket.on('getBoard', function(){
 				db.getTop10(listUserNames);
 		});
 		socket.on('updateBoardW', function(userName){
-			//console.log("gonna update score for " + userName);
 			uname = JSON.parse(userName).name;
 			db.updateWin(listUserNames);
 		});
 		socket.on('updateBoardL', function(userName){
-			//console.log("gonna update score for " + userName);
 			uname = JSON.parse(userName).name;
 			db.updateWin(listUserNames);
 		});
 		
 		socket.on('registerNew', function(userForm){
 				//NEEDS MORE INPUT CHECKING BUT INSERTING NEW USER WORKS
-				//console.log("registring new user " + userForm);
 				
 				function getRegResult(inputErrors, queryResult){
-					//console.log("REGISTRATION RESULTS");
-					//console.log(inputErrors);
-					//console.log(queryResult);
 					var result = {errors:inputErrors, result:queryResult};
 					var entry = JSON.stringify(result);
 					socket.emit('registrationResult', entry);
@@ -82,14 +74,12 @@ io.on('connection', function(socket){
 				db.registerUser(userForm, getRegResult);
 		});
 		socket.on('loginUser', function(userForm){
-				console.log("logging in user " + userForm);
 				function getLoginResult(result){
 					var entry = JSON.stringify(result);
 					socket.emit('loginResult', entry);
 					userData = JSON.parse(userForm)
 					if(result[2] == 1){
 						socket.handshake.session.player_name = userData.user_name;
-						console.log("User name is: " + userData.user_name)
 					}
 				userData.user_name
 				}

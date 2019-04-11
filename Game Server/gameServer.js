@@ -14,7 +14,6 @@ module.exports = function(app, io){
         
         socket.on('add to queue', function(msg){
             room = 0;
-            console.log("I am add log: " + socket.handshake.session.room);
             if(first && socket.handshake.session.room == null){
                 room = current_room;
                 first = !first;
@@ -23,7 +22,6 @@ module.exports = function(app, io){
                 socket.handshake.session.room = current_room;
                 socket.handshake.session.save();
                 
-                console.log("User has joined room " + room);
             }
             else if(!first && socket.handshake.session.room == null){
                 room = current_room;
@@ -43,8 +41,6 @@ module.exports = function(app, io){
                 games.push(gameData);
                 
                 io.sockets.in(room).emit("start game", room);
-                console.log("User has joined room " + room);
-
                 io.of('/').in(current_room - 1).clients((error, socketIds) => {
                     if (error) throw error;
                     socketIds.forEach(socketId => io.sockets.sockets[socketId].leave(current_room - 1));
@@ -55,12 +51,10 @@ module.exports = function(app, io){
                 socket.handshake.session.room = null;
                 socket.handshake.session.save();
 
-                console.log("I am refresh log: " + socket.handshake.session.room)
                 socket.emit("refresh");
             }
         });
         socket.on('in game', function(msg){
-            console.log("Player " + socket.handshake.session.player_order + " In room " + socket.handshake.session.room);
             var data = new Object();
             var room = socket.handshake.session.room;
             data.id = socket.handshake.session.player_order;
@@ -70,7 +64,6 @@ module.exports = function(app, io){
             setTimeout( function(){
                 var roomData = io.sockets.adapter.rooms[room];
                 if(roomData.length == 1){
-                    console.log("Not enough players");
                     io.sockets.in(room).emit("leave game", room);
                 }
             }, 3000);
@@ -83,20 +76,16 @@ module.exports = function(app, io){
             
             boards[playeris - 1] = JSON.parse(msg);
             socket.emit('board accept', playeris);
-            console.log("received player " + playeris + " board");
-            console.log(boards[playeris - 1]);
             
             if(boards[0] != null && boards[1] != null){ 
                 var response = {'shot':null, 'hit':false, 'seq_id':1};
                 var responseJSON = JSON.stringify(response);
-                console.log("sending game start");
                 io.to(room).emit("player turn",  responseJSON);
             }
         });
         socket.on('finish turn', function(msg){
             room = socket.handshake.session.room;
             var clientData = JSON.parse(msg);
-            console.log("Finished turn " + msg);
             seq_id =  clientData.seq_id;
             var shot_coords = clientData.shotLoc;
             var gameData = games[room];
@@ -107,9 +96,7 @@ module.exports = function(app, io){
                 player = 1;
             var hit = checkLocation(shot_coords.x, shot_coords.y, gameData, player);
             
-            console.log("sending seq_id: " + clientData.seq_id);
             seq_id ++;
-            console.log("hit is: " + hit);
             var response = {'shot':shot_coords, 'hit':hit, 'seq_id':seq_id};
             var responseJSON = JSON.stringify(response);
             io.to(room).emit("player turn",  responseJSON);
@@ -123,13 +110,10 @@ module.exports = function(app, io){
             
         });
         socket.on('disconnect', function(socket){
-            console.log("A user has sailed to deeper waters!");
         });
         socket.on('player ready', function(msg){
-            console.log("player ships submited");
         });
         socket.on('join queue', function(msg){
-            console.log("player joined queue" + msg);
         })
 			/**
         socket.on('getBoard', function(){
@@ -162,7 +146,6 @@ module.exports = function(app, io){
 
 */
 function checkLocation(posX, posY, gameData, playerTurn){
-    console.log("posX: " + posX + " posY: " +posY);
     var is_hit = false;
     var boards = gameData.boards
     //player checks opponents bored for a click
@@ -181,7 +164,6 @@ function checkLocation(posX, posY, gameData, playerTurn){
     ships.forEach( function(ship){
         relX = (posX - ship.x);
         relY = (posY - ship.y);
-        console.log("relX: " + relX + " relY: " + relY);
         if(ship.r == 0 && relY == 0 && relX < ship.s && relX >= 0){
             gameData.hits[playerToCheck] += 1;
             is_hit = true;
@@ -193,29 +175,5 @@ function checkLocation(posX, posY, gameData, playerTurn){
             // is hit
         }
     });
-    console.log("hit? " + is_hit);
     return(is_hit);
 }
-
-function isFinished(){
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

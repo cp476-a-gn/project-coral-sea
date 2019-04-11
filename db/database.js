@@ -16,15 +16,12 @@ var returnBoard = "SELECT uid, uname, score FROM players where score >= (SELECT 
 function DatabaseAPI(){
 	const DB = new sqlite3.Database(DB_PATH, function(err){
 		if (err){
-			console.log(err);
 			return
 		}
-		console.log('Connected to ' + DB_PATH + ' database.');
 		DB.exec(' PRAGMA foreign_keys = ON;', function(error){
 			if (error){
 				console.error("Pragma statement didn't work. ");
 			}else{
-				//console.log("Foreign Key Enforcement is on.");
 			}
 		});
 	});
@@ -32,7 +29,6 @@ function DatabaseAPI(){
 	var returnTable = function(_callback, uname){
 		DB.all(returnBoard,[uname], function(error, rows){
 				if(error){
-					console.log(error);
 					return
 				}
 				_callback(rows);
@@ -65,14 +61,12 @@ function DatabaseAPI(){
 	
 	var insertUser = function(userData){
 		return new Promise(function(resolve, reject){
-			console.log("userData: "+userData);
 				var uscore = "0";
 				var uname = userData.user_name;
 				var upass = userData.user_password;
 				var hashed = Crypto.SHA256(upass);
 				upass = hashed.toString();
 				
-				console.log("uname: " + uname + "  upass: " + upass);
 				DB.run(insertNewSQL, [uname, upass, uscore], function(error){
 					if (error){
 						reject(error);
@@ -94,7 +88,6 @@ function DatabaseAPI(){
 					errorsAr.push("4");
 				}
 			}
-			console.log(errorsAr);
 			return
 	}
 	
@@ -112,31 +105,24 @@ function DatabaseAPI(){
 			var userData = JSON.parse(userForm);
 			var errorsAr = [];
 			var querySuccess = 0;
-			console.log("user data");
-			console.log(userData);
 			if (userData.user_name == ""){
-				console.log("empty user name");
 				errorsAr.push("0");
 				checkPasswords(userData, errorsAr);
 				_callback(errorsAr, querySuccess);
 			}else{
 				checkUser(userData.user_name)
 					.then(function (fullfilled){
-						console.log(fullfilled);
 						if (fullfilled.counter > 0){
 							errorsAr.push("1");
 						}
 						checkPasswords(userData, errorsAr);
 						if (errorsAr.length == 0){
-							console.log("gonna add new user");
 							insertUser(userData)
 								.then(function (fullfilled){
-									console.log("succes: " + fullfilled);
 									querySuccess = fullfilled;
 									_callback(errorsAr, querySuccess);
 								})
 								.catch(function(error){
-									console.log("error: " + error.message);
 									_callback(errorsAr, querySuccess);
 								});
 						}else{
@@ -144,7 +130,6 @@ function DatabaseAPI(){
 						}
 					})
 					.catch(function(error){
-						console.log("error: " + error.message);
 						_callback(errorsAr, fullfilled);
 					});
 			}
@@ -160,9 +145,7 @@ function DatabaseAPI(){
 			*/
 			var userData = JSON.parse(userForm);
 			var resultsAr = [0, 0, 0];
-			console.log("bout 2 login");
 			if (userData.user_name == "" || userData.user_password == ""){
-				console.log("empty user name or password");
 				resultsAr[0] = 1;
 				_callback(resultsAr);
 			}else{
@@ -171,7 +154,6 @@ function DatabaseAPI(){
 				var passHash = Crypto.SHA256(userData.user_password);
 				checkLogin(userData.user_name)
 					.then(function (fullfilled){
-						console.log("here: " + fullfilled);
 						if (fullfilled.pwd != passHash.toString()){
 							resultsAr[1] = 1;
 						}else{
@@ -180,7 +162,6 @@ function DatabaseAPI(){
 						_callback(resultsAr);
 					})
 					.catch(function(error){
-						console.log("1 error: " + error.message);
 						resultsAr[1] = 1;
 						_callback(resultsAr);
 					});
@@ -190,7 +171,6 @@ function DatabaseAPI(){
 		getTop10: function(_callback){
 			DB.all(selectTop10SQL,[], function(error, rows){
 				if(error){
-					console.log(error);
 					return
 				}
 				_callback(rows);
@@ -198,26 +178,20 @@ function DatabaseAPI(){
 		},
 		
 		updateWin: function(_callback){
-			console.log("uname is " + uname);
 			DB.run(updateWinSQL, [ uname], function(error, rows){
 				if(error){
-					console.log(error);
 					return
 				}
-				console.log("wee");
 				returnTable(_callback, uname); 
 				//_callback(rows);
 			});
 		},
 		
 		updateLos: function(_callback){
-			console.log("uname is " + uname);
 			DB.run(updateLosSQL, [ uname], function(error, rows){
 				if(error){
-					console.log(error);
 					return
 				}
-				console.log("wee");
 				returnTable(_callback, uname); 
 				//_callback(rows);
 			});
