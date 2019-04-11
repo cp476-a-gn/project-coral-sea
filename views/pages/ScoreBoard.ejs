@@ -31,11 +31,11 @@
 				console.log(usname);
 				//if (usname === 1){
 				var socket = io(); 
-				if (usname === '1' && (typeof parseCookie("name") !== "unefined")){
+				if (usname === '1' && (parseCookie("name") != null)){
 					console.log("cookies: " + parseCookie("name") + " gonna updateBoardW");
 					socket.emit('updateBoardW', JSON.stringify({'name':parseCookie("name")}));
 					
-				}else if (usname === '2' && (typeof parseCookie("name") !== "unefined")){
+				}else if (usname === '2' && (parseCookie("name") != null)){
 					console.log("cookies: " + parseCookie("name"));
 					socket.emit('updateBoardL', JSON.stringify({'name':parseCookie("name")}));
 				}else{

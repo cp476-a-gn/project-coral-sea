@@ -9,13 +9,13 @@ module.exports = function(app, io){
 
     io.on('connection', function(socket){
         socket.on("new connection", function(){
-			delete socket.handshake.session.room
+			socket.handshake.session.room = null
         })
         
         socket.on('add to queue', function(msg){
             room = 0;
             console.log(typeof socket.handshake.session.room);
-            if(first && typeof socket.handshake.session.room === "undefined"){
+            if(first && typeof socket.handshake.session.room == null){
                 room = current_room;
                 first = !first;
                 socket.join(room);
@@ -25,7 +25,7 @@ module.exports = function(app, io){
                 
                 console.log("User has joined room " + room);
             }
-            else if(!first && typeof socket.handshake.session.room === "undefined"){
+            else if(!first && typeof socket.handshake.session.room == null){
                 room = current_room;
                 current_room ++;
                 first = !first;
@@ -51,8 +51,8 @@ module.exports = function(app, io){
                   
                 });
             }
-            else if(typeof socket.handshake.session.room !== "undefined"){
-                delete socket.handshake.session.room;
+            else if(socket.handshake.session.room != null){
+                socket.handshake.session.room = null;
                 console.log(socket.handshake.session.room)
                 socket.emit("refresh");
             }
@@ -112,10 +112,10 @@ module.exports = function(app, io){
             var responseJSON = JSON.stringify(response);
             io.to(room).emit("player turn",  responseJSON);
             if(games[room].hits[0] >= 18){
-                delete socket.handshake.session.room
+                socket.handshake.session.room = null;
                 io.to(room).emit("player wins", "2");
             } else if(games[room].hits[1] >= 18){
-                delete socket.handshake.session.room
+                socket.handshake.session.room = null;
                 io.to(room).emit("player wins", "1");
             }
             
