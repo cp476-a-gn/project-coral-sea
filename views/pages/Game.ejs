@@ -32,7 +32,7 @@ function parseCookie(key){
     <script src="js/game.js"></script>
     <script>
         var your_id = 0;
-		var seq_id = 0;
+				var seq_id = 0;
         var socket = io();
         var user_name = "";
         socket.emit('in game');
@@ -84,13 +84,17 @@ function parseCookie(key){
         socket.on("player wins", function(msg){
             if(msg == your_id){
                 endMessage(true);
+								setTimeout(function(){
+										redirectW();
+								}, 3000);
             }
             else{
                 endMessage(false);
-            }
-            setTimeout(function(){
-                redirect();
-            }, 3000);
+								
+								setTimeout(function(){
+										redirectL();
+								}, 3000);
+						}
         });
         socket.on('disconnect', (reason) => {
             if (reason === 'io server disconnect') {

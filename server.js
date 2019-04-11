@@ -2,7 +2,7 @@
 var express = require('express');
 var app = express();
 var http = require('http').Server(app);
-var port = process.env.PORT || 8082;
+var port = process.env.PORT || 80;
 var morgan = require('morgan');
 var bodyParser = require('body-parser');
 var io = require('socket.io')(http);
@@ -42,22 +42,33 @@ require('./Game Server/gameServer.js')(app, io);
 
 
 io.on('connection', function(socket){
-
-		socket.on('getBoard', function(){
-				function listUserNames(userIDs) {
+	function listUserNames(userIDs) {
 						result = []
 						var entry = JSON.stringify("meow");
 						userIDs.forEach(row => {
 							result.push(row);
 						});
 						entry = JSON.stringify(result);
+						console.log("gonna return: " + entry);
 						socket.emit('returnBoard', entry);
-				}
+		}
+		socket.on('getBoard', function(){
 				db.getTop10(listUserNames);
 		});
+		socket.on('updateBoardW', function(userName){
+			//console.log("gonna update score for " + userName);
+			uname = JSON.parse(userName).name;
+			db.updateWin(listUserNames);
+		});
+		socket.on('updateBoardL', function(userName){
+			//console.log("gonna update score for " + userName);
+			uname = JSON.parse(userName).name;
+			db.updateWin(listUserNames);
+		});
+		
 		socket.on('registerNew', function(userForm){
 				//NEEDS MORE INPUT CHECKING BUT INSERTING NEW USER WORKS
-				console.log("registring new user " + userForm);
+				//console.log("registring new user " + userForm);
 				
 				function getRegResult(inputErrors, queryResult){
 					//console.log("REGISTRATION RESULTS");

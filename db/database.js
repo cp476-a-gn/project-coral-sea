@@ -8,6 +8,10 @@ var selectTop10SQL = "SELECT uid, uname, score FROM players ORDER BY score DESC 
 var insertNewSQL = "INSERT INTO players (uid, uname, pwd, score) VALUES ((select max(uid)+1 from players), ?, ?, ?);";
 var checkUserSQL = "SELECT COUNT(uid) as counter FROM players WHERE uname = ?;";
 var checkLoginSQL = "SELECT pwd FROM players WHERE uname = ?;";
+var updateWinSQL = "UPDATE players SET score = score + 5 WHERE uname = ?;";
+var updateLosSQL = "UPDATE players SET score = score - 5 WHERE uname = ?;";
+var returnBoard = "SELECT uid, uname, score FROM players where score >= (SELECT score from players where uname = ? LIMIT 1) ORDER BY score ASC LIMIT 10;"; 
+//var updateWinSQL = 'SELECT uid, uname, score FROM players where score < (SELECT score from players where uname = ? LIMIT 1) ORDER BY score DESC LIMIT 10;';
 
 function DatabaseAPI(){
 	const DB = new sqlite3.Database(DB_PATH, function(err){
@@ -20,10 +24,20 @@ function DatabaseAPI(){
 			if (error){
 				console.error("Pragma statement didn't work. ");
 			}else{
-				console.log("Foreign Key Enforcement is on.");
+				//console.log("Foreign Key Enforcement is on.");
 			}
 		});
 	});
+	
+	var returnTable = function(_callback, uname){
+		DB.all(returnBoard,[uname], function(error, rows){
+				if(error){
+					console.log(error);
+					return
+				}
+				_callback(rows);
+			});
+	}
 	
 	var checkUser = function(uname){
 		return new Promise(function(resolve, reject){
@@ -180,6 +194,32 @@ function DatabaseAPI(){
 					return
 				}
 				_callback(rows);
+			});
+		},
+		
+		updateWin: function(_callback){
+			console.log("uname is " + uname);
+			DB.run(updateWinSQL, [ uname], function(error, rows){
+				if(error){
+					console.log(error);
+					return
+				}
+				console.log("wee");
+				returnTable(_callback, uname); 
+				//_callback(rows);
+			});
+		},
+		
+		updateLos: function(_callback){
+			console.log("uname is " + uname);
+			DB.run(updateLosSQL, [ uname], function(error, rows){
+				if(error){
+					console.log(error);
+					return
+				}
+				console.log("wee");
+				returnTable(_callback, uname); 
+				//_callback(rows);
 			});
 		}
 		//add comma to previous line and write more here if needed
