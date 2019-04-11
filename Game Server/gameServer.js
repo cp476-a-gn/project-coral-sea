@@ -14,7 +14,7 @@ module.exports = function(app, io){
         
         socket.on('add to queue', function(msg){
             room = 0;
-            console.log(socket.handshake.session.room);
+            console.log("I am add log: " + socket.handshake.session.room);
             if(first && socket.handshake.session.room == null){
                 room = current_room;
                 first = !first;
@@ -53,7 +53,7 @@ module.exports = function(app, io){
             }
             else if(socket.handshake.session.room != null){
                 socket.handshake.session.room = null;
-                console.log(socket.handshake.session.room)
+                console.log("I am refresh log: " + socket.handshake.session.room)
                 socket.emit("refresh");
             }
         });
