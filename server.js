@@ -42,6 +42,7 @@ require('./Game Server/gameServer.js')(app, io);
 
 
 io.on('connection', function(socket){
+
 		socket.on('getBoard', function(){
 				function listUserNames(userIDs) {
 						result = []
