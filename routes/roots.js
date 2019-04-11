@@ -18,13 +18,18 @@ module.exports = function(app){
     });
 
     app.get('/score', function(req,res){
-		res.render("pages/ScoreBoard.ejs");
+				res.render("pages/ScoreBoard.ejs",  {usname: '0'});
 				
     });
-		
+		app.get('/scorePlayerW', function(req, res){
+				res.render("pages/ScoreBoard.ejs", {usname: '1'});
+		});			
+		app.get('/scorePlayerL', function(req, res){
+				res.render("pages/ScoreBoard.ejs", {usname: '2'});
+		});	
     app.get('/score/json', function (req,res){
         var testJSON = db.getTop10(listUserNames); 
-        res.json(testJSON)
+        res.json(testJSON);
     });
 		
 	app.get('/mainMenu',function(req,res){

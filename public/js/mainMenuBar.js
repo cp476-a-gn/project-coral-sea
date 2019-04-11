@@ -1,4 +1,4 @@
-
+//var user_name = "";
 function openRegister(){
 	document.getElementById("sidebar").style.width = "25vw";
 	document.getElementById("pas_rep").style.display = "flex"; 
@@ -84,7 +84,7 @@ $(function(){
 		$resText="";
 		if (logResults[2] == 1){
 			$resText += "Welcome back, captain!";
-			var user_name = document.getElementById("name").value
+			user_name = document.getElementById("name").value
 			document.cookie = "name=" + user_name;
 			console.log(document.cookie);
 		}else{

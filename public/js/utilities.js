@@ -358,9 +358,12 @@ function endMessage(win){
 	document.getElementById("endText").innerHTML = msg;
 }
 
-function redirect(){
-	window.location.replace("/score")
+function redirectW(){
+	window.location.replace("/scorePlayerW")
 }
 
+function redirectL(){
+	window.location.replace("/scorePlayerL")
+}
 
 
